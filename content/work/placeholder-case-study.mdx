@@ -27,6 +27,8 @@ our products integrates once.
 
 ## What we deliberately did not standardise
 
+Worth being precise about who decided what. I owned the product boundary: which data the service replicates, what stays configurable per customer, and where the abstraction stops. Engineering owned how — the replication itself, the queue, the reconciliation, and everything about running it. The decisions that took the longest were the ones on the line between those, and they were made together.
+
 Reference data is cached, and the refresh frequency is configurable by the
 customer rather than fixed by us. Different properties tolerate stale data
 differently, and it also depends on which product is consuming it. We set

@@ -28,7 +28,7 @@ const CV_ENTRIES = [
   },
   {
     period: "2019—2020",
-    company: "Spreenauten GbmH",
+    company: "Spreenauten GmbH",
     role: "Project Manager",
     detail:
       "Telecom and IoT delivery for enterprise clients, coordinating development teams, hardware suppliers and stakeholders.",
@@ -80,7 +80,7 @@ export default function CvPage() {
         >
           <div>download CV</div>
           <div className="mt-1 text-meta-dark">
-            PDF · 180 KB · September 2026
+            PDF · 120 KB · September 2026
           </div>
         </a>
         <div className="mt-5 font-mono text-xs leading-[1.8] text-meta">

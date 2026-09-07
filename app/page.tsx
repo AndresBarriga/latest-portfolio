@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { getAllCaseStudies, getAllLabProjects } from "@/src/lib/content";
+import { getAllCaseStudies } from "@/src/lib/content";
 import { CaseStudyListItem } from "@/src/components/CaseStudyListItem";
-import { LabListItem } from "@/src/components/LabListItem";
+// LabListItem unused while the /lab section is hidden — re-add with the section below.
+// import { LabListItem } from "@/src/components/LabListItem";
 
 export default function Home() {
   const caseStudies = getAllCaseStudies();
-  const labProjects = getAllLabProjects();
   const lastUpdated = new Date().toLocaleDateString("en-US", {
     month: "short",
     year: "numeric",
@@ -20,11 +20,13 @@ export default function Home() {
               Platform underneath, product on top
             </h1>
             <p className="m-0 mb-3.5 max-w-[56ch] text-[16.5px] leading-[1.6] text-body">
-              Product manager, five years across B2B SaaS in hospitality and travel tech, and before that regulated healthtech. I work on the layer several products end up depending on, third-party APIs I don't control, shared data models, integration platforms — and on the products built on top of it. Right now that's a suite of hospitality products sharing integrations into the property management systems our customers already run.
+              I work on the layer other products depend on: third-party APIs I don't control, shared data models, the integration underneath. Right now that's a suite of hospitality products sharing into integrations to the property management systems (mainly Oracle Hospitality) our customers already run. Five years of B2B SaaS, and before that a healthtech product 0 → 1 inside the German reimbursement system.
             </p>
             <p className="m-0 max-w-[56ch] text-[16.5px] leading-[1.6] text-body">
-              Each case below is one decision, not a project summary. What the problem was, what I actually knew at the time, what I rejected, what I chose and what it cost. Some of them I got wrong, and those are written down too. Nothing here is claimed that I can't evidence.
-            </p>
+              Each case below is one decision, not a project summary. What the problem was, what I knew at the time, what I rejected, what it cost.
+
+Four of them share a habit: letting economics kill a technically correct answer. Some I got wrong. Those are written down too.
+ </p>
           </div>
           <div className="font-mono text-[12.5px] leading-[1.5] text-meta">
             <div className="grid grid-cols-[78px_1fr] gap-x-3.5 gap-y-1.5 border-t border-hairline pt-3.5">
@@ -85,6 +87,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Lab section hidden from homepage until it has real content — re-add when ready.
       <section className="mt-10 bg-ink px-6 py-12 text-ink-inverse sm:px-12">
         <div className="mx-auto w-full max-w-[1080px]">
           <div className="mb-6 flex items-baseline justify-between gap-4">
@@ -105,6 +108,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      */}
 
       <section className="border-b border-hairline px-6 py-10 sm:px-12 sm:py-11">
         <div className="mx-auto grid w-full max-w-[1080px] grid-cols-1 gap-10 lg:grid-cols-[1.55fr_1fr] lg:gap-16">
