@@ -1,0 +1,68 @@
+---
+title: 'LLM Translation - The answer to supporting dynamic data translations'
+slug: 'translation-cache'
+problem: 'Guest-facing products render content from three sources: static frontend strings, property configuration, and live PMS data. The first can be translated at build time. The other two only exist once a customer configures them, so before this there was no translation of dynamic content at all — guests read whatever language the property typed in.'
+evidence: 'Treatment names, package descriptions, room types and terms and conditions all arrive at render time from the PMS or from property config. No build step can see them. Any solution that translates ahead of time covers the least important third of what a guest actually reads.'
+alternatives: 'Pre-translated string files: no coverage of dynamic content. Translating on every render: correct, but pays a model call for text that has not changed since the last guest read it. Asking properties to supply translations: shifts the work to the customer and does not scale across languages.'
+decision: 'Translate on demand and cache the result, keyed on source text plus a context field describing what the string is for. Trade-off: the first render of new content is synchronous and takes several seconds, so the model cost is paid once per string rather than once per guest.'
+outcome: 'In production across guest-facing products. A typical session hits cache for effectively everything except content that changed since the last guest saw it, or strings unique to a property such as terms and conditions. Staff can flag a bad translation from the interface, which corrects that entry.'
+lessons: 'The cache key mattered more than the model. Storing what a string is for, not just what it says, is what stopped correct-but-wrong translations, and it had to be designed in from the start rather than retrofitted.'
+---
+
+Our guest-facing products render three kinds of content, and they have nothing
+in common except that a guest reads all of them.
+
+Static frontend strings are ours. They ship with the build and can be translated
+however you like. Property configuration is the customer's: treatment names,
+package descriptions, house rules, whatever they set up. And live PMS data
+arrives at render time from the system the hotel already runs.
+
+Only the first can be translated ahead of time. The other two do not exist until
+a customer configures them, and they change afterwards. That is why there was no
+translation of dynamic content before this: not because nobody wanted it, but
+because the obvious approach only covers the part the guest reads least.
+
+## Translating at render time, once
+
+So translation happens when the content is requested, and the result is stored.
+
+Each cache entry holds the source text, the target language, the translated
+string, whether it came from the model or from cache, and a context field
+describing what the string is for. That last field is the one that matters. The
+same word in a button, a heading, and a list of treatments should not always
+translate the same way, and a model given only the word cannot know which it is
+looking at. The context field was in the design from the beginning, not added
+after we saw bad output.
+
+The cache is shared across properties rather than per property. If two hotels
+offer a treatment with the same name, the second one is already translated. This
+is the reason the economics work at all: a string costs a model call once, not
+once per guest, and not once per customer.
+
+In a typical session almost everything is already cached. What is left is
+content that changed since the last guest saw it, plus strings genuinely unique
+to a property — terms and conditions being the usual case.
+
+## The part I would not hide
+
+The first render of uncached content is synchronous. The guest sees a spinner,
+and if a whole page needs translating it runs five to eight seconds. That is not
+a good experience and there is no version of on-demand translation where it is.
+
+What makes it acceptable is that a real guest almost never hits it. We warm the
+cache in QA, per product, before a release, so the expensive path is walked in
+our environment rather than at a front desk. The penalty is real; the question
+was only who pays it.
+
+Languages are a fixed list rather than whatever a guest's browser asks for. An
+open list multiplies cost and makes quality impossible to review, since nobody
+on the team can check output in a language we did not choose to support. I set
+the list for the first product. Newer products now choose their own, which is
+the right direction — the platform should offer the capability and let product
+teams decide their market.
+
+The correction loop runs through staff. Anyone at the property can flag a
+translation from the interface, and that entry gets corrected. This is
+deliberate: the receptionist knows what the treatment is actually called. They
+have context the model does not, and they are the ones who will hear about it
+from a guest.

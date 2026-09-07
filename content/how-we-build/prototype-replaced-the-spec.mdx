@@ -1,0 +1,134 @@
+---
+title: 'We stopped describing products and started showing them'
+slug: 'how-we-build'
+section: 'how we build in 2026'
+---
+
+Writing a user story or a PRD used to mean describing a product I could only
+imagine. I wrote what I thought we wanted, handed it over, and found out weeks
+later whether the thing in my head and the thing in everyone else's were the same
+product. Usually they were close. Close is expensive.
+
+Now the first artefact is a working prototype I build myself. Not a mockup,
+something you can click through.
+
+## The two things that actually changed
+
+Everything else here follows from these.
+
+**Validation moved before the build, not after it.** We put something usable in
+front of customers while changing it still costs an afternoon. People are polite
+about descriptions and specific about things they can hold, so the feedback is
+different in kind, not only earlier. Features die at this point, which is the
+whole idea . One that dies in a demo costs a prototype, one that dies in
+production costs a quarter.
+
+**Handover became showing instead of explaining.** Developers receive the
+prototype alongside the PRD, so they read a document about something they have
+already used. That gap between what I wrote and what someone else pictured is
+where most of the waste used to live.
+
+## Who receives what
+
+**Me.** I build it, look at it, and often decide it is wrong before anyone else
+has spent an hour on it. That filter did not exist before. I could not properly
+evaluate my own idea until it was built, which meant I evaluated it once it was
+already expensive.
+
+**Design.** UI/UX used to be a dependency at the start of the work. Now there is
+something concrete to react to, so the review happens against a real artefact
+rather than a description. The role moved from producing the starting point to
+improving one.
+
+**Engineering.** We walk through the prototype together on a call, and they write
+the TRD and implementation plan from a shared reference rather than from my
+prose. The questions that come back are about edge cases rather than about what I
+meant.
+
+**Customers.** This is the one that changed most. Being able to show a hotel
+manager a working flow gets a different answer than describing one. And we only
+build once we are reasonably sure it will deliver real value.
+
+## The process
+
+An idea becomes a clickable prototype in low-code, which goes through internal
+review and then in front of customers. That loop runs as many times as it needs
+to. Only once it holds up do I write the PRD, which means the PRD describes
+something that has already survived contact with the people who will use it.
+
+The handover call is the point engineering commits. Developers write the TRD and
+implementation plan, with an agent checking the TRD against the PRD and flagging
+what is unclear before anyone builds on top of an ambiguity. Work breaks down
+into Jira stories, agents implement and report back on the ticket, and a second
+agent reviews the diff independently before a developer sees it.
+
+Then it goes back in front of customers, before pilot and before production.
+Validation is not a phase that closes.
+
+## It scales down
+
+The full loop is what a new product gets. Most work is not a new product.
+
+For a single feature or a change to an existing screen, the same thing happens in
+compressed form: prototype the change, show it to whoever asked for it, adjust,
+then hand it over. It might be an afternoon rather than several weeks. What stays
+constant is the order — something clickable exists before anything is specified,
+and someone outside the team has reacted to it before engineering commits.
+
+This is now how the portfolio works rather than an experiment on one product. The
+scale changes; the sequence does not.
+
+## One example: TYNGO Spa
+
+_One product, not a pattern I can generalise from. It is the clearest case I
+have._
+
+We built digital check-in, advanced analytics, a customisable booking flow and an
+automated waitlist. Almost none of it survived contact with the people who would
+use it.
+
+The configurable booking flow looked like a selling point and came back as work:
+twenty options to set up is not flexibility, it is homework. They wanted good
+defaults. Automated upselling during booking failed differently — pushing extras
+made a premium reservation feel like an online store. Managers did not open most
+of the analytics. Reception did not want digital check-in taking away the human
+moment. VIP guests turned out to need manual handling by design rather than by
+omission.
+
+What we built instead came from watching what reception actually does all day: an
+operational day board that runs the whole shift from one screen, scheduling that
+understands therapist and room and equipment rather than just availability,
+treatment packages, and cancellation recovery. One-click rebooking of the same
+treatment with the same therapist in four weeks is not an exciting feature.
+Reception uses it constantly.
+
+## What came out of it
+
+**Fewer features built that nobody wanted.** Four rejected directions on one
+product, all caught before engineering committed. That is the outcome I care most
+about, and it is invisible in any roadmap because it shows up as work that never
+happened.
+
+**Better acceptance of what did ship.** The replacement features came out of
+watching the work rather than guessing at it, and reception uses them daily
+rather than being trained into them.
+
+**Faster delivery, for a specific reason.** Duty Roster went from nothing to
+production in under two months. Not because code got written faster, but because
+we were not building the wrong version of it and nobody had to rework a
+misunderstanding.
+
+**Less translation loss.** Design reviews a real artefact. Developers ask about
+edge cases instead of intent. I catch my own bad ideas early.
+
+## What did not change
+
+The prototype is not the architecture. It is a communication artefact, and
+treating it as a foundation would be a mistake. Engineering rebuilds properly
+from the PRD and TRD.
+
+And the review question is open. The developer reads a summary rather than
+several hundred lines. That is faster, and there is still a human in the loop,
+but I am not going to pretend it is free. Reviewing a summary changes what you
+are looking at, and I do not think anyone knows yet what that costs. It is the
+question I would want answered before leaning on this any harder.

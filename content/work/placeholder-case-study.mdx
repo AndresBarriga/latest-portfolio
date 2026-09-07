@@ -1,0 +1,62 @@
+---
+title: 'Replicating Opera Cloud so every product reads from one place we control'
+slug: 'shared-integration-service'
+problem: "Five products needed the same reservation and profile data from a customer's PMS. Each integrating separately meant a new connector per product per property, each with its own cache and its own idea of how fresh the data was."
+evidence: 'Every new product repeated the same onboarding work against the same system. Reference data such as payment methods, packages and rates differs per property and changes without notice, so each product was independently exposed to the same class of failure.'
+alternatives: 'Direct integration per product: no shared infrastructure, but N connectors and N divergent caches per property. A shared client library: removes duplicated code, leaves every product owning its own state. A shared service: one integration per property, consumed by all products.'
+decision: "A dedicated service replicating reservations and profiles per PMS instance via Business Events, consumed by every product. Trade-off: we took on eventual consistency and the operational cost of running a replica of someone else's data."
+outcome: 'Five products in production on the same layer, including digital guest registration, restaurant access control, spa booking, and staff ordering synced with the POS. Also used for a multi-property deployment for a hotel group.'
+lessons: '[CONFIRM - pick the one that is true: (a) the dictionary fallback was built reactively, after production failures, and should have been designed in from the start; (b) keeping a replica correct costs more over time than building it did.]'
+---
+
+We had five products that all needed the same thing: who is staying, what they
+booked, what packages they are entitled to. That data lives in the customer's
+PMS, and every product was going to reach for it separately.
+
+That framing matters, because the obvious reading is wrong. This was not a
+performance problem. The API was fast enough and we were nowhere near rate
+limits. It was a duplication problem. One integration per product per property
+means the same onboarding work repeated five times, five caches with five
+different refresh policies, and five separate places where the same failure can
+appear.
+
+So we built one service per PMS instance. It subscribes to Business Events from
+the PMS and replicates reservations and profiles into our own infrastructure.
+Any product that needs guest data reads from there. A customer running three of
+our products integrates once.
+
+## What we deliberately did not standardise
+
+Reference data is cached, and the refresh frequency is configurable by the
+customer rather than fixed by us. Different properties tolerate stale data
+differently, and it also depends on which product is consuming it. We set
+sensible defaults for customers who do not want to think about it, but the
+decision belongs to them. Choosing freshness on a customer's behalf is the kind
+of default that looks tidy in design and generates support tickets for years.
+
+The second thing that shaped the design is that a third-party system changes
+underneath you without telling you. A property adds a payment method, renames a
+package, reconfigures a rate. A product then sends a value the PMS rejects. The
+naive behaviour is to return the error. Instead the service refreshes the
+relevant dictionary, checks what the valid values actually are now, and either
+retries with the correct value or falls back. Most of the time the failure
+resolves itself rather than surfacing to a receptionist.
+
+## Operating a replica, not just building one
+
+Running a replica means owning its failure modes. Events arrive out of order, or
+do not arrive. We built idempotent handling and retries, an event queue where
+you can see what was processed, skipped or purged, scheduled reconciliation
+against the source system, and a manual resync for reservations, profiles and
+packages when someone needs to force the issue.
+
+The observability mattered more than I expected. The difference between
+replicating data and operating a replica is being able to answer why a booking
+looks wrong without guessing.
+
+What convinced me the abstraction was right is not the architecture. It is that
+products got built on top of it that would have been hard to justify
+individually: restaurant access control checking entitlements in real time,
+pre-arrival communications driven by who is actually arriving tomorrow. The
+integration stopped being a cost per product and became something products could
+assume.

@@ -1,0 +1,91 @@
+<svg width="100%" viewBox="0 0 680 860" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>Where engineering commitment begins</title>
+<desc>A vertical workflow. Above the commitment line: idea, working prototype, internal review, customer demos which loop back to the prototype, and a validated prototype plus PRD written afterwards. The line is crossed by a handover call walking developers through the prototype. Below it: TRD and implementation plan with an agent checking the TRD against the PRD, Jira stories, agents implementing and reporting back, agent then developer review, further customer demos, and finally pilot and production.</desc>
+
+<text x="40" y="34" style="fill:rgb(82, 81, 78);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:12px;">Before engineering commits — being wrong costs an afternoon</text>
+
+<rect x="170" y="52" width="340" height="40" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5px;"/>
+<text x="340" y="77" text-anchor="middle" style="fill:rgb(11, 11, 11);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:14px;font-weight:500;">Idea</text>
+
+<line x1="340" y1="92" x2="340" y2="104" style="stroke:rgb(137, 135, 129);stroke-width:1px;"/>
+<polygon points="340,104 336,97 344,97" style="fill:rgb(137, 135, 129);"/>
+
+<rect x="170" y="106" width="340" height="52" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5px;"/>
+<text x="340" y="127" text-anchor="middle" style="fill:rgb(11, 11, 11);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:14px;font-weight:500;">Working prototype</text>
+<text x="340" y="144" text-anchor="middle" style="fill:rgb(82, 81, 78);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:12px;">low-code, clickable</text>
+
+<line x1="340" y1="158" x2="340" y2="170" style="stroke:rgb(137, 135, 129);stroke-width:1px;"/>
+<polygon points="340,170 336,163 344,163" style="fill:rgb(137, 135, 129);"/>
+
+<rect x="170" y="172" width="340" height="40" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5px;"/>
+<text x="340" y="197" text-anchor="middle" style="fill:rgb(11, 11, 11);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:14px;font-weight:500;">Internal review</text>
+
+<line x1="340" y1="212" x2="340" y2="224" style="stroke:rgb(137, 135, 129);stroke-width:1px;"/>
+<polygon points="340,224 336,217 344,217" style="fill:rgb(137, 135, 129);"/>
+
+<rect x="170" y="226" width="340" height="52" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5px;"/>
+<text x="340" y="247" text-anchor="middle" style="fill:rgb(11, 11, 11);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:14px;font-weight:500;">Customer demos</text>
+<text x="340" y="264" text-anchor="middle" style="fill:rgb(82, 81, 78);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:12px;">features die here</text>
+
+<path d="M 170 252 L 140 252 L 140 132 L 170 132" fill="none" style="stroke:rgb(137, 135, 129);stroke-width:1px;"/>
+<polygon points="170,132 163,128 163,136" style="fill:rgb(137, 135, 129);"/>
+<text x="132" y="196" text-anchor="end" style="fill:rgb(82, 81, 78);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:12px;">iterate</text>
+
+<line x1="340" y1="278" x2="340" y2="290" style="stroke:rgb(137, 135, 129);stroke-width:1px;"/>
+<polygon points="340,290 336,283 344,283" style="fill:rgb(137, 135, 129);"/>
+
+<rect x="170" y="292" width="340" height="52" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5px;"/>
+<text x="340" y="313" text-anchor="middle" style="fill:rgb(11, 11, 11);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:14px;font-weight:500;">Validated prototype + PRD</text>
+<text x="340" y="330" text-anchor="middle" style="fill:rgb(82, 81, 78);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:12px;">the PRD is written after, not before</text>
+
+<line x1="340" y1="344" x2="340" y2="368" style="stroke:rgb(137, 135, 129);stroke-width:1px;"/>
+<polygon points="340,368 336,361 344,361" style="fill:rgb(137, 135, 129);"/>
+
+<line x1="40" y1="372" x2="640" y2="372" style="stroke:rgb(137, 135, 129);stroke-width:1px;stroke-dasharray:4,4;"/>
+
+<rect x="170" y="386" width="340" height="52" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5px;"/>
+<text x="340" y="407" text-anchor="middle" style="fill:rgb(11, 11, 11);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:14px;font-weight:500;">Handover call</text>
+<text x="340" y="424" text-anchor="middle" style="fill:rgb(82, 81, 78);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:12px;">walking developers through the prototype</text>
+
+<text x="40" y="462" style="fill:rgb(82, 81, 78);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:12px;">After — being wrong costs a sprint</text>
+
+<line x1="340" y1="438" x2="340" y2="474" style="stroke:rgb(137, 135, 129);stroke-width:1px;"/>
+<polygon points="340,474 336,467 344,467" style="fill:rgb(137, 135, 129);"/>
+
+<rect x="170" y="476" width="340" height="64" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5px;"/>
+<text x="340" y="497" text-anchor="middle" style="fill:rgb(11, 11, 11);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:14px;font-weight:500;">TRD + implementation plan</text>
+<text x="340" y="514" text-anchor="middle" style="fill:rgb(82, 81, 78);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:12px;">an agent checks the TRD against the PRD</text>
+<text x="340" y="530" text-anchor="middle" style="fill:rgb(82, 81, 78);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:12px;">and flags what is unclear</text>
+
+<line x1="340" y1="540" x2="340" y2="552" style="stroke:rgb(137, 135, 129);stroke-width:1px;"/>
+<polygon points="340,552 336,545 344,545" style="fill:rgb(137, 135, 129);"/>
+
+<rect x="170" y="554" width="340" height="40" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5px;"/>
+<text x="340" y="579" text-anchor="middle" style="fill:rgb(11, 11, 11);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:14px;font-weight:500;">Jira user stories</text>
+
+<line x1="340" y1="594" x2="340" y2="606" style="stroke:rgb(137, 135, 129);stroke-width:1px;"/>
+<polygon points="340,606 336,599 344,599" style="fill:rgb(137, 135, 129);"/>
+
+<rect x="170" y="608" width="340" height="52" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5px;"/>
+<text x="340" y="629" text-anchor="middle" style="fill:rgb(11, 11, 11);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:14px;font-weight:500;">Agents implement</text>
+<text x="340" y="646" text-anchor="middle" style="fill:rgb(82, 81, 78);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:12px;">reporting back on the ticket</text>
+
+<line x1="340" y1="660" x2="340" y2="672" style="stroke:rgb(137, 135, 129);stroke-width:1px;"/>
+<polygon points="340,672 336,665 344,665" style="fill:rgb(137, 135, 129);"/>
+
+<rect x="170" y="674" width="340" height="52" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5px;"/>
+<text x="340" y="695" text-anchor="middle" style="fill:rgb(11, 11, 11);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:14px;font-weight:500;">Agent review, then developer</text>
+<text x="340" y="712" text-anchor="middle" style="fill:rgb(82, 81, 78);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:12px;">the developer reads a summary</text>
+
+<line x1="340" y1="726" x2="340" y2="738" style="stroke:rgb(137, 135, 129);stroke-width:1px;"/>
+<polygon points="340,738 336,731 344,731" style="fill:rgb(137, 135, 129);"/>
+
+<rect x="170" y="740" width="340" height="40" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5px;"/>
+<text x="340" y="765" text-anchor="middle" style="fill:rgb(11, 11, 11);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:14px;font-weight:500;">More customer demos</text>
+
+<line x1="340" y1="780" x2="340" y2="792" style="stroke:rgb(137, 135, 129);stroke-width:1px;"/>
+<polygon points="340,792 336,785 344,785" style="fill:rgb(137, 135, 129);"/>
+
+<rect x="170" y="794" width="340" height="40" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5px;"/>
+<text x="340" y="819" text-anchor="middle" style="fill:rgb(11, 11, 11);font-family:-apple-system,'system-ui','Segoe UI',sans-serif;font-size:14px;font-weight:500;">Pilot, then production</text>
+</svg>

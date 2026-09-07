@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #e8e4dc; }
+  a { color: #c2136d; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>
+</helmet>
+
+<section style="padding: 56px 56px 96px; font-family: 'Archivo', system-ui, sans-serif;">
+  <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 40px; max-width: 760px;">
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6b665d;">variation B · Familjen Grotesk + fuchsia / teal</div>
+    <div style="font-size: 15px; line-height: 1.6; color: #3a3630;">Same bones, different voice. Familjen Grotesk with its angled cuts for headlines, Archivo for body, JetBrains Mono for metadata. Links are saturated fuchsia; status tags are teal with dark ink — higher contrast between the two accents than variation A.</div>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 64px; align-items: flex-start;">
+
+    <!-- ================= HOMEPAGE ================= -->
+    <div style="display: flex; flex-direction: column; gap: 14px; flex: 0 0 1080px; width: 1080px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #6b665d;">/ — homepage</div>
+      <div style="background: #f6f3ec; border: 1px solid #ddd7cb; color: #1c1a17;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 22px 48px; border-bottom: 1px solid #ddd7cb;">
+          <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 19px; letter-spacing: -0.01em;">Daniel Reyes</div>
+          <div style="display: flex; gap: 26px; font-size: 14px;">
+            <a href="#work" style="color: #1c1a17; border-bottom: 2px solid #c2136d; padding-bottom: 2px;">Work</a>
+            <a href="#lab" style="color: #1c1a17;">Lab</a>
+            <a href="#about" style="color: #1c1a17;">About</a>
+            <a href="#cv">CV</a>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1.55fr 1fr; gap: 64px; padding: 64px 48px 56px; border-bottom: 1px solid #ddd7cb;">
+          <div>
+            <h1 style="margin: 0 0 22px; font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.035em; font-size: 49px; line-height: 1.08; letter-spacing: -0.02em; max-width: 15ch; text-wrap: pretty;">I ship the AI features I spec.</h1>
+            <p style="margin: 0 0 14px; font-size: 16.5px; line-height: 1.6; max-width: 56ch; color: #33302a;">Product manager, seven years across enterprise SaaS, hospitality tech and healthtech. I write the PRD, then I build the prototype that proves it — LLM pipelines, MCP tool orchestration, eval harnesses — and hand engineering something already de-risked.</p>
+            <p style="margin: 0; font-size: 16.5px; line-height: 1.6; max-width: 56ch; color: #33302a;">Every case study below carries its decision record: the problem, the evidence, what I ruled out, and what it cost me to be wrong. Open any field to see the detail behind it.</p>
+          </div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.5; color: #6b665d; padding-top: 12px;">
+            <div style="display: grid; grid-template-columns: 78px 1fr; gap: 6px 14px; border-top: 1px solid #ddd7cb; padding-top: 14px;">
+              <div>now</div><div style="color: #1c1a17;">Senior PM, claims platform<br>Meridian Health</div>
+              <div>before</div><div style="color: #1c1a17;">Nightwatch (hospitality)<br>Palladin (enterprise SaaS)</div>
+              <div>builds</div><div style="color: #1c1a17;">Python, TypeScript, MCP,<br>evals, dbt</div>
+              <div>where</div><div style="color: #1c1a17;">Lisbon / GMT+1</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="work" style="padding: 48px 48px 12px;">
+          <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px;">
+            <h2 style="margin: 0; font-family: 'Familjen Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.025em; font-size: 28px;">Work</h2>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6b665d;">shipped in a real org · 2019—2026</span>
+          </div>
+          <div style="border-top: 1px solid #1c1a17;">
+            <a href="#case" style="display: grid; grid-template-columns: 108px 1fr 132px; gap: 32px; padding: 24px 0; border-bottom: 1px solid #ddd7cb; align-items: start; text-decoration: none; color: #1c1a17;" style-hover="background: #f0ece2;">
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6b665d; line-height: 1.5;">2025<br>healthtech</div>
+              <div>
+                <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 25px; line-height: 1.2; margin-bottom: 6px;">Halving claim review time with a citation-first assist</div>
+                <div style="font-size: 14.5px; color: #57524a; line-height: 1.55; max-width: 62ch;">Retrieval over 40k pages of policy text. Reviewers keep the decision; the model only has to show its work.</div>
+              </div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #08302d; background: #14b8ad; border: 1px solid #0f978e; padding: 4px 8px; justify-self: start;">shipped</div>
+            </a>
+            <a href="#case" style="display: grid; grid-template-columns: 108px 1fr 132px; gap: 32px; padding: 24px 0; border-bottom: 1px solid #ddd7cb; align-items: start; text-decoration: none; color: #1c1a17;" style-hover="background: #f0ece2;">
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6b665d; line-height: 1.5;">2023<br>hospitality</div>
+              <div>
+                <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 25px; line-height: 1.2; margin-bottom: 6px;">Onboarding 4,200 hotels without a migration team</div>
+                <div style="font-size: 14.5px; color: #57524a; line-height: 1.55; max-width: 62ch;">Self-serve property setup replaced a 9-day implementation queue. The hard part was rate-plan mapping, not UI.</div>
+              </div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #08302d; background: #14b8ad; border: 1px solid #0f978e; padding: 4px 8px; justify-self: start;">shipped</div>
+            </a>
+            <a href="#case" style="display: grid; grid-template-columns: 108px 1fr 132px; gap: 32px; padding: 24px 0; border-bottom: 1px solid #ddd7cb; align-items: start; text-decoration: none; color: #1c1a17;" style-hover="background: #f0ece2;">
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6b665d; line-height: 1.5;">2022<br>enterprise SaaS</div>
+              <div>
+                <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 25px; line-height: 1.2; margin-bottom: 6px;">Killing a committed roadmap bet in four weeks</div>
+                <div style="font-size: 14.5px; color: #57524a; line-height: 1.55; max-width: 62ch;">A pricing-intelligence module with three signed LOIs and no repeatable job to be done. The record of why we stopped.</div>
+              </div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #08302d; background: #14b8ad; border: 1px solid #0f978e; padding: 4px 8px; justify-self: start;">cancelled</div>
+            </a>
+          </div>
+        </div>
+
+        <div id="lab" style="margin: 40px 0 0; padding: 46px 48px 54px; background: #1c1a17; color: #f0ebe0;">
+          <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 24px;">
+            <h2 style="margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 20px; letter-spacing: -0.02em;">/lab</h2>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #a09788; max-width: 48ch; text-align: right; line-height: 1.5;">Built alone, on weekends, with the same burden of proof and none of the stakeholders.</span>
+          </div>
+          <div style="border-top: 1px solid #3a352d;">
+            <a href="#lab" style="display: grid; grid-template-columns: 1fr 210px; gap: 32px; padding: 22px 0; border-bottom: 1px solid #3a352d; align-items: start; text-decoration: none; color: #f0ebe0;" style-hover="background: #24211c;">
+              <div>
+                <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 23px; margin-bottom: 6px;">Ledger</div>
+                <div style="font-size: 14.5px; line-height: 1.6; color: #cdc5b6; max-width: 58ch;">An MCP server that turns meeting transcripts into decision records and files them against the roadmap. Built it because I kept writing them by hand.</div>
+              </div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.7; color: #a09788;">
+                <div style="color: #2ad1c9;">v0.4 · 41 users</div>
+                <div>python · claude · sqlite</div>
+                <div>6 teams, 2 paying</div>
+              </div>
+            </a>
+            <a href="#lab" style="display: grid; grid-template-columns: 1fr 210px; gap: 32px; padding: 22px 0; border-bottom: 1px solid #3a352d; align-items: start; text-decoration: none; color: #f0ebe0;" style-hover="background: #24211c;">
+              <div>
+                <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 23px; margin-bottom: 6px;">Triage</div>
+                <div style="font-size: 14.5px; line-height: 1.6; color: #cdc5b6; max-width: 58ch;">Inbox classifier trained on 2,300 labels I tagged myself. Held-out accuracy 0.91, plus a written list of the cases where it still fails.</div>
+              </div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.7; color: #a09788;">
+                <div style="color: #2ad1c9;">running daily</div>
+                <div>ts · evals · cron</div>
+                <div>personal, 14 months</div>
+              </div>
+            </a>
+            <a href="#lab" style="display: grid; grid-template-columns: 1fr 210px; gap: 32px; padding: 22px 0; border-bottom: 1px solid #3a352d; align-items: start; text-decoration: none; color: #f0ebe0;" style-hover="background: #24211c;">
+              <div>
+                <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 23px; margin-bottom: 6px;">Roomtone</div>
+                <div style="font-size: 14.5px; line-height: 1.6; color: #cdc5b6; max-width: 58ch;">Clustered 90k hotel reviews into operational complaints. Died when API pricing moved. The post-mortem is the useful part.</div>
+              </div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.7; color: #a09788;">
+                <div>archived</div>
+                <div>python · embeddings</div>
+                <div>1 pilot, no renewal</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1.55fr 1fr; gap: 64px; padding: 40px 48px 44px;">
+          <div>
+            <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 24px; margin-bottom: 8px;">Talking to me is easy</div>
+            <p style="margin: 0; font-size: 15.5px; line-height: 1.6; color: #57524a; max-width: 52ch;">Hiring, advising, or an argument about whether your model should be allowed to decide anything. Twenty minutes, no agenda needed.</p>
+          </div>
+          <div style="border-left: 1px solid #ddd7cb; padding-left: 24px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.9; color: #6b665d;">
+            <div><a href="#about">cal.com/danielreyes/20min</a></div>
+            <div><a href="#about">daniel@reyes.work</a></div>
+            <div><a href="#about">github.com/dreyes</a></div>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; padding: 20px 48px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6b665d; border-top: 1px solid #ddd7cb;">
+          <span>Daniel Reyes</span>
+          <span>last updated Aug 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= CASE STUDY ================= -->
+    <div id="case" style="display: flex; flex-direction: column; gap: 14px; flex: 0 0 1080px; width: 1080px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #6b665d;">/work/claims-assist — case study, decision record interactive</div>
+      <div style="background: #f6f3ec; border: 1px solid #ddd7cb; color: #1c1a17;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 22px 48px; border-bottom: 1px solid #ddd7cb;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #6b665d;"><a href="#work">work</a> / claims-assist</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #6b665d;">1 of 3</div>
+        </div>
+
+        <div style="padding: 56px 48px 40px; border-bottom: 1px solid #ddd7cb;">
+          <h1 style="margin: 0 0 18px; font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.035em; font-size: 42px; line-height: 1.12; letter-spacing: -0.02em; max-width: 24ch; text-wrap: pretty;">Halving claim review time with a citation-first assist</h1>
+          <p style="margin: 0 0 26px; font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 20px; line-height: 1.5; color: #4a453d; max-width: 52ch;">Reviewers didn't need a model that decided. They needed one that could point at the paragraph.</p>
+          <div style="display: flex; gap: 40px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6b665d;">
+            <span style="color: #08302d; background: #14b8ad; border: 1px solid #0f978e; padding: 4px 8px;">shipped</span>
+            <span>Meridian Health</span><span>Senior PM</span><span>Mar—Nov 2025</span><span>4 eng · 1 design · 2 SME</span>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 372px; gap: 56px; padding: 48px 48px 56px; align-items: start;">
+          <div style="max-width: 64ch;">
+            <p style="margin: 0 0 18px; font-size: 16.5px; line-height: 1.68; color: #2c2924;">Claim reviewers at Meridian spent a median of eleven minutes per claim, and most of it was not judgement. It was reconciliation: holding a submitted invoice in one window and hunting the governing clause across a 40,000-page policy corpus in another.</p>
+            <p style="margin: 0 0 18px; font-size: 16.5px; line-height: 1.68; color: #2c2924;">The obvious pitch inside the company was auto-adjudication. Leadership had seen a vendor demo that decided low-value claims outright. I spent three weeks arguing against it, which is the part of this project I'd defend hardest.</p>
+
+            <h2 style="margin: 34px 0 12px; font-family: 'Familjen Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.025em; font-size: 26px;">What the evidence actually said</h2>
+            <p style="margin: 0 0 18px; font-size: 16.5px; line-height: 1.68; color: #2c2924;">Fourteen shadowing sessions and a log study over 62,000 claims put the time cost in one place: reviewers re-read the same twelve clause families over and over, and they distrusted any summary they could not trace. In the survey (n=88), the top-ranked feature request was not speed. It was "show me where that came from."</p>
+            <p style="margin: 0 0 18px; font-size: 16.5px; line-height: 1.68; color: #2c2924;">Auto-adjudication also failed a constraint nobody had written down: our regulator requires a named human decision-maker per claim. A model that decides creates an audit hole. A model that retrieves does not.</p>
+
+            <h2 style="margin: 34px 0 12px; font-family: 'Familjen Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.025em; font-size: 26px;">What I built myself</h2>
+            <p style="margin: 0 0 18px; font-size: 16.5px; line-height: 1.68; color: #2c2924;">I wrote the first working pipeline before engineering was staffed: clause-level chunking, hybrid retrieval, and an MCP server exposing the policy corpus and claims database as tools so the model could look things up instead of recalling them. Then the part that actually made the argument — a 240-case eval set graded by two SMEs, run on every prompt change.</p>
+            <p style="margin: 0 0 18px; font-size: 16.5px; line-height: 1.68; color: #2c2924;">That harness is what converted the auto-adjudication debate from opinion to numbers. Answer-level accuracy was fine at 0.94. Citation-span accuracy started at 0.71, and 0.71 is unshippable when the whole product promise is traceability. We spent six of the eight sprints on retrieval quality, not on the interface.</p>
+
+            <div style="border: 1px solid #ddd7cb; background: repeating-linear-gradient(135deg, #efe9dc 0 6px, #f6f3ec 6px 12px); height: 240px; display: flex; align-items: flex-end; padding: 14px; margin: 26px 0;">
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #6b665d; background: #f6f3ec; padding: 4px 7px; border: 1px solid #ddd7cb;">reviewer screen — citation span highlighted in policy pane</span>
+            </div>
+
+            <h2 style="margin: 34px 0 12px; font-family: 'Familjen Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.025em; font-size: 26px;">Where it landed</h2>
+            <p style="margin: 0 0 18px; font-size: 16.5px; line-height: 1.68; color: #2c2924;">Median review time fell to five minutes twenty across 1,100 reviewers. The override rate — reviewers rejecting the assist's suggested clause — settled at 0.4%, and we kept publishing it internally as the honest quality metric rather than a satisfaction score.</p>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid #1c1a17; border-bottom: 1px solid #ddd7cb; margin: 26px 0 0;">
+              <div style="padding: 18px 0;"><div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 34px;">11m → 5m20</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #6b665d; margin-top: 4px;">median review time</div></div>
+              <div style="padding: 18px 0;"><div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 34px;">0.4%</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #6b665d; margin-top: 4px;">clause override rate</div></div>
+              <div style="padding: 18px 0;"><div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 34px;">0.96</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #6b665d; margin-top: 4px;">citation-span accuracy at launch</div></div>
+            </div>
+          </div>
+
+          <div style="border: 1px solid #1c1a17; background: #fbf9f4; position: sticky; top: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 12px 16px; border-bottom: 1px solid #1c1a17; font-family: 'JetBrains Mono', monospace; font-size: 11.5px;">
+              <span>decision record</span>
+              <span style="color: #6b665d;">rev. 3 · Nov 2025</span>
+            </div>
+            <div style="padding: 12px 16px 8px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #6b665d; border-bottom: 1px dotted #cfc7b6;">click a field to open the supporting detail</div>
+            <div style="padding: 0 16px 16px;">
+
+              <div style="padding: 13px 0; border-bottom: 1px dotted #cfc7b6; cursor: pointer;" onClick="{{ toggleProblem }}">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6b665d; margin-bottom: 5px;"><span>problem</span><span>{{ markProblem }}</span></div>
+                <div style="font-size: 14.5px; line-height: 1.55; color: #2c2924;">11 min median per claim, spent reconciling invoices against a 40k-page policy corpus. Throughput capped hiring.</div>
+                <sc-if value="{{ openProblem }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top: 10px; padding-left: 12px; border-left: 2px solid #c2136d; font-size: 13.5px; line-height: 1.6; color: #4a453d;">Reviewers handle 2.4M claims a year. At 11 minutes each, meeting the 2026 volume forecast meant hiring roughly 40 more reviewers — a request finance had already declined twice. The queue, not the decision quality, was the business problem.</div>
+                </sc-if>
+              </div>
+
+              <div style="padding: 13px 0; border-bottom: 1px dotted #cfc7b6; cursor: pointer;" onClick="{{ toggleEvidence }}">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6b665d; margin-bottom: 5px;"><span>evidence</span><span>{{ markEvidence }}</span></div>
+                <div style="font-size: 14.5px; line-height: 1.55; color: #2c2924;">14 shadowing sessions · log study, 62k claims · reviewer survey, n=88 · regulator constraint on named decision-maker.</div>
+                <sc-if value="{{ openEvidence }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top: 10px; padding-left: 12px; border-left: 2px solid #c2136d; font-size: 13.5px; line-height: 1.6; color: #4a453d;">Shadowing showed 62% of handling time in policy lookup, concentrated in twelve clause families. The log study confirmed it at scale: median 4.1 searches per claim, 71% of them repeats within the same shift. The survey ranked traceability above speed, 1st of 9 items. Compliance confirmed in writing that a model-issued decision would need a new control.</div>
+                </sc-if>
+              </div>
+
+              <div style="padding: 13px 0; border-bottom: 1px dotted #cfc7b6; cursor: pointer;" onClick="{{ toggleAlternatives }}">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6b665d; margin-bottom: 5px;"><span>alternatives considered</span><span>{{ markAlternatives }}</span></div>
+                <div style="font-size: 14.5px; line-height: 1.55; color: #2c2924;">Clause macros · auto-adjudication · hiring 40 reviewers.</div>
+                <sc-if value="{{ openAlternatives }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top: 10px; padding-left: 12px; border-left: 2px solid #c2136d; font-size: 13.5px; line-height: 1.6; color: #4a453d;">
+                    <div style="margin-bottom: 8px;"><b style="font-weight: 600;">Clause macros.</b> Cheapest option, and the SMEs wanted it. Rejected: plan-year drift broke 3 of 12 families annually, and someone has to own the rewrite.</div>
+                    <div style="margin-bottom: 8px;"><b style="font-weight: 600;">Auto-adjudication.</b> The exec favourite. Rejected: no named decision-maker, so every claim it touched became an audit exception.</div>
+                    <div><b style="font-weight: 600;">Hire 40 reviewers.</b> Fully costed at 3.1× the build over three years, and it scales the problem rather than removing it.</div>
+                  </div>
+                </sc-if>
+              </div>
+
+              <div style="padding: 13px 0; border-bottom: 1px dotted #cfc7b6; cursor: pointer;" onClick="{{ toggleDecision }}">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6b665d; margin-bottom: 5px;"><span>decision</span><span>{{ markDecision }}</span></div>
+                <div style="font-size: 14.5px; line-height: 1.55; color: #2c2924;">Retrieval assist with mandatory citation click-through. No model-made decisions, ever. Ship only above 0.95 span accuracy.</div>
+                <sc-if value="{{ openDecision }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top: 10px; padding-left: 12px; border-left: 2px solid #c2136d; font-size: 13.5px; line-height: 1.6; color: #4a453d;">Signed off by the VP Claims and Compliance in the same room, which is why the guardrails held later. Three written commitments: the assist never writes a determination, the reviewer must open a citation before submitting, and any span-accuracy regression below 0.95 rolls the release back automatically.</div>
+                </sc-if>
+              </div>
+
+              <div style="padding: 13px 0; border-bottom: 1px dotted #cfc7b6; cursor: pointer;" onClick="{{ toggleOutcome }}">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6b665d; margin-bottom: 5px;"><span>outcome</span><span>{{ markOutcome }}</span></div>
+                <div style="font-size: 14.5px; line-height: 1.55; color: #2c2924;">Median 5m20 across 1,100 reviewers. 0.4% override rate. Passed the Q4 audit with no findings on the assist.</div>
+                <sc-if value="{{ openOutcome }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top: 10px; padding-left: 12px; border-left: 2px solid #c2136d; font-size: 13.5px; line-height: 1.6; color: #4a453d;">Rollout ran in four waves over ten weeks. Time savings held after the novelty period (week 12 median 5m34). What didn't move: appeal rates, unchanged at 2.8%, and reviewer satisfaction, up only 4 points — the job is still hard, it just has less clerical work in it.</div>
+                </sc-if>
+              </div>
+
+              <div style="padding: 13px 0 6px; cursor: pointer;" onClick="{{ toggleLessons }}">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6b665d; margin-bottom: 5px;"><span>lessons</span><span>{{ markLessons }}</span></div>
+                <div style="font-size: 14.5px; line-height: 1.55; color: #2c2924;">Citation UI mattered more than model choice. I under-scoped retrieval eval by about four weeks.</div>
+                <sc-if value="{{ openLessons }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top: 10px; padding-left: 12px; border-left: 2px solid #c2136d; font-size: 13.5px; line-height: 1.6; color: #4a453d;">We swapped the underlying model twice with no measurable change in reviewer behaviour. Changing how spans were highlighted moved override rate by 1.9 points. Next time the eval harness gets built in week one, before the interface exists, and I'd write the rollback rule into the spec rather than negotiating it at launch.</div>
+                </sc-if>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= ABOUT ================= -->
+    <div id="about" style="display: flex; flex-direction: column; gap: 14px; flex: 0 0 1080px; width: 1080px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #6b665d;">/about — includes the Cal.com booking block</div>
+      <div style="background: #f6f3ec; border: 1px solid #ddd7cb; color: #1c1a17;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 22px 48px; border-bottom: 1px solid #ddd7cb;">
+          <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 19px;">Daniel Reyes</div>
+          <div style="display: flex; gap: 26px; font-size: 14px;">
+            <a href="#work" style="color: #1c1a17;">Work</a>
+            <a href="#lab" style="color: #1c1a17;">Lab</a>
+            <a href="#about" style="color: #1c1a17; border-bottom: 2px solid #c2136d; padding-bottom: 2px;">About</a>
+            <a href="#cv">CV</a>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 340px; gap: 64px; padding: 60px 48px 52px;">
+          <div style="max-width: 62ch;">
+            <h1 style="margin: 0 0 24px; font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.035em; font-size: 39px; line-height: 1.14; letter-spacing: -0.02em; max-width: 22ch;">I got into product through the back door.</h1>
+            <p style="margin: 0 0 18px; font-size: 16.5px; line-height: 1.68; color: #2c2924;">I was a support engineer at a hotel software company in 2018, on the phone with night managers who had been handed a system nobody asked them about. I started writing up what they told me. Eventually someone noticed the write-ups were better than the roadmap and made me a PM, which I have never fully stopped feeling suspicious about.</p>
+            <p style="margin: 0 0 18px; font-size: 16.5px; line-height: 1.68; color: #2c2924;">Seven years later the shape of the job hasn't changed much: find the person doing the work, watch them do it, write down what's actually expensive. The difference is that I can now build the thing I'm describing. I taught myself Python badly in 2020 and less badly since, and in the last three years I've shipped retrieval pipelines, MCP servers and eval harnesses into production alongside engineers who were kind about my first pull requests.</p>
+            <p style="margin: 0 0 18px; font-size: 16.5px; line-height: 1.68; color: #2c2924;">That combination is mostly useful for one thing: arguing about AI features with evidence instead of vibes. When leadership wants the model to decide something, I can usually show them what happens when it does, in a week, on their real data.</p>
+            <p style="margin: 0 0 18px; font-size: 16.5px; line-height: 1.68; color: #2c2924;">I live in Lisbon with a very old greyhound. I run slowly, cook ambitiously, and keep a written log of every product decision I've regretted — the lab project on this site exists because that log was getting hard to search.</p>
+            <p style="margin: 0; font-size: 16.5px; line-height: 1.68; color: #2c2924;">Things I'm bad at: hiring fast, sitting in silence when a meeting has clearly finished, and estimating retrieval work.</p>
+          </div>
+
+          <div style="padding-top: 8px;">
+            <div style="border: 1px solid #1c1a17; background: #fbf9f4;">
+              <div style="padding: 12px 16px; border-bottom: 1px solid #1c1a17; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; display: flex; justify-content: space-between;"><span>book time</span><span style="color: #6b665d;">cal.com</span></div>
+              <div style="padding: 16px;">
+                <div style="font-size: 14.5px; line-height: 1.6; color: #2c2924; margin-bottom: 14px;">Twenty minutes, my calendar, no agenda required.</div>
+                <div style="border: 1px solid #ddd7cb; background: repeating-linear-gradient(135deg, #efe9dc 0 6px, #fbf9f4 6px 12px); height: 190px; display: flex; align-items: flex-end; padding: 12px;">
+                  <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #6b665d; background: #fbf9f4; padding: 4px 6px; border: 1px solid #ddd7cb;">Cal.com inline embed — 20min event type</span>
+                </div>
+                <div style="margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.9; color: #6b665d;">
+                  <div><a href="#about">cal.com/danielreyes/20min</a></div>
+                  <div><a href="#about">daniel@reyes.work</a></div>
+                  <div><a href="#about">github.com/dreyes</a></div>
+                  <div><a href="#about">linkedin.com/in/dreyes</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; padding: 20px 48px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6b665d; border-top: 1px solid #ddd7cb;">
+          <span>Lisbon, GMT+1</span>
+          <span>last updated Aug 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= CV ================= -->
+    <div id="cv" style="display: flex; flex-direction: column; gap: 14px; flex: 0 0 1080px; width: 1080px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #6b665d;">/cv</div>
+      <div style="background: #f6f3ec; border: 1px solid #ddd7cb; color: #1c1a17;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 22px 48px; border-bottom: 1px solid #ddd7cb;">
+          <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 19px;">Daniel Reyes</div>
+          <div style="display: flex; gap: 26px; font-size: 14px;">
+            <a href="#work" style="color: #1c1a17;">Work</a>
+            <a href="#lab" style="color: #1c1a17;">Lab</a>
+            <a href="#about" style="color: #1c1a17;">About</a>
+            <a href="#cv" style="color: #1c1a17; border-bottom: 2px solid #c2136d; padding-bottom: 2px;">CV</a>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 300px; gap: 64px; padding: 60px 48px 56px;">
+          <div>
+            <h1 style="margin: 0 0 30px; font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.035em; font-size: 40px; letter-spacing: -0.02em;">Curriculum vitae</h1>
+            <div style="border-top: 1px solid #1c1a17;">
+              <div style="display: grid; grid-template-columns: 132px 1fr; gap: 32px; padding: 20px 0; border-bottom: 1px solid #ddd7cb;">
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6b665d;">2024—now</div>
+                <div>
+                  <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 21px;">Senior Product Manager, Meridian Health</div>
+                  <div style="font-size: 14.5px; line-height: 1.6; color: #57524a; margin-top: 4px; max-width: 62ch;">Claims platform. Citation-first review assist; retrieval pipeline and eval harness built hands-on. 1,100 reviewers, 2.4M claims a year.</div>
+                </div>
+              </div>
+              <div style="display: grid; grid-template-columns: 132px 1fr; gap: 32px; padding: 20px 0; border-bottom: 1px solid #ddd7cb;">
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6b665d;">2021—2024</div>
+                <div>
+                  <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 21px;">Product Manager, Nightwatch</div>
+                  <div style="font-size: 14.5px; line-height: 1.6; color: #57524a; margin-top: 4px; max-width: 62ch;">Hospitality operations software. Self-serve property onboarding for 4,200 hotels; rate-plan mapping engine.</div>
+                </div>
+              </div>
+              <div style="display: grid; grid-template-columns: 132px 1fr; gap: 32px; padding: 20px 0; border-bottom: 1px solid #ddd7cb;">
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6b665d;">2019—2021</div>
+                <div>
+                  <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 21px;">Product Manager, Palladin</div>
+                  <div style="font-size: 14.5px; line-height: 1.6; color: #57524a; margin-top: 4px; max-width: 62ch;">Enterprise SaaS, revenue tooling. Two launches, one deliberate cancellation documented in the work section.</div>
+                </div>
+              </div>
+              <div style="display: grid; grid-template-columns: 132px 1fr; gap: 32px; padding: 20px 0; border-bottom: 1px solid #ddd7cb;">
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6b665d;">2017—2019</div>
+                <div>
+                  <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 21px;">Support Engineer, Nightwatch</div>
+                  <div style="font-size: 14.5px; line-height: 1.6; color: #57524a; margin-top: 4px; max-width: 62ch;">Front line for hotel night staff. Where the write-ups started.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding-top: 14px;">
+            <a href="#cv" style="display: block; border: 1px solid #1c1a17; background: #1c1a17; color: #f6f3ec; padding: 14px 18px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; text-decoration: none;" style-hover="background: #c2136d; border-color: #c2136d;">
+              <div>download CV</div>
+              <div style="color: #b3aa9a; margin-top: 4px;">PDF · 148 kB · Aug 2026</div>
+            </a>
+            <div style="margin-top: 22px; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.8; color: #6b665d;">
+              <div style="color: #1c1a17;">skills</div>
+              <div>discovery, roadmapping,<br>LLM eval design</div>
+              <div>Python, TypeScript, SQL,<br>MCP, dbt</div>
+              <div style="margin-top: 14px; color: #1c1a17;">languages</div>
+              <div>English, Portuguese,<br>Spanish</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= MOBILE ================= -->
+    <div style="display: flex; gap: 40px; align-items: flex-start; flex: 0 0 auto;">
+      <div style="display: flex; flex-direction: column; gap: 14px; flex: 0 0 390px; width: 390px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #6b665d;">/ — mobile, 390px</div>
+        <div style="background: #f6f3ec; border: 1px solid #ddd7cb; color: #1c1a17;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 16px 20px; border-bottom: 1px solid #ddd7cb;">
+            <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 17px;">Daniel Reyes</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6b665d;">menu</div>
+          </div>
+          <div style="display: flex; gap: 18px; padding: 12px 20px; border-bottom: 1px solid #ddd7cb; font-size: 14px; overflow: hidden;">
+            <a href="#work" style="color: #1c1a17; border-bottom: 2px solid #c2136d; padding-bottom: 2px;">Work</a>
+            <a href="#lab" style="color: #1c1a17;">Lab</a>
+            <a href="#about" style="color: #1c1a17;">About</a>
+            <a href="#cv">CV</a>
+          </div>
+          <div style="padding: 32px 20px 28px; border-bottom: 1px solid #ddd7cb;">
+            <h1 style="margin: 0 0 16px; font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.035em; font-size: 31px; line-height: 1.12; letter-spacing: -0.02em;">I ship the AI features I spec.</h1>
+            <p style="margin: 0 0 12px; font-size: 15.5px; line-height: 1.6; color: #33302a;">Product manager, seven years across enterprise SaaS, hospitality tech and healthtech. I write the PRD, then build the prototype that proves it.</p>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.6; color: #6b665d; border-top: 1px solid #ddd7cb; padding-top: 12px; margin-top: 16px;">
+              <div><span style="color: #1c1a17;">now</span> — Senior PM, Meridian Health</div>
+              <div><span style="color: #1c1a17;">builds</span> — Python, TS, MCP, evals</div>
+              <div><span style="color: #1c1a17;">where</span> — Lisbon / GMT+1</div>
+            </div>
+          </div>
+          <div style="padding: 26px 20px 4px;">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;">
+              <h2 style="margin: 0; font-family: 'Familjen Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.025em; font-size: 24px;">Work</h2>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6b665d;">2019—2026</span>
+            </div>
+            <div style="border-top: 1px solid #1c1a17;">
+              <a href="#mcase" style="display: block; padding: 18px 0; border-bottom: 1px solid #ddd7cb; text-decoration: none; color: #1c1a17;">
+                <div style="display: flex; gap: 10px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6b665d; margin-bottom: 8px;">
+                  <span style="color: #08302d; background: #14b8ad; border: 1px solid #0f978e; padding: 3px 6px;">shipped</span><span>2025 · healthtech</span>
+                </div>
+                <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 21px; line-height: 1.22;">Halving claim review time with a citation-first assist</div>
+              </a>
+              <a href="#mcase" style="display: block; padding: 18px 0; border-bottom: 1px solid #ddd7cb; text-decoration: none; color: #1c1a17;">
+                <div style="display: flex; gap: 10px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6b665d; margin-bottom: 8px;">
+                  <span style="color: #08302d; background: #14b8ad; border: 1px solid #0f978e; padding: 3px 6px;">shipped</span><span>2023 · hospitality</span>
+                </div>
+                <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 21px; line-height: 1.22;">Onboarding 4,200 hotels without a migration team</div>
+              </a>
+              <a href="#mcase" style="display: block; padding: 18px 0; border-bottom: 1px solid #ddd7cb; text-decoration: none; color: #1c1a17;">
+                <div style="display: flex; gap: 10px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6b665d; margin-bottom: 8px;">
+                  <span style="color: #08302d; background: #14b8ad; border: 1px solid #0f978e; padding: 3px 6px;">cancelled</span><span>2022 · enterprise</span>
+                </div>
+                <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 21px; line-height: 1.22;">Killing a committed roadmap bet in four weeks</div>
+              </a>
+            </div>
+          </div>
+          <div style="margin-top: 26px; padding: 28px 20px 32px; background: #1c1a17; color: #f0ebe0;">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px;">
+              <h2 style="margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 17px;">/lab</h2>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #a09788;">built alone</span>
+            </div>
+            <div style="border-top: 1px solid #3a352d;">
+              <a href="#lab" style="display: block; padding: 16px 0; border-bottom: 1px solid #3a352d; text-decoration: none; color: #f0ebe0;">
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #2ad1c9; margin-bottom: 6px;">v0.4 · 41 users</div>
+                <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 20px; margin-bottom: 4px;">Ledger</div>
+                <div style="font-size: 14px; line-height: 1.55; color: #cdc5b6;">MCP server turning meeting transcripts into filed decision records.</div>
+              </a>
+              <a href="#lab" style="display: block; padding: 16px 0; border-bottom: 1px solid #3a352d; text-decoration: none; color: #f0ebe0;">
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #2ad1c9; margin-bottom: 6px;">running daily</div>
+                <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 20px; margin-bottom: 4px;">Triage</div>
+                <div style="font-size: 14px; line-height: 1.55; color: #cdc5b6;">Inbox classifier on 2,300 self-tagged labels. 0.91 held-out.</div>
+              </a>
+              <a href="#lab" style="display: block; padding: 16px 0; text-decoration: none; color: #f0ebe0;">
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #a09788; margin-bottom: 6px;">archived</div>
+                <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 20px; margin-bottom: 4px;">Roomtone</div>
+                <div style="font-size: 14px; line-height: 1.55; color: #cdc5b6;">90k hotel reviews clustered into operational complaints. Post-mortem inside.</div>
+              </a>
+            </div>
+          </div>
+          <div style="padding: 26px 20px 28px;">
+            <div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 21px; margin-bottom: 8px;">Talking to me is easy</div>
+            <p style="margin: 0 0 14px; font-size: 15px; line-height: 1.6; color: #57524a;">Twenty minutes, no agenda needed.</p>
+            <a href="#about" style="display: block; text-align: center; border: 1px solid #1c1a17; padding: 14px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #1c1a17;" style-hover="background: #14b8ad; border-color: #0f978e; color: #08302d;">book 20 min · cal.com</a>
+            <div style="margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.9; color: #6b665d;">
+              <div><a href="#about">daniel@reyes.work</a></div>
+              <div><a href="#about">github.com/dreyes</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="mcase" style="display: flex; flex-direction: column; gap: 14px; flex: 0 0 390px; width: 390px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #6b665d;">/work/claims-assist — mobile, record as accordion</div>
+        <div style="background: #f6f3ec; border: 1px solid #ddd7cb; color: #1c1a17;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 16px 20px; border-bottom: 1px solid #ddd7cb; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6b665d;">
+            <span><a href="#work">work</a> / claims-assist</span><span>1 of 3</span>
+          </div>
+          <div style="padding: 30px 20px 24px; border-bottom: 1px solid #ddd7cb;">
+            <h1 style="margin: 0 0 14px; font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.035em; font-size: 31px; line-height: 1.14; letter-spacing: -0.02em;">Halving claim review time with a citation-first assist</h1>
+            <p style="margin: 0 0 18px; font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 17px; line-height: 1.5; color: #4a453d;">Reviewers didn't need a model that decided. They needed one that could point at the paragraph.</p>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.7; color: #6b665d;">
+              <div style="color: #08302d; background: #14b8ad; border: 1px solid #0f978e; padding: 3px 6px; display: inline-block; margin-bottom: 8px;">shipped</div>
+              <div>Meridian Health · Senior PM</div>
+              <div>Mar—Nov 2025 · 4 eng, 1 design, 2 SME</div>
+            </div>
+          </div>
+
+          <div style="padding: 20px; border-bottom: 1px solid #ddd7cb;">
+            <div style="border: 1px solid #1c1a17; background: #fbf9f4;">
+              <div style="display: flex; justify-content: space-between; padding: 11px 14px; border-bottom: 1px solid #1c1a17; font-family: 'JetBrains Mono', monospace; font-size: 11px;">
+                <span>decision record</span><span style="color: #6b665d;">tap to open</span>
+              </div>
+              <div style="padding: 0 14px 12px;">
+                <div style="padding: 14px 0; border-bottom: 1px dotted #cfc7b6; cursor: pointer; min-height: 44px;" onClick="{{ toggleMProblem }}">
+                  <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6b665d; margin-bottom: 5px;"><span>problem</span><span>{{ markMProblem }}</span></div>
+                  <div style="font-size: 14.5px; line-height: 1.55;">11 min median per claim, spent reconciling invoices against 40k pages of policy.</div>
+                  <sc-if value="{{ openMProblem }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top: 10px; padding-left: 12px; border-left: 2px solid #c2136d; font-size: 13.5px; line-height: 1.6; color: #4a453d;">2.4M claims a year. Meeting the 2026 forecast at 11 minutes each meant 40 more reviewers, a request finance had declined twice.</div>
+                  </sc-if>
+                </div>
+                <div style="padding: 14px 0; border-bottom: 1px dotted #cfc7b6; cursor: pointer; min-height: 44px;" onClick="{{ toggleMEvidence }}">
+                  <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6b665d; margin-bottom: 5px;"><span>evidence</span><span>{{ markMEvidence }}</span></div>
+                  <div style="font-size: 14.5px; line-height: 1.55;">14 shadowing sessions · 62k-claim log study · survey n=88.</div>
+                  <sc-if value="{{ openMEvidence }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top: 10px; padding-left: 12px; border-left: 2px solid #c2136d; font-size: 13.5px; line-height: 1.6; color: #4a453d;">62% of handling time went to lookup, concentrated in twelve clause families; 71% of searches were repeats within a shift. Traceability ranked 1st of 9 requests.</div>
+                  </sc-if>
+                </div>
+                <div style="padding: 14px 0; border-bottom: 1px dotted #cfc7b6; cursor: pointer; min-height: 44px;" onClick="{{ toggleMAlternatives }}">
+                  <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6b665d; margin-bottom: 5px;"><span>alternatives</span><span>{{ markMAlternatives }}</span></div>
+                  <div style="font-size: 14.5px; line-height: 1.55;">Clause macros · auto-adjudication · hiring 40 reviewers.</div>
+                  <sc-if value="{{ openMAlternatives }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top: 10px; padding-left: 12px; border-left: 2px solid #c2136d; font-size: 13.5px; line-height: 1.6; color: #4a453d;">Macros broke on plan-year drift. Auto-adjudication left no named decision-maker, so every claim became an audit exception. Hiring cost 3.1× the build.</div>
+                  </sc-if>
+                </div>
+                <div style="padding: 14px 0; border-bottom: 1px dotted #cfc7b6; cursor: pointer; min-height: 44px;" onClick="{{ toggleMDecision }}">
+                  <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6b665d; margin-bottom: 5px;"><span>decision</span><span>{{ markMDecision }}</span></div>
+                  <div style="font-size: 14.5px; line-height: 1.55;">Retrieval assist, mandatory citation click-through, no model-made decisions.</div>
+                  <sc-if value="{{ openMDecision }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top: 10px; padding-left: 12px; border-left: 2px solid #c2136d; font-size: 13.5px; line-height: 1.6; color: #4a453d;">Signed off by VP Claims and Compliance together. Span accuracy below 0.95 rolls the release back automatically.</div>
+                  </sc-if>
+                </div>
+                <div style="padding: 14px 0; border-bottom: 1px dotted #cfc7b6; cursor: pointer; min-height: 44px;" onClick="{{ toggleMOutcome }}">
+                  <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6b665d; margin-bottom: 5px;"><span>outcome</span><span>{{ markMOutcome }}</span></div>
+                  <div style="font-size: 14.5px; line-height: 1.55;">Median 5m20 across 1,100 reviewers. 0.4% override rate.</div>
+                  <sc-if value="{{ openMOutcome }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top: 10px; padding-left: 12px; border-left: 2px solid #c2136d; font-size: 13.5px; line-height: 1.6; color: #4a453d;">Held after novelty (week 12: 5m34). Unchanged: appeal rate at 2.8%. Q4 audit closed with no findings on the assist.</div>
+                  </sc-if>
+                </div>
+                <div style="padding: 14px 0 6px; cursor: pointer; min-height: 44px;" onClick="{{ toggleMLessons }}">
+                  <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6b665d; margin-bottom: 5px;"><span>lessons</span><span>{{ markMLessons }}</span></div>
+                  <div style="font-size: 14.5px; line-height: 1.55;">Citation UI mattered more than model choice.</div>
+                  <sc-if value="{{ openMLessons }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top: 10px; padding-left: 12px; border-left: 2px solid #c2136d; font-size: 13.5px; line-height: 1.6; color: #4a453d;">Two model swaps changed nothing measurable. Changing span highlighting moved override rate 1.9 points. Build the eval harness in week one.</div>
+                  </sc-if>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding: 26px 20px 32px;">
+            <p style="margin: 0 0 16px; font-size: 16px; line-height: 1.68; color: #2c2924;">Claim reviewers at Meridian spent a median of eleven minutes per claim, and most of it was not judgement. It was reconciliation: an invoice in one window, a 40,000-page policy corpus in the other.</p>
+            <p style="margin: 0 0 16px; font-size: 16px; line-height: 1.68; color: #2c2924;">The pitch circulating internally was auto-adjudication. I spent three weeks arguing against it, which is the part of this project I'd defend hardest.</p>
+            <h2 style="margin: 26px 0 10px; font-family: 'Familjen Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.025em; font-size: 22px;">What I built myself</h2>
+            <p style="margin: 0 0 16px; font-size: 16px; line-height: 1.68; color: #2c2924;">Clause-level chunking, hybrid retrieval, and an MCP server exposing the policy corpus as tools — written before engineering was staffed. Then a 240-case eval set graded by two SMEs, run on every prompt change.</p>
+            <div style="border: 1px solid #ddd7cb; background: repeating-linear-gradient(135deg, #efe9dc 0 6px, #f6f3ec 6px 12px); height: 180px; display: flex; align-items: flex-end; padding: 12px; margin: 20px 0;">
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #6b665d; background: #f6f3ec; padding: 4px 6px; border: 1px solid #ddd7cb;">reviewer screen — citation span</span>
+            </div>
+            <div style="border-top: 1px solid #1c1a17; padding-top: 16px; display: flex; flex-direction: column; gap: 14px;">
+              <div><div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 28px;">11m → 5m20</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6b665d;">median review time</div></div>
+              <div><div style="font-family: 'Familjen Grotesk', sans-serif; font-weight: 500; letter-spacing: -0.02em; font-size: 28px;">0.4%</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6b665d;">clause override rate</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:2400},&quot;startExpanded&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Decision record&quot;}}">
+class Component extends DCLogic {
+  state = { open: {} };
+
+  toggle(key) {
+    this.setState(s => ({ open: Object.assign({}, s.open, { [key]: !s.open[key] }) }));
+  }
+
+  renderVals() {
+    const keys = ['Problem', 'Evidence', 'Alternatives', 'Decision', 'Outcome', 'Lessons'];
+    const startOpen = this.props.startExpanded ?? false;
+    const vals = {};
+    ['', 'M'].forEach(prefix => {
+      keys.forEach(k => {
+        const key = prefix + k;
+        const isOpen = this.state.open[key] ?? startOpen;
+        vals['open' + key] = isOpen;
+        vals['mark' + key] = isOpen ? '–' : '+';
+        vals['toggle' + key] = () => this.toggle(key);
+      });
+    });
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

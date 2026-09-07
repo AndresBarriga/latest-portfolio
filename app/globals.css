@@ -1,26 +1,170 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/*
+ * Design tokens extracted from design/handoff/Portfolio Ledger v2.dc.html.
+ * Tailwind v4 reads tokens from this @theme block (no tailwind.config file
+ * in this project) — add new colors/fonts/spacing here, not inline in
+ * components.
+ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Type families — see font loaders in app/layout.tsx */
+  --font-display: var(--font-bricolage), "Bricolage Grotesque", sans-serif;
+  --font-sans: var(--font-archivo), "Archivo", system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+
+  /* Surfaces */
+  --color-paper: #f6f3ec; /* page + card background */
+  --color-paper-raised: #fbf9f4; /* decision record / callout panels */
+  --color-paper-hover: #f0ece2; /* row hover, light surfaces */
+  --color-hatch: #efe9dc; /* diagonal hatch stripe for media placeholders */
+  --color-ink: #1c1a17; /* primary text, heavy rules, Lab band background */
+  --color-ink-hover: #24211c; /* row hover, Lab band */
+  --color-ink-inverse: #f0ebe0; /* text on the dark Lab band */
+
+  /* Borders */
+  --color-hairline: #ddd7cb; /* standard thin border, light surfaces */
+  --color-hairline-dark: #3a352d; /* thin border on the dark Lab band */
+  --color-divider: #cfc7b6; /* decision record field dividers (paired with Tailwind's border-dotted style) */
+
+  /* Text */
+  --color-body: #2c2924; /* paragraph text, light surfaces */
+  --color-body-muted: #57524a; /* secondary/description text */
+  --color-body-dark: #cdc5b6; /* paragraph text on the dark Lab band */
+  --color-meta: #6b665d; /* monospace metadata, light surfaces */
+  --color-meta-dark: #a09788; /* monospace metadata on the dark Lab band */
+
+  /* Accents — meaning-tied, not decorative */
+  --color-accent: #6d4a17; /* bronze: links, active nav, decision detail rule */
+  --color-accent-dark: #e0a9bd; /* rose: Lab status highlight on dark band */
+  --color-tag-fg: #6b1f3f; /* garnet: status tag text */
+  --color-tag-bg: #f2e4e9; /* rose: status tag background */
+  --color-tag-border: #e3c9d4;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/*
+ * Element defaults belong in Tailwind's "base" layer, not bare at the top
+ * level. Bare (unlayered) rules always beat every Tailwind utility class
+ * regardless of specificity, so an unlayered `a { color }` here would win
+ * over every text-ink / text-ink-inverse / text-accent-dark etc. utility
+ * anyone puts on a link — which is why link colors on dark backgrounds were
+ * coming out bronze instead of the intended light color.
+ */
+@layer base {
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  a {
+    color: var(--color-accent);
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/*
+ * Animated underline used by inline text links site-wide: a 1px line grows
+ * from the left on hover/focus instead of the instant `text-decoration`
+ * underline. `currentColor` so it always matches whatever text color class
+ * the link already has — no new color tokens needed.
+ */
+@layer components {
+  .underline-sweep {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition: background-size 150ms ease-out;
+  }
+
+  .underline-sweep:hover,
+  .underline-sweep:focus-visible,
+  .group:hover .underline-sweep,
+  .group:focus-within .underline-sweep {
+    background-size: 100% 1px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .underline-sweep {
+    transition: none;
+  }
+}
+
+/*
+ * Decision record entrance animation. The two header rules (solid under the
+ * "decision record" label, dotted under the instructions line) are drawn via
+ * a `::after` line rather than the real Tailwind border, so they can be
+ * clip-path-revealed left-to-right; the real border is intentionally omitted
+ * on those two elements to avoid a static line sitting underneath the
+ * animated one. Field rows fade up instead, staggered via an inline
+ * animation-delay set from React based on row index (their own dotted
+ * divider is the ordinary Tailwind border, fading in with the row).
+ * Driven by a `.dr-in` class toggled once, on first viewport entry (see
+ * DecisionRecord.tsx) — the animation never re-runs after that.
+ */
+.dr-rule {
+  position: relative;
+  --dr-line-color: var(--color-ink);
+}
+
+.dr-rule::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 -1px 0;
+  height: 1px;
+  background: var(--dr-line-color);
+}
+
+.dr-rule-dotted::after {
+  background: repeating-linear-gradient(
+    to right,
+    var(--color-divider) 0,
+    var(--color-divider) 2px,
+    transparent 2px,
+    transparent 5px
+  );
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dr-rule::after {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  .dr-rule.dr-in::after {
+    animation: dr-draw 450ms ease-out forwards;
+  }
+
+  .dr-row {
+    opacity: 0;
+    transform: translateY(4px);
+    animation: dr-fade-in 350ms ease-out forwards;
+    animation-play-state: paused;
+  }
+
+  .dr-row.dr-in {
+    animation-play-state: running;
+  }
+}
+
+@keyframes dr-draw {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes dr-fade-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -4,9 +4,37 @@
 // Requires the dev server running at localhost:3000 in another terminal.
 
 import { chromium } from "playwright";
-import { mkdir } from "fs/promises";
+import { mkdir, readdir, readFile } from "fs/promises";
+import matter from "gray-matter";
 
-const routes = ["/", "/work", "/lab", "/about", "/cv"];
+async function slugsFrom(dir) {
+  let files;
+  try {
+    files = await readdir(dir);
+  } catch {
+    return [];
+  }
+  const slugs = [];
+  for (const file of files.filter((f) => f.endsWith(".mdx"))) {
+    const raw = await readFile(`${dir}/${file}`, "utf8");
+    const { data } = matter(raw);
+    if (data.slug) slugs.push(data.slug);
+  }
+  return slugs;
+}
+
+const workSlugs = await slugsFrom("content/work");
+const labSlugs = await slugsFrom("content/lab");
+
+const routes = [
+  "/",
+  "/work",
+  ...workSlugs.map((slug) => `/work/${slug}`),
+  "/lab",
+  ...labSlugs.map((slug) => `/lab/${slug}`),
+  "/about",
+  "/cv",
+];
 const viewports = [
   { name: "desktop", width: 1440, height: 900 },
   { name: "mobile", width: 390, height: 844 },
