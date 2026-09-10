@@ -1,3 +1,4 @@
+import { Children, cloneElement, isValidElement, type ReactElement } from "react";
 import Image, { type ImageProps } from "next/image";
 import Link from "next/link";
 import type { MDXComponents } from "mdx/types";
@@ -72,6 +73,27 @@ function createMdxComponents(theme: MdxTheme, back: BackLink): MDXComponents {
         {children}
       </a>
     ),
+    // Wraps a short emphasised passage inside the prose flow — same max
+    // width as surrounding paragraphs, not a full-bleed breakout. The first
+    // child (the markdown line before the blank line) is re-styled as a
+    // display-type lede; the rest render as ordinary prose via the `p`
+    // component above.
+    Callout: ({ children }) => {
+      const items = Children.toArray(children);
+      const [first, ...rest] = items;
+      return (
+        <div
+          className={`my-10 max-w-[64ch] border-y border-hairline p-8 [&>*:last-child]:mb-0! sm:my-12`}
+        >
+          {isValidElement(first)
+            ? cloneElement(first as ReactElement<{ className?: string }>, {
+                className: `mb-4 font-display text-xl font-medium tracking-[-0.02em] leading-snug ${theme.heading}`,
+              })
+            : first}
+          {rest}
+        </div>
+      );
+    },
     Diagram: (props) => {
       const { src, alt, width, height } = props as ImageProps;
       const href = buildDiagramHref({
