@@ -55,6 +55,16 @@ export function getLabProjectBySlug(
   return getAllLabProjects().find((entry) => entry.frontmatter.slug === slug);
 }
 
+/** Meta description for a lab project: explicit frontmatter value if set,
+ * otherwise the first sentence of `problem`. */
+export function getLabProjectDescription(
+  frontmatter: LabProjectFrontmatter
+): string {
+  if (frontmatter.description) return frontmatter.description;
+  const match = frontmatter.problem.match(/^.*?[.!?](?=\s|$)/);
+  return match ? match[0] : frontmatter.problem;
+}
+
 export function getHowWeBuildEntry(): ContentEntry<EssayFrontmatter> | undefined {
   return readEntries<EssayFrontmatter>(HOW_WE_BUILD_DIR)[0];
 }

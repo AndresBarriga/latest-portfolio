@@ -21,6 +21,9 @@ export interface LabProjectFrontmatter {
   traction: string;
   nextVersion: string;
   repoUrl?: string;
+  /** Optional explicit meta description. Falls back to the first sentence
+   * of `problem` (see getLabProjectDescription in content.ts) when omitted. */
+  description?: string;
 }
 
 export interface EssayFrontmatter {

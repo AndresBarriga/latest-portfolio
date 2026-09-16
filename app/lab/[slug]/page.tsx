@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote-client/rsc";
-import { getAllLabProjects } from "@/src/lib/content";
+import { getAllLabProjects, getLabProjectDescription } from "@/src/lib/content";
 import { getMdxComponentsDark } from "@/src/components/mdx-components";
 import { DecisionRecord, type DecisionRecordField } from "@/src/components/DecisionRecord";
 import type { LabProjectFrontmatter } from "@/src/lib/types";
@@ -27,8 +27,20 @@ export async function generateMetadata(
   const { slug } = await props.params;
   const entry = getAllLabProjects().find((e) => e.frontmatter.slug === slug);
 
+  if (!entry) {
+    return { title: "Lab project not found" };
+  }
+
+  const { title } = entry.frontmatter;
+  const description = getLabProjectDescription(entry.frontmatter);
+  const url = `/lab/${slug}`;
+
   return {
-    title: entry ? entry.frontmatter.title : "Lab project not found",
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { title, description, url },
+    twitter: { card: "summary_large_image", title, description },
   };
 }
 
@@ -74,6 +86,16 @@ export default async function LabProjectPage(props: PageProps<"/lab/[slug]">) {
         </h1>
 
         <div className="mb-10">
+          <Suspense
+            fallback={
+              <p className="font-mono text-sm text-meta-dark">Loading content…</p>
+            }
+          >
+            <MDXRemote source={content} components={components} />
+          </Suspense>
+        </div>
+
+        <div>
           <DecisionRecord
             data={frontmatter}
             fields={LAB_FIELDS}
@@ -91,16 +113,6 @@ export default async function LabProjectPage(props: PageProps<"/lab/[slug]">) {
               </a>
             </div>
           ) : null}
-        </div>
-
-        <div>
-          <Suspense
-            fallback={
-              <p className="font-mono text-sm text-meta-dark">Loading content…</p>
-            }
-          >
-            <MDXRemote source={content} components={components} />
-          </Suspense>
         </div>
       </div>
 

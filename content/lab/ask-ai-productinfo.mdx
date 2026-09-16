@@ -26,53 +26,17 @@ decision: >
   heuristics didn't hold up, and the real failure was in the prompt,
   not the model's capability.
 rigor: >
-  Four concrete findings broke my initial assumptions:
+  Five concrete findings broke my initial assumptions:
 
-  (1) The highest-impact fix wasn't visible in any test: the page
-  title was silently dropped because only the fragment text was
-  embedded, not its heading path. Measured: "install" showed up in
-  4 of 42 chunks when searching embedded text, but in 28 of 42 when
-  the heading path was included. Fixing this took retrieval of the
-  installation guide from 1/10 to 9/10, and the eval score from
-  22/23 to 23/23.
+  (1) Missing heading path. Problem: the highest-impact fix wasn't visible in any test. Measurement: "install" showed up in 4 of 42 chunks when searching embedded text, but 28 of 42 once the heading path was included. Change: embedding fragment text alone had silently dropped the page title; adding the heading path took retrieval of the installation guide from 1/10 to 9/10, and an early 23-question eval from 22/23 to 23/23.
 
-  (2) I built two complete mechanisms for what turned out to be a
-  ranking problem, not an information problem. Together they moved
-  only 1 of 3 missing facts. Widening the retrieval window to 50 for
-  diagnosis showed the missing facts were sitting at ranks 11, 12,
-  and 12. The bottleneck was K=10 — a single retrieval parameter
-  nobody had questioned before building more machinery on top.
+  (2) Wrong problem, wrong fix. Problem: 3 facts kept getting missed. Measurement: two complete mechanisms, built to fix what looked like a missing-information problem, together moved only 1 of the 3. Change: widening the retrieval window to 50 for diagnosis showed the missing facts sitting at ranks 11, 12, and 12 — the real bottleneck was K=10, never questioned before building on top of it.
 
-  (3) A sync bug that looked healthy from the outside: updating one
-  documentation branch silently deleted the previous branches for the
-  same product, because the replace operation was scoped to the
-  product, not the branch. The UI kept showing everything as correct
-  while only the most recently synced documents actually survived.
+  (3) Sync bug invisible from the UI. Problem: updating one documentation branch silently deleted the previous branches for the same product. Measurement: the UI kept showing all branches as correct while only the most recently synced documents actually survived. Change: replace scope moved from product-level to branch-level.
 
-  (4) An exported PDF arrived with zero extractable characters. The
-  first diagnosis — a parsing-library failure — was wrong. 62% of the
-  file was Unicode replacement-character sequences: a lossy
-  conversion somewhere in transport had destroyed the underlying
-  bytes, not misread them. That changed the project's priority:
-  ingesting directly from the source API moved from a "maybe later"
-  idea to the primary path.
+  (4) Corrupted, not unparseable. Problem: an exported PDF arrived with zero extractable characters. Measurement: 62% of the file was Unicode replacement-character sequences — a lossy conversion in transport, not a parsing-library failure. Change: ingesting directly from the source API moved from a "maybe later" idea to the primary path. (Mechanical text-matching checks had the same failure mode elsewhere — false positives and negatives, including one Unicode-escape test that passed green while testing nothing real.)
 
-  Mechanical text-matching checks produced repeated false positives
-  and negatives — one Unicode-escape test passed green while testing
-  nothing real.
-
-  (5) I built a versioned evaluation harness (21 cases, graded by a
-  separate judge model from the one answering) so I wasn't relying on
-  gut feel. The history isn't monotonic, which is the sign it's
-  measuring something real: baseline 85.7% correct; raising K from 6
-  to 10 brought it to 100% (confirming the bottleneck was retrieval,
-  not generation); switching to a cheaper generation model made it
-  *drop* to 95.2% — a real, measured regression, not hidden; adding
-  completeness rules to the prompt brought it back to 100%. The final
-  confirmation run (repeating each case 3 times, to tell a genuine
-  pass from a lucky one) stopped partway through — the API account
-  ran out of credit mid-run, and only 7 of the 21 cases completed all
-  3 repetitions. That was logged as incomplete, not reported as 100%.
+  (5) A harness that measures something real. Problem: relying on gut feel about whether a change helped. Measurement: a separate, later 21-case harness (graded by a judge model different from the one answering) produced a non-monotonic history — the sign it's measuring something real, not noise: baseline 85.7% correct; K 6→10 brought it to 100%; switching to a cheaper generation model made it drop to 95.2% — a real, measured regression; completeness rules in the prompt recovered it to 100%. Change: the final 3-repetition confirmation run stopped at 7 of 21 cases when the API account ran out of credit — logged as incomplete, not reported as 100%.
 traction: >
   Shown to several people in Support, Product and CS internally; positive
   reaction, and they're evaluating it. Approved by Product Director to keep going. Now deployed to stage environment and people actively using it.
