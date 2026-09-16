@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "CV | Andres Barriga",
+  title: "CV",
 };
 
 const CV_ENTRIES = [

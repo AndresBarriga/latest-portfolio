@@ -3,7 +3,7 @@ import { getAllLabProjects } from "@/src/lib/content";
 import { LabListItem } from "@/src/components/LabListItem";
 
 export const metadata: Metadata = {
-  title: "[PLACEHOLDER: Lab | Site name]",
+  title: "Lab",
 };
 
 export default function LabIndexPage() {
@@ -17,16 +17,21 @@ export default function LabIndexPage() {
             /lab
           </h1>
           <span className="max-w-[48ch] text-right font-mono text-xs leading-[1.5] text-meta-dark">
-            [PLACEHOLDER: lab section tagline]
+            personal builds, not shipped features
           </span>
         </div>
         <p className="mb-8 max-w-[62ch] text-[15.5px] leading-[1.6] text-body-dark">
-          [PLACEHOLDER: one-line framing for why these projects exist.]
+          Things I build on my own time to understand whether an idea holds
+          up under real evaluation. Each one is written up as a product
+          decision — what I tried, what broke, what I&apos;d do differently.
         </p>
         <div className="border-t border-hairline-dark">
           {labProjects.map((entry) => (
             <LabListItem key={entry.frontmatter.slug} entry={entry} />
           ))}
+          <div className="py-5 font-mono text-[12.5px] text-meta-dark">
+            More in progress — check back soon.
+          </div>
         </div>
       </div>
     </div>

@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { getAllCaseStudies } from "@/src/lib/content";
+import { getAllCaseStudies, getAllLabProjects } from "@/src/lib/content";
 import { CaseStudyListItem } from "@/src/components/CaseStudyListItem";
-// LabListItem unused while the /lab section is hidden — re-add with the section below.
-// import { LabListItem } from "@/src/components/LabListItem";
+import { LabListItem } from "@/src/components/LabListItem";
 
 export default function Home() {
   const caseStudies = getAllCaseStudies();
+  const labProjects = getAllLabProjects();
   const lastUpdated = new Date().toLocaleDateString("en-US", {
     month: "short",
     year: "numeric",
@@ -20,7 +20,7 @@ export default function Home() {
               Platform underneath, product on top
             </h1>
             <p className="m-0 mb-3.5 max-w-[56ch] text-[16.5px] leading-[1.6] text-body">
-              I work on the layer other products depend on: third-party APIs I don't control, shared data models, the integration underneath. Right now that's a suite of hospitality products sharing into integrations to the property management systems (mainly Oracle Hospitality) our customers already run. Five years of B2B SaaS, and before that a healthtech product 0 → 1 inside the German reimbursement system.
+              I work on the layer other products depend on: third-party APIs I don't control, shared data models, the integration underneath. Right now that's a suite of hospitality products sharing one integration layer to the property management systems (mainly Oracle Hospitality) our customers already run. Five years of B2B SaaS, and before that a healthtech product 0 → 1 inside the German reimbursement system.
             </p>
             <p className="m-0 max-w-[56ch] text-[16.5px] leading-[1.6] text-body">
               Each case below is one decision, not a project summary. What the problem was, what I knew at the time, what I rejected, what it cost.
@@ -37,7 +37,7 @@ Four of them share a habit: letting economics kill a technically correct answer.
               <div>builds</div>
               <div className="text-ink">Integration platforms · PMS and third-party APIs · event-driven sync · AI-assisted product workflow</div>
               <div>where</div>
-              <div className="text-ink">Berlin - working accross EMEA</div>
+              <div className="text-ink">Berlin - working across EMEA</div>
             </div>
           </div>
         </div>
@@ -87,7 +87,6 @@ Four of them share a habit: letting economics kill a technically correct answer.
         </div>
       </section>
 
-      {/* Lab section hidden from homepage until it has real content — re-add when ready.
       <section className="mt-10 bg-ink px-6 py-12 text-ink-inverse sm:px-12">
         <div className="mx-auto w-full max-w-[1080px]">
           <div className="mb-6 flex items-baseline justify-between gap-4">
@@ -105,10 +104,12 @@ Four of them share a habit: letting economics kill a technically correct answer.
             {labProjects.map((entry) => (
               <LabListItem key={entry.frontmatter.slug} entry={entry} />
             ))}
+            <div className="py-5 font-mono text-[12.5px] text-meta-dark">
+              More in progress — check back soon.
+            </div>
           </div>
         </div>
       </section>
-      */}
 
       <section className="border-b border-hairline px-6 py-10 sm:px-12 sm:py-11">
         <div className="mx-auto grid w-full max-w-[1080px] grid-cols-1 gap-10 lg:grid-cols-[1.55fr_1fr] lg:gap-16">

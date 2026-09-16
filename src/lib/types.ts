@@ -7,6 +7,9 @@ export interface CaseStudyFrontmatter {
   decision: string;
   outcome: string;
   lessons: string;
+  /** Optional explicit meta description. Falls back to the first sentence
+   * of `problem` (see getCaseStudyDescription in content.ts) when omitted. */
+  description?: string;
 }
 
 export interface LabProjectFrontmatter {

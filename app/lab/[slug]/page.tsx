@@ -5,6 +5,15 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote-client/rsc";
 import { getAllLabProjects } from "@/src/lib/content";
 import { getMdxComponentsDark } from "@/src/components/mdx-components";
+import { DecisionRecord, type DecisionRecordField } from "@/src/components/DecisionRecord";
+import type { LabProjectFrontmatter } from "@/src/lib/types";
+
+const LAB_FIELDS: DecisionRecordField<LabProjectFrontmatter>[] = [
+  { key: "decision", label: "decision" },
+  { key: "rigor", label: "rigor" },
+  { key: "traction", label: "traction" },
+  { key: "nextVersion", label: "next version" },
+];
 
 export function generateStaticParams() {
   return getAllLabProjects().map(({ frontmatter }) => ({
@@ -64,45 +73,25 @@ export default async function LabProjectPage(props: PageProps<"/lab/[slug]">) {
           {frontmatter.title}
         </h1>
 
-        <dl className="m-0 mb-10 grid grid-cols-1 gap-x-10 gap-y-5 border-y border-hairline-dark py-6 font-mono text-[12.5px] sm:grid-cols-2">
-          <div>
-            <dt className="text-meta-dark">decision</dt>
-            <dd className="m-0 mt-1 text-[14px] leading-[1.55] text-ink-inverse">
-              {frontmatter.decision}
-            </dd>
-          </div>
-          <div>
-            <dt className="text-meta-dark">rigor</dt>
-            <dd className="m-0 mt-1 text-[14px] leading-[1.55] text-ink-inverse">
-              {frontmatter.rigor}
-            </dd>
-          </div>
-          <div>
-            <dt className="text-meta-dark">traction</dt>
-            <dd className="m-0 mt-1 text-[14px] leading-[1.55] text-accent-dark">
-              {frontmatter.traction}
-            </dd>
-          </div>
-          <div>
-            <dt className="text-meta-dark">next version</dt>
-            <dd className="m-0 mt-1 text-[14px] leading-[1.55] text-ink-inverse">
-              {frontmatter.nextVersion}
-            </dd>
-          </div>
+        <div className="mb-10">
+          <DecisionRecord
+            data={frontmatter}
+            fields={LAB_FIELDS}
+            theme="dark"
+            sticky={false}
+          />
           {frontmatter.repoUrl ? (
-            <div>
-              <dt className="text-meta-dark">repo</dt>
-              <dd className="m-0 mt-1 text-[14px] leading-[1.55]">
-                <a
-                  href={frontmatter.repoUrl}
-                  className="no-underline underline-sweep text-accent-dark"
-                >
-                  {frontmatter.repoUrl}
-                </a>
-              </dd>
+            <div className="mt-3 font-mono text-[11.5px] text-meta-dark">
+              repo:{" "}
+              <a
+                href={frontmatter.repoUrl}
+                className="no-underline underline-sweep text-accent-dark"
+              >
+                {frontmatter.repoUrl}
+              </a>
             </div>
           ) : null}
-        </dl>
+        </div>
 
         <div>
           <Suspense

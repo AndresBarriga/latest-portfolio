@@ -35,6 +35,16 @@ export function getCaseStudyBySlug(
   return getAllCaseStudies().find((entry) => entry.frontmatter.slug === slug);
 }
 
+/** Meta description for a case study: explicit frontmatter value if set,
+ * otherwise the first sentence of `problem`. */
+export function getCaseStudyDescription(
+  frontmatter: CaseStudyFrontmatter
+): string {
+  if (frontmatter.description) return frontmatter.description;
+  const match = frontmatter.problem.match(/^.*?[.!?](?=\s|$)/);
+  return match ? match[0] : frontmatter.problem;
+}
+
 export function getAllLabProjects(): ContentEntry<LabProjectFrontmatter>[] {
   return readEntries<LabProjectFrontmatter>(LAB_DIR);
 }

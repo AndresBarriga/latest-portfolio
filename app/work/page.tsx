@@ -3,7 +3,7 @@ import { getAllCaseStudies } from "@/src/lib/content";
 import { CaseStudyListItem } from "@/src/components/CaseStudyListItem";
 
 export const metadata: Metadata = {
-  title: "[PLACEHOLDER: Work | Site name]",
+  title: "Work",
 };
 
 export default function WorkIndexPage() {

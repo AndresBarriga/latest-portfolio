@@ -6,7 +6,7 @@ evidence: 'Every new product repeated the same onboarding work against the same 
 alternatives: 'Direct integration per product: no shared infrastructure, but N connectors and N divergent caches per property. A shared client library: removes duplicated code, leaves every product owning its own state. A shared service: one integration per property, consumed by all products.'
 decision: "A dedicated service replicating reservations and profiles per PMS instance via Business Events, consumed by every product. Trade-off: we took on eventual consistency and the operational cost of running a replica of someone else's data."
 outcome: 'Five products in production on the same layer, including digital guest registration, restaurant access control, spa booking, and staff ordering synced with the POS. Also used for a multi-property deployment for a hotel group.'
-lessons: '[CONFIRM - pick the one that is true: (a) the dictionary fallback was built reactively, after production failures, and should have been designed in from the start; (b) keeping a replica correct costs more over time than building it did.]'
+lessons: 'The dictionary fallback was built reactively, after production failures, and should have been designed in from the start.'
 ---
 
 We had five products that all needed the same thing: who is staying, what they

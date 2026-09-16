@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque, Archivo, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SiteNav } from "@/src/components/SiteNav";
+import { SITE_URL } from "@/src/lib/site";
 import "./globals.css";
+
+const SITE_DESCRIPTION =
+  "Product manager for integration platforms and third-party APIs. Decision records from B2B SaaS, hospitality tech and healthtech.";
 
 const bricolageGrotesque = Bricolage_Grotesque({
   variable: "--font-bricolage",
@@ -23,15 +27,25 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : "http://localhost:3000"
-  ),
-  title: "[PLACEHOLDER: Site name]",
-  description: "[PLACEHOLDER: site description]",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    template: "%s — Andres Barriga",
+    default: "Andres Barriga — Product Manager, platform & integrations",
+  },
+  description: SITE_DESCRIPTION,
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Andres Barriga — Product Manager, platform & integrations",
+    description: SITE_DESCRIPTION,
+    url: "/",
+    siteName: "Andres Barriga",
+  },
   twitter: {
     card: "summary_large_image",
+    title: "Andres Barriga — Product Manager, platform & integrations",
+    description: SITE_DESCRIPTION,
   },
 };
 

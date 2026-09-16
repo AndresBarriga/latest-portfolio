@@ -5,8 +5,7 @@ import { usePathname } from "next/navigation";
 
 const NAV_LINKS = [
   { href: "/work", label: "Work" },
-  // Lab hidden from nav until it has real content — re-add when ready.
-  // { href: "/lab", label: "Lab" },
+  { href: "/lab", label: "Lab" },
   { href: "/about", label: "About" },
   { href: "/cv", label: "CV" },
 ];

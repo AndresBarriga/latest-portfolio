@@ -3,9 +3,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote-client/rsc";
-import { getAllCaseStudies } from "@/src/lib/content";
-import { DecisionRecord } from "@/src/components/DecisionRecord";
+import { getAllCaseStudies, getCaseStudyDescription } from "@/src/lib/content";
+import { DecisionRecord, type DecisionRecordField } from "@/src/components/DecisionRecord";
 import { getMdxComponents } from "@/src/components/mdx-components";
+import type { CaseStudyFrontmatter } from "@/src/lib/types";
+
+const CASE_STUDY_FIELDS: DecisionRecordField<CaseStudyFrontmatter>[] = [
+  { key: "problem", label: "problem" },
+  { key: "evidence", label: "evidence" },
+  { key: "alternatives", label: "alternatives considered" },
+  { key: "decision", label: "decision" },
+  { key: "outcome", label: "outcome" },
+  { key: "lessons", label: "lessons" },
+];
 
 export function generateStaticParams() {
   return getAllCaseStudies().map(({ frontmatter }) => ({
@@ -19,8 +29,20 @@ export async function generateMetadata(
   const { slug } = await props.params;
   const entry = getAllCaseStudies().find((e) => e.frontmatter.slug === slug);
 
+  if (!entry) {
+    return { title: "Case study not found" };
+  }
+
+  const { title } = entry.frontmatter;
+  const description = getCaseStudyDescription(entry.frontmatter);
+  const url = `/work/${slug}`;
+
   return {
-    title: entry ? entry.frontmatter.title : "Case study not found",
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { title, description, url },
+    twitter: { card: "summary_large_image", title, description },
   };
 }
 
@@ -79,7 +101,7 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
               <MDXRemote source={content} components={components} />
             </Suspense>
           </div>
-          <DecisionRecord frontmatter={frontmatter} />
+          <DecisionRecord data={frontmatter} fields={CASE_STUDY_FIELDS} />
         </div>
       </div>
 

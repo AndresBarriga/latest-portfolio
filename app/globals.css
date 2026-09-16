@@ -128,8 +128,8 @@
 .dr-rule-dotted::after {
   background: repeating-linear-gradient(
     to right,
-    var(--color-divider) 0,
-    var(--color-divider) 2px,
+    var(--dr-dotted-color, var(--color-divider)) 0,
+    var(--dr-dotted-color, var(--color-divider)) 2px,
     transparent 2px,
     transparent 5px
   );

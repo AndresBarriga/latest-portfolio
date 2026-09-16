@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About | Andres Barriga",
+  title: "About",
 };
 
 export default function AboutPage() {
