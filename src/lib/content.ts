@@ -45,6 +45,19 @@ export function getCaseStudyDescription(
   return match ? match[0] : frontmatter.problem;
 }
 
+/** Lowercase industry/focus/tech tags for a case study. Omits `tech` when
+ * the case study doesn't set it. */
+export function getCaseStudyTags(frontmatter: CaseStudyFrontmatter): string[] {
+  return [frontmatter.industry, frontmatter.focus, frontmatter.tech]
+    .filter((value): value is string => Boolean(value))
+    .map((value) => value.toLowerCase());
+}
+
+/** Compact "industry · focus · tech" meta line for the case study header. */
+export function getCaseStudyMetaLine(frontmatter: CaseStudyFrontmatter): string {
+  return getCaseStudyTags(frontmatter).join(" · ");
+}
+
 export function getAllLabProjects(): ContentEntry<LabProjectFrontmatter>[] {
   return readEntries<LabProjectFrontmatter>(LAB_DIR);
 }

@@ -3,7 +3,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote-client/rsc";
-import { getAllCaseStudies, getCaseStudyDescription } from "@/src/lib/content";
+import {
+  getAllCaseStudies,
+  getCaseStudyDescription,
+  getCaseStudyMetaLine,
+} from "@/src/lib/content";
 import { DecisionRecord, type DecisionRecordField } from "@/src/components/DecisionRecord";
 import { getMdxComponents } from "@/src/components/mdx-components";
 import type { CaseStudyFrontmatter } from "@/src/lib/types";
@@ -84,6 +88,9 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
 
       <div className="border-b border-hairline px-6 py-10 sm:px-12 sm:py-14">
         <div className="mx-auto w-full max-w-[1080px]">
+          <p className="m-0 mb-3 font-mono text-[12px] text-meta">
+            {getCaseStudyMetaLine(frontmatter)}
+          </p>
           <h1 className="m-0 max-w-[24ch] font-display text-[32px] font-medium leading-[1.1] tracking-[-0.02em] sm:text-[46px]">
             {frontmatter.title}
           </h1>

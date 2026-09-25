@@ -1,12 +1,15 @@
 ---
-title: 'Replicating Opera Cloud so every product reads from one place we control'
+title: 'Replicating Opera Cloud so every product reads from one place'
 slug: 'shared-integration-service'
+industry: 'Hospitality'
+focus: 'Platform strategy'
+tech: 'Integrations'
 problem: "Five products needed the same reservation and profile data from a customer's PMS. Each integrating separately meant a new connector per product per property, each with its own cache and its own idea of how fresh the data was."
 evidence: 'Every new product repeated the same onboarding work against the same system. Reference data such as payment methods, packages and rates differs per property and changes without notice, so each product was independently exposed to the same class of failure.'
 alternatives: 'Direct integration per product: no shared infrastructure, but N connectors and N divergent caches per property. A shared client library: removes duplicated code, leaves every product owning its own state. A shared service: one integration per property, consumed by all products.'
 decision: "A dedicated service replicating reservations and profiles per PMS instance via Business Events, consumed by every product. Trade-off: we took on eventual consistency and the operational cost of running a replica of someone else's data."
 outcome: 'Five products in production on the same layer, including digital guest registration, restaurant access control, spa booking, and staff ordering synced with the POS. Also used for a multi-property deployment for a hotel group.'
-lessons: 'The dictionary fallback was built reactively, after production failures, and should have been designed in from the start.'
+lessons: The dictionary fallback treated unmapped values as an edge case to patch after the fact. What should have been there from day one is schema validation at the point of ingestion — reject and alert on an unrecognized value immediately, rather than let it pass through silently until a downstream product broke. The dictionary was the visible fix; the actual gap was that nothing was watching the boundary.
 ---
 
 We had five products that all needed the same thing: who is staying, what they
@@ -14,8 +17,7 @@ booked, what packages they are entitled to. That data lives in the customer's
 PMS, and every product was going to reach for it separately.
 
 That framing matters, because the obvious reading is wrong. This was not a
-performance problem. The API was fast enough and we were nowhere near rate
-limits. It was a duplication problem. One integration per product per property
+performance problem (API was fast enough), it was a duplication problem. One integration per product per property
 means the same onboarding work repeated five times, five caches with five
 different refresh policies, and five separate places where the same failure can
 appear.
@@ -27,7 +29,8 @@ our products integrates once.
 
 ## What we deliberately did not standardise
 
-Worth being precise about who decided what. I owned the product boundary: which data the service replicates, what stays configurable per customer, and where the abstraction stops. Engineering owned how — the replication itself, the queue, the reconciliation, and everything about running it. The decisions that took the longest were the ones on the line between those, and they were made together.
+Worth being precise about who decided what. I owned the product boundary: which data the service replicates, what stays configurable per customer, and where the abstraction stops.
+Engineering owned how — the replication itself, the queue, the reconciliation, and everything about running it. The decisions that took the longest were the ones on the line between those, and they were made together.
 
 Reference data is cached, and the refresh frequency is configurable by the
 customer rather than fixed by us. Different properties tolerate stale data

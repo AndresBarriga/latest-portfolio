@@ -4,66 +4,59 @@ slug: 'ask-ai-productinfo'
 problem: >
   Product knowledge (installation, configuration, troubleshooting,
   roadmap) lives scattered across Confluence, exported PDFs, and the
-  heads of a few people. Support and CS — the people who need it
-  most — don't have access to those tools or a fast way to find
+  heads of a few people. Support , Sales and CS, the people who need it
+  most, don't have access to those tools or a fast way to find
   answers. The same questions get answered by hand, repeatedly, over
   Slack and email.
 decision: >
-  Strict per-product isolation instead of global search: each product
-  is its own compartment with its own documents and conversation
-  history, and the filter is applied before ranking, not after. This
-  is the opposite of what mature systems in this category do, which
-  search across the whole company corpus.
-  I deliberately rejected the company's existing product stack
-  (heavier, built for a different scale) in favor of Python +
-  FastAPI + SQLite at prototype stage — infrastructure that added
-  nothing at the real scale (857 chunks) and would have blocked
-  getting started.
-  I switched from a larger model to a smaller one after measuring the
-  trade-off: 3x cheaper, median latency down from 5.60s to 3.24s,
-  groundedness intact, one point of completeness lost. I rejected
-  routing between models based on question complexity — the
-  heuristics didn't hold up, and the real failure was in the prompt,
-  not the model's capability.
+  Build a focused internal Q&A tool rather than another documentation
+  interface: users select a product, and the chatbot searches only
+  that product's documentation and conversation history.
+
+  I kept the prototype lightweight — Python, FastAPI and SQLite —
+  because the real corpus was only 857 chunks. I also measured model
+  cost and latency rather than assuming the largest model was necessary:
+  switching to a smaller model cut cost by 3x and median latency from
+  5.60s to 3.24s, with groundedness intact and a one-point completeness
+  trade-off.
 rigor: >
-  Five concrete findings broke my initial assumptions:
+  Four findings changed the implementation:
 
-  (1) Missing heading path. Problem: the highest-impact fix wasn't visible in any test. Measurement: "install" showed up in 4 of 42 chunks when searching embedded text, but 28 of 42 once the heading path was included. Change: embedding fragment text alone had silently dropped the page title; adding the heading path took retrieval of the installation guide from 1/10 to 9/10, and an early 23-question eval from 22/23 to 23/23.
+  (1) Missing context, not missing content. "Install" appeared in 4/42
+  chunks using text alone, versus 28/42 when the heading path was
+  included. Adding the heading path improved installation retrieval
+  from 1/10 to 9/10 and an early evaluation from 19/23 to 23/23.
 
-  (2) Wrong problem, wrong fix. Problem: 3 facts kept getting missed. Measurement: two complete mechanisms, built to fix what looked like a missing-information problem, together moved only 1 of the 3. Change: widening the retrieval window to 50 for diagnosis showed the missing facts sitting at ranks 11, 12, and 12 — the real bottleneck was K=10, never questioned before building on top of it.
+  (2) Retrieval depth was the bottleneck. Two mechanisms built around
+  a presumed missing-information problem fixed only 1 of 3 missed facts.
+  Increasing K from 10 to 50 showed the missing facts at ranks 11–13.
+  The problem was retrieval depth, not missing knowledge.
 
-  (3) Sync bug invisible from the UI. Problem: updating one documentation branch silently deleted the previous branches for the same product. Measurement: the UI kept showing all branches as correct while only the most recently synced documents actually survived. Change: replace scope moved from product-level to branch-level.
+  (3) The UI hid a data-loss bug. Syncing one documentation branch
+  silently removed previous branches for the same product. Changing
+  replacement scope from product-level to branch-level fixed it.
 
-  (4) Corrupted, not unparseable. Problem: an exported PDF arrived with zero extractable characters. Measurement: 62% of the file was Unicode replacement-character sequences — a lossy conversion in transport, not a parsing-library failure. Change: ingesting directly from the source API moved from a "maybe later" idea to the primary path. (Mechanical text-matching checks had the same failure mode elsewhere — false positives and negatives, including one Unicode-escape test that passed green while testing nothing real.)
-
-  (5) A harness that measures something real. Problem: relying on gut feel about whether a change helped. Measurement: a separate, later 21-case harness (graded by a judge model different from the one answering) produced a non-monotonic history — the sign it's measuring something real, not noise: baseline 85.7% correct; K 6→10 brought it to 100%; switching to a cheaper generation model made it drop to 95.2% — a real, measured regression; completeness rules in the prompt recovered it to 100%. Change: the final 3-repetition confirmation run stopped at 7 of 21 cases when the API account ran out of credit — logged as incomplete, not reported as 100%.
+  (4) The evaluation had to measure regressions as well as improvements.
+  A separate 21-case harness moved from 85.7% to 100% after increasing K,
+  dropped to 95.2% with a cheaper generation model, then recovered to
+  100% after tightening completeness rules.
 traction: >
   Shown to several people in Support, Product and CS internally; positive
-  reaction, and they're evaluating it. Approved by Product Director to keep going. Now deployed to stage environment and people actively using it.
+  reaction feedback. Now deployed to stage environment and people actively using it.
 nextVersion: >
-  Diagnose before building: two complete mechanisms were measured and
-  discarded, because nobody first checked where the missing facts
-  actually ranked. The rule I take from this: when a retrieval case
-  fails, the first question is "where is the missing information
-  ranked?" — not "what mechanism should we build?"
-
-  The evaluation set was also initially built around a single
-  document and saturated at 100% — it stopped distinguishing a good
-  configuration from a better one. Expanding it with varied content
-  should have come before several of the optimization experiments.
-
-  Immediate, concrete next step: finish the 3-repetition confirmation
-  across all 21 cases — it stopped at 7 for lack of API credit, not
-  by choice.
+  Expand the evaluation set beyond the initial document and establish
+  a repeatable evaluation suite before making further retrieval or
+  generation changes. The next iteration will focus on broader content
+  coverage, retrieval edge cases and repeatability rather than adding
+  more mechanisms, including image handling.
 ---
 
 This started inside a hospitality SaaS platform, where product
-knowledge — installation, configuration, troubleshooting, the
-roadmap — was scattered across Confluence, exported PDFs, and the
+knowledge, installation, configuration, troubleshooting, the
+roadmap, was scattered across Confluence, exported PDFs, and the
 heads of a handful of people. Support and CS, who needed it most,
-didn't have access to those tools or a fast way to search them. The
-same questions kept getting answered by hand, over Slack and email,
-one ticket at a time.
+didn't have access to fast way to search them. The
+same questions kept getting answered by hand, over Slack and email.
 
 Company and product names are omitted throughout — the underlying
 documentation spans several internal products, and nothing below

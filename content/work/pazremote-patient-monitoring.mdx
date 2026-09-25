@@ -1,0 +1,73 @@
+---
+title: 'Making remote patient monitoring work for clinicians and patients'
+slug: 'remote-patient-monitoring'
+industry: 'Healthtech'
+focus: 'Discovery'
+problem: >
+  We needed to build a remote patient monitoring product that met
+  regulatory requirements without making the clinical workflow too
+  burdensome for patients or doctors to use in practice.
+evidence: >
+  Regulation defined requirements around patient onboarding, what
+  needed to be measured, measurement frequency and accuracy. At the
+  same time, doctors had a limited amount of time they could spend
+  managing alerts, so we measured average alert-handling time and
+  worked backwards from the time required for the service to be
+  commercially viable.
+alternatives: >
+  Treat regulation as the product specification: covers the required
+  steps, but risks creating unnecessary work for patients and
+  clinicians. Optimize purely for clinical efficiency: simpler
+  workflows, but risks missing regulatory requirements. Design at the
+  intersection of both: identify what must happen, what can be
+  simplified or automated, and where the user actually needs to be
+  involved.
+decision: >
+  We designed the product around three constraints: regulatory
+  requirements, clinical workflow and operational economics. We
+  measured alert-handling time with doctors, defined the target needed
+  for a viable service, and used workshops and observed product use
+  with nurses to identify unnecessary steps and opportunities for
+  automation.
+
+  For patient workflows, we treated regulatory requirements as
+  constraints rather than as a reason to make every step manual. Where
+  something had to happen, we looked at whether the product could
+  handle more of the work instead of pushing the burden onto the
+  patient or clinician.
+outcome: >
+  Reduced average alert-handling time by 40%, measured against the
+  average before the redesign. Progressed the product from pre-launch
+  to live use with 5 paying hospital customers.
+lessons: >
+  In regulated products, compliance should define the constraints,
+  not the entire user experience. The product challenge is finding
+  what must happen, what can be automated, and what should stay in
+  the hands of the user.
+---
+
+Building a remote patient monitoring product meant satisfying two very different definitions of "good."
+
+The product had to meet regulatory requirements around how patients were onboarded, what was measured, how frequently measurements were taken and how accurate those measurements needed to be.
+
+But meeting every requirement was not enough. Doctors also needed to process the resulting alerts within a reasonable amount of time. If managing one patient generated too much clinical work, the service would not be economically viable. We therefore measured average alert-handling time and discussed with doctors what target we needed to reach for the service to be profitable.
+
+That gave us a concrete product constraint rather than a vague goal of "making the workflow more efficient."
+
+We then went through the workflow step by step to identify what actually required clinical attention, what could be simplified and what could be automated. We also ran workshops with nurses where we deliberately let them use the product rather than explaining how we expected them to use it.
+
+We observed where they hesitated, what they did differently from our assumptions and which parts of the workflow created unnecessary effort. We used those observations to change the product.
+
+The same principle applied to patient workflows. We could not simply remove steps because they were inconvenient: some existed because regulatory requirements demanded them. Instead, we looked at where the burden could move from the user to the product. If something had to happen, the question became: does the patient or clinician actually need to do it manually?
+
+This approach reduced average alert-handling time by 40%. More importantly, it changed how we thought about the product. Regulation was not a checklist sitting alongside the product — it defined constraints the product had to satisfy, while discovery with clinicians showed us how to satisfy those constraints without making the workflow unnecessarily heavy.
+
+## Deterministic vs. AI-assisted triage
+
+A separate design question was how much of alert triage should be decided by rules and how much could be assisted by a model.
+
+Letting a model decide what counts as dangerous was not defensible in a regulated context: a missed threshold or a hallucinated reading is not an acceptable failure mode. But rules alone left doctors reading raw data with no prioritization, which was a large part of the alert-handling time.
+
+We split it in two. A deterministic layer flagged dangerous readings with fixed rules (a value rising by a set amount, or crossing a set threshold): auditable and non-negotiable. We defined those rules together with doctors, so the clinical judgment of what counts as dangerous stayed with clinicians, not with product or engineering. On top of that, an LLM layer ordered alerts by priority, highlighted which transmitted values were potentially concerning, and produced a short summary of exactly what to look at.
+
+The model never decided what was dangerous. Its job was to reduce what a doctor had to read before acting. Together with fewer screens and clicks and all the necessary information in one place, that is where the 40% came from.

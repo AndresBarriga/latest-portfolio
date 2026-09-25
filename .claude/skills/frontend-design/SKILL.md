@@ -29,7 +29,11 @@ build," not a features list. Don't reach for the same layout for both.
 - Tracked-out ALL-CAPS eyebrow labels above every heading.
 - Numbered markers (01 / 02 / 03) unless the content is genuinely
   sequential — a case study is not a numbered sequence.
-- A "→" appended to every link or button.
+- A "→" appended to every link or button. Exception: a whole-row link
+  (e.g. the /work index rows) can end in a single "read →" as the row's
+  one action cue, with the arrow nudging right on hover/focus instead of
+  underlining the row. That's one arrow per row standing in for the row's
+  only interactive affordance, not decoration sprinkled on every link.
 - Fade-and-slide-up entrance animation on every section, hover
   transitions on every card — scattered motion reads as generated.
   One deliberate moment (a single page-load sequence, one reveal) beats

@@ -1,6 +1,10 @@
 export interface CaseStudyFrontmatter {
   title: string;
   slug: string;
+  industry: string;
+  focus: string;
+  /** Optional; the index row and header show only industry + focus when omitted. */
+  tech?: string;
   problem: string;
   evidence: string;
   alternatives: string;

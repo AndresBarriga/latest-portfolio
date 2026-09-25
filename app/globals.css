@@ -101,6 +101,30 @@
 }
 
 /*
+ * Single arrow nudge for a row where the whole row is the link (e.g. the
+ * /work index): the arrow shifting right on hover/focus is the one hover
+ * cue for the row's primary action, standing in for a hover state on the
+ * row itself.
+ */
+@layer components {
+  .row-arrow {
+    display: inline-block;
+    transition: transform 150ms ease-out;
+  }
+
+  .group:hover .row-arrow,
+  .group:focus-within .row-arrow {
+    transform: translateX(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .row-arrow {
+    transition: none;
+  }
+}
+
+/*
  * Decision record entrance animation. The two header rules (solid under the
  * "decision record" label, dotted under the instructions line) are drawn via
  * a `::after` line rather than the real Tailwind border, so they can be

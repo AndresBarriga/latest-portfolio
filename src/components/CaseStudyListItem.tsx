@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getCaseStudyDescription, getCaseStudyTags } from "@/src/lib/content";
 import type { CaseStudyFrontmatter, ContentEntry } from "@/src/lib/types";
 
 export function CaseStudyListItem({
@@ -7,6 +8,7 @@ export function CaseStudyListItem({
   entry: ContentEntry<CaseStudyFrontmatter>;
 }) {
   const { frontmatter } = entry;
+  const tags = getCaseStudyTags(frontmatter);
 
   return (
     <Link
@@ -17,12 +19,25 @@ export function CaseStudyListItem({
         <div className="font-display text-[25px] leading-tight tracking-[-0.02em]">
           {frontmatter.title}
         </div>
-        <p className="mt-1.5 line-clamp-2 max-w-[62ch] text-[14.5px] leading-[1.55] text-body-muted">
-          {frontmatter.problem}
+        <p className="mt-1.5 max-w-[62ch] text-[14.5px] leading-[1.55] text-body-muted">
+          {getCaseStudyDescription(frontmatter)}
         </p>
+        <div className="mt-3 flex flex-wrap gap-1.5">
+          {tags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded-[3px] border border-hairline px-1.5 py-0.5 font-mono text-[10.5px] text-meta"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
       </div>
-      <div className="underline-sweep w-fit font-mono text-[11.5px] text-meta sm:ml-auto sm:text-right">
-        read the decision record
+      <div className="flex w-fit items-baseline gap-1 font-mono text-[11.5px] text-meta sm:ml-auto">
+        <span>read</span>
+        <span className="row-arrow" aria-hidden="true">
+          →
+        </span>
       </div>
     </Link>
   );

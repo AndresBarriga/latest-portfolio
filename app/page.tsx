@@ -47,7 +47,7 @@ Four of them share a habit: letting economics kill a technically correct answer.
         <div className="mx-auto w-full max-w-[1080px]">
           <div className="mb-2 flex items-baseline justify-between gap-4">
             <h2 className="m-0 font-display text-2xl font-medium tracking-[-0.025em] sm:text-[28px]">
-              How we build
+              How we build in 2026
             </h2>
           </div>
           <div className="border-t-2 border-ink py-6">
@@ -97,7 +97,7 @@ Four of them share a habit: letting economics kill a technically correct answer.
               href="/lab"
               className="max-w-[48ch] text-right font-mono text-xs leading-[1.5] text-meta-dark no-underline underline-sweep"
             >
-              Things I build to understand something — view all
+              Things I build to understand something or have fun — view all
             </Link>
           </div>
           <div className="border-t border-hairline-dark">

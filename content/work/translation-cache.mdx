@@ -1,6 +1,9 @@
 ---
 title: 'LLM Translation - The answer to supporting dynamic data translations'
 slug: 'translation-cache'
+industry: 'Hospitality'
+focus: 'Build vs buy'
+tech: 'AI'
 problem: 'Guest-facing products render content from three sources: static frontend strings, property configuration, and live PMS data. The first can be translated at build time. The other two only exist once a customer configures them, so before this there was no translation of dynamic content at all — guests read whatever language the property typed in.'
 evidence: 'Treatment names, package descriptions, room types and terms and conditions all arrive at render time from the PMS or from property config. No build step can see them. Any solution that translates ahead of time covers the least important third of what a guest actually reads.'
 alternatives: 'Pre-translated string files: no coverage of dynamic content. Translating on every render: correct, but pays a model call for text that has not changed since the last guest read it. Asking properties to supply translations: shifts the work to the customer and does not scale across languages.'
