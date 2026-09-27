@@ -10,7 +10,7 @@ import { buildDiagramHref } from "@/src/lib/diagram";
 
 const DIAGRAM_SRC = "/images/how-we-build/engineering-commitment-line.svg";
 const DIAGRAM_ALT =
-  "Where engineering commitment begins. A vertical workflow. Above the commitment line: idea, working prototype, internal review, customer demos which loop back to the prototype for iteration, and a validated prototype plus PRD written afterwards. The line is crossed by a handover call walking developers through the prototype. Below it: TRD and implementation plan with an agent checking the TRD against the PRD, Jira user stories, agents implementing and reporting back, agent review then developer review, more customer demos, and finally pilot then production.";
+  "Discovery, owned by the PM: idea, clickable prototype, internal review, customer demos looping back, then a PRD describing what survived. A handover call is where engineering commits. Delivery, owned by engineering: TRD with agent assistance, stories implemented by agents, code review with agent pre-checks and developer ownership, customer demos again that can loop back, then pilot and rollout. Filled teal marks steps agents do; teal outline marks steps agents assist.";
 
 export async function generateMetadata(): Promise<Metadata> {
   const entry = getHowWeBuildEntry();
@@ -60,7 +60,7 @@ export default function HowWeBuildPage() {
                 src={DIAGRAM_SRC}
                 alt={DIAGRAM_ALT}
                 width={680}
-                height={860}
+                height={1036}
                 className="h-auto w-full border border-hairline"
               />
             </div>
@@ -69,7 +69,7 @@ export default function HowWeBuildPage() {
                 src: DIAGRAM_SRC,
                 alt: DIAGRAM_ALT,
                 width: 680,
-                height: 860,
+                height: 1036,
                 backHref: "/how-we-build",
                 backLabel: "how we build",
               })}
