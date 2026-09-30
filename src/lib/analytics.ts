@@ -69,3 +69,20 @@ export function capturePageview(url: string) {
   if (!enabled) return;
   posthog.capture("$pageview", { $current_url: url });
 }
+
+// posthog-js's own automatic $pageleave only fires on a real document
+// unload (tab close, external link, hard reload) — it has no way to know
+// about a client-side route change, since we capture pageviews ourselves
+// (capture_pageview: false). Without this, time-on-page is only ever
+// measurable for whichever page happens to be open when the tab closes.
+// Called on every SPA navigation for the page being left; the very last
+// page of a visit still gets its $pageleave from posthog-js's native
+// unload handling, so this isn't called on unmount.
+export function capturePageleave(pathname: string, durationSeconds: number) {
+  if (!enabled) return;
+  posthog.capture("$pageleave", {
+    $pathname: pathname,
+    $prev_pageview_pathname: pathname,
+    $prev_pageview_duration: durationSeconds,
+  });
+}

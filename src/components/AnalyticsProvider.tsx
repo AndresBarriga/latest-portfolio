@@ -1,9 +1,10 @@
 "use client";
 
-import { Suspense, useEffect, type ReactNode } from "react";
+import { Suspense, useEffect, useRef, type ReactNode } from "react";
 import posthog from "posthog-js";
 import { usePathname, useSearchParams } from "next/navigation";
 import {
+  capturePageleave,
   capturePageview,
   isNoTrackFlagSet,
   markAnalyticsEnabled,
@@ -86,11 +87,22 @@ function registerGeoCountry() {
 function PageviewTracker() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const prevPageRef = useRef<{ pathname: string; enteredAt: number } | null>(
+    null
+  );
 
   useEffect(() => {
     let url = `${window.location.origin}${pathname}`;
     const search = searchParams.toString();
     if (search) url += `?${search}`;
+
+    const now = Date.now();
+    const prev = prevPageRef.current;
+    if (prev && prev.pathname !== pathname) {
+      capturePageleave(prev.pathname, (now - prev.enteredAt) / 1000);
+    }
+    prevPageRef.current = { pathname, enteredAt: now };
+
     capturePageview(url);
   }, [pathname, searchParams]);
 
