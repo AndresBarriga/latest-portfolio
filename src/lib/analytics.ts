@@ -55,10 +55,11 @@ export function disableAnalyticsNow() {
 
 export function track<E extends AnalyticsEventName>(
   event: E,
-  properties: AnalyticsEventProperties<E>
+  properties: AnalyticsEventProperties<E>,
+  options?: Parameters<typeof posthog.capture>[2]
 ) {
   if (!enabled) return;
-  posthog.capture(event, properties);
+  posthog.capture(event, properties, options);
 }
 
 export function capturePageview(url: string) {

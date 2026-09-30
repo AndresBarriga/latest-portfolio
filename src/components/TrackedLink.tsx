@@ -32,7 +32,14 @@ export function TrackedLink<E extends AnalyticsEventName>({
     <Link
       {...linkProps}
       onClick={(e) => {
-        track(event, properties);
+        // posthog.capture() defaults to a fetch/XHR request, which the
+        // browser can cancel mid-flight when this click immediately
+        // navigates away (especially external links: mailto:, Calendly,
+        // GitHub, LinkedIn). sendBeacon is designed to survive that.
+        track(event, properties, {
+          transport: "sendBeacon",
+          send_instantly: true,
+        });
         onClick?.(e);
       }}
     />
