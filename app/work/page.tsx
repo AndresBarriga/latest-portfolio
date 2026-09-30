@@ -23,8 +23,12 @@ export default function WorkIndexPage() {
         [PLACEHOLDER: one-line framing for the case study index.]
       </p>
       <div className="border-t-2 border-ink">
-        {caseStudies.map((entry) => (
-          <CaseStudyListItem key={entry.frontmatter.slug} entry={entry} />
+        {caseStudies.map((entry, index) => (
+          <CaseStudyListItem
+            key={entry.frontmatter.slug}
+            entry={entry}
+            position={index + 1}
+          />
         ))}
       </div>
     </div>

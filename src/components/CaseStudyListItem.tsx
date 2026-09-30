@@ -1,18 +1,22 @@
-import Link from "next/link";
 import { getCaseStudyDescription, getCaseStudyTags } from "@/src/lib/content";
+import { TrackedLink } from "@/src/components/TrackedLink";
 import type { CaseStudyFrontmatter, ContentEntry } from "@/src/lib/types";
 
 export function CaseStudyListItem({
   entry,
+  position,
 }: {
   entry: ContentEntry<CaseStudyFrontmatter>;
+  position: number;
 }) {
   const { frontmatter } = entry;
   const tags = getCaseStudyTags(frontmatter);
 
   return (
-    <Link
+    <TrackedLink
       href={`/work/${frontmatter.slug}`}
+      event="work_row_click"
+      properties={{ case: frontmatter.slug, position }}
       className="group grid grid-cols-1 items-start gap-2 border-b border-hairline py-6 text-ink no-underline transition-colors hover:bg-paper-hover sm:grid-cols-[1fr_180px] sm:gap-8"
     >
       <div>
@@ -39,6 +43,6 @@ export function CaseStudyListItem({
           →
         </span>
       </div>
-    </Link>
+    </TrackedLink>
   );
 }

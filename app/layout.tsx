@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Archivo, JetBrains_Mono } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
 import { SiteNav } from "@/src/components/SiteNav";
+import { Footer } from "@/src/components/Footer";
+import { AnalyticsProvider } from "@/src/components/AnalyticsProvider";
 import { SITE_URL } from "@/src/lib/site";
 import "./globals.css";
 
@@ -56,9 +57,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${bricolageGrotesque.variable} ${archivo.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-paper text-ink font-sans">
-        <SiteNav />
-        <main className="flex flex-1 flex-col">{children}</main>
-        <Analytics />
+        <AnalyticsProvider>
+          <SiteNav />
+          <main className="flex flex-1 flex-col">{children}</main>
+          <Footer />
+        </AnalyticsProvider>
       </body>
     </html>
   );

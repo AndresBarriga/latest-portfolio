@@ -7,13 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "screenshot": "node scripts/screenshot.mjs"
+    "screenshot": "node scripts/screenshot.mjs",
+    "link": "node scripts/generate-link.mjs"
   },
   "dependencies": {
-    "@vercel/analytics": "^2.0.1",
     "gray-matter": "^4.0.3",
     "next": "16.3.4",
     "next-mdx-remote-client": "^2.1.12",
+    "posthog-js": "^1.435.2",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },

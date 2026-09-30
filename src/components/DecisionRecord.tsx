@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { track } from "@/src/lib/analytics";
 
 export type DecisionRecordField<T> = { key: keyof T; label: string };
 
@@ -43,7 +44,7 @@ const darkTheme: Theme = {
 const ROW_BASE_DELAY_MS = 150;
 const ROW_STAGGER_MS = 60;
 
-export function DecisionRecord<T>({
+export function DecisionRecord<T extends { slug: string }>({
   data,
   fields,
   theme = "light",
@@ -77,7 +78,13 @@ export function DecisionRecord<T>({
   }, []);
 
   function toggle(key: string) {
-    setOpenFields((prev) => ({ ...prev, [key]: !prev[key] }));
+    setOpenFields((prev) => {
+      const willOpen = !prev[key];
+      if (willOpen) {
+        track("decision_record_open", { case: data.slug, field: key });
+      }
+      return { ...prev, [key]: willOpen };
+    });
   }
 
   return (

@@ -10,6 +10,7 @@ import {
 } from "@/src/lib/content";
 import { DecisionRecord, type DecisionRecordField } from "@/src/components/DecisionRecord";
 import { getMdxComponents } from "@/src/components/mdx-components";
+import { ScrollDepthTracker } from "@/src/components/ScrollDepthTracker";
 import type { CaseStudyFrontmatter } from "@/src/lib/types";
 
 const CASE_STUDY_FIELDS: DecisionRecordField<CaseStudyFrontmatter>[] = [
@@ -69,6 +70,7 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
 
   return (
     <article>
+      <ScrollDepthTracker />
       <div className="border-b border-hairline px-6 py-5 sm:px-12">
         <div className="mx-auto flex w-full max-w-[1080px] items-baseline justify-between font-mono text-[12.5px] text-meta">
           <span>

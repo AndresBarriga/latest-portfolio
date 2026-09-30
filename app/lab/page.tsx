@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { getAllLabProjects } from "@/src/lib/content";
 import { LabListItem } from "@/src/components/LabListItem";
+import { FeatureVideoStudioListItem } from "@/src/components/FeatureVideoStudioListItem";
+import { ScrollDepthTracker } from "@/src/components/ScrollDepthTracker";
 
 export const metadata: Metadata = {
   title: "Lab",
@@ -11,6 +13,7 @@ export default function LabIndexPage() {
 
   return (
     <div className="flex-1 bg-ink text-ink-inverse">
+      <ScrollDepthTracker />
       <div className="mx-auto w-full max-w-[1080px] px-6 py-12 sm:px-12 sm:py-16">
         <div className="mb-2 flex items-baseline justify-between gap-4">
           <h1 className="m-0 font-mono text-xl font-medium tracking-[-0.02em] sm:text-2xl">
@@ -29,6 +32,7 @@ export default function LabIndexPage() {
           {labProjects.map((entry) => (
             <LabListItem key={entry.frontmatter.slug} entry={entry} />
           ))}
+          <FeatureVideoStudioListItem />
           <div className="py-5 font-mono text-[12.5px] text-meta-dark">
             More in progress — check back soon.
           </div>

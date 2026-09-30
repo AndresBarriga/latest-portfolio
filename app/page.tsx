@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getAllCaseStudies, getAllLabProjects } from "@/src/lib/content";
 import { CaseStudyListItem } from "@/src/components/CaseStudyListItem";
 import { LabListItem } from "@/src/components/LabListItem";
+import { FeatureVideoStudioListItem } from "@/src/components/FeatureVideoStudioListItem";
 
 export default function Home() {
   const caseStudies = getAllCaseStudies();
@@ -80,8 +81,12 @@ Four of them share a habit: letting economics kill a technically correct answer.
             </Link>
           </div>
           <div className="border-t-2 border-ink">
-            {caseStudies.map((entry) => (
-              <CaseStudyListItem key={entry.frontmatter.slug} entry={entry} />
+            {caseStudies.map((entry, index) => (
+              <CaseStudyListItem
+                key={entry.frontmatter.slug}
+                entry={entry}
+                position={index + 1}
+              />
             ))}
           </div>
         </div>
@@ -104,6 +109,7 @@ Four of them share a habit: letting economics kill a technically correct answer.
             {labProjects.map((entry) => (
               <LabListItem key={entry.frontmatter.slug} entry={entry} />
             ))}
+            <FeatureVideoStudioListItem />
             <div className="py-5 font-mono text-[12.5px] text-meta-dark">
               More in progress — check back soon.
             </div>

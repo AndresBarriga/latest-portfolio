@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { TrackedLink } from "@/src/components/TrackedLink";
 
 export const metadata: Metadata = {
   title: "About",
@@ -46,27 +47,43 @@ export default function AboutPage() {
         <div className="grid grid-cols-[84px_1fr] gap-x-3.5 gap-y-1.5 border-t border-hairline pt-3.5 text-meta">
           <div>book time</div>
           <div>
-            <a href="https://calendly.com/andresbarriga/30min">
+            <TrackedLink
+              href="https://calendly.com/andresbarriga/30min"
+              event="booking_click"
+              properties={{ source_page: "/about" }}
+            >
               calendly.com/andresbarriga/30min
-            </a>
+            </TrackedLink>
           </div>
           <div>email</div>
           <div>
-            <a href="mailto:andresbarrigaru@gmail.com">
+            <TrackedLink
+              href="mailto:andresbarrigaru@gmail.com"
+              event="contact_click"
+              properties={{ channel: "email" }}
+            >
               andresbarrigaru@gmail.com
-            </a>
+            </TrackedLink>
           </div>
           <div>github</div>
           <div>
-            <a href="https://github.com/AndresBarriga">
+            <TrackedLink
+              href="https://github.com/AndresBarriga"
+              event="contact_click"
+              properties={{ channel: "github" }}
+            >
               github.com/AndresBarriga
-            </a>
+            </TrackedLink>
           </div>
           <div>linkedin</div>
           <div>
-            <a href="https://www.linkedin.com/in/andres-barriga/">
+            <TrackedLink
+              href="https://www.linkedin.com/in/andres-barriga/"
+              event="contact_click"
+              properties={{ channel: "linkedin" }}
+            >
               linkedin.com/in/andres-barriga
-            </a>
+            </TrackedLink>
           </div>
         </div>
       </div>

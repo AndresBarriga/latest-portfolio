@@ -6,6 +6,8 @@ import { MDXRemote } from "next-mdx-remote-client/rsc";
 import { getAllLabProjects, getLabProjectDescription } from "@/src/lib/content";
 import { getMdxComponentsDark } from "@/src/components/mdx-components";
 import { DecisionRecord, type DecisionRecordField } from "@/src/components/DecisionRecord";
+import { TrackedLink } from "@/src/components/TrackedLink";
+import { ScrollDepthTracker } from "@/src/components/ScrollDepthTracker";
 import type { LabProjectFrontmatter } from "@/src/lib/types";
 
 const LAB_FIELDS: DecisionRecordField<LabProjectFrontmatter>[] = [
@@ -63,6 +65,7 @@ export default async function LabProjectPage(props: PageProps<"/lab/[slug]">) {
 
   return (
     <article className="flex-1 bg-ink text-ink-inverse">
+      <ScrollDepthTracker />
       <div className="border-b border-hairline-dark px-6 py-5 sm:px-12">
         <div className="mx-auto flex w-full max-w-[1080px] items-baseline justify-between font-mono text-[12.5px] text-meta-dark">
           <span>
@@ -105,12 +108,14 @@ export default async function LabProjectPage(props: PageProps<"/lab/[slug]">) {
           {frontmatter.repoUrl ? (
             <div className="mt-3 font-mono text-[11.5px] text-meta-dark">
               repo:{" "}
-              <a
+              <TrackedLink
                 href={frontmatter.repoUrl}
+                event="outbound_click"
+                properties={{ destination: frontmatter.repoUrl }}
                 className="no-underline underline-sweep text-accent-dark"
               >
                 {frontmatter.repoUrl}
-              </a>
+              </TrackedLink>
             </div>
           ) : null}
         </div>
