@@ -7,10 +7,6 @@ import { FeatureVideoStudioListItem } from "@/src/components/FeatureVideoStudioL
 export default function Home() {
   const caseStudies = getAllCaseStudies();
   const labProjects = getAllLabProjects();
-  const lastUpdated = new Date().toLocaleDateString("en-US", {
-    month: "short",
-    year: "numeric",
-  });
 
   return (
     <div>
@@ -134,13 +130,6 @@ Four of them share a habit: letting economics kill a technically correct answer.
           </div>
         </div>
       </section>
-
-      <footer className="px-6 py-5 sm:px-12">
-        <div className="mx-auto flex w-full max-w-[1080px] justify-between font-mono text-xs text-meta">
-          <span>Andres Barriga</span>
-          <span>last updated {lastUpdated}</span>
-        </div>
-      </footer>
     </div>
   );
 }
