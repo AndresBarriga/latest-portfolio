@@ -13,7 +13,10 @@ type AnalyticsEvents = {
   video_complete: { page: string };
   cv_download: { source_page: string };
   booking_click: { source_page: string };
-  contact_click: { channel: "email" | "linkedin" | "github" };
+  contact_click: {
+    channel: "email" | "linkedin" | "github";
+    source_page: string;
+  };
   outbound_click: { destination: string };
 };
 

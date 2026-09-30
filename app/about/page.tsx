@@ -60,7 +60,7 @@ export default function AboutPage() {
             <TrackedLink
               href="mailto:andresbarrigaru@gmail.com"
               event="contact_click"
-              properties={{ channel: "email" }}
+              properties={{ channel: "email", source_page: "/about" }}
             >
               andresbarrigaru@gmail.com
             </TrackedLink>
@@ -70,7 +70,7 @@ export default function AboutPage() {
             <TrackedLink
               href="https://github.com/AndresBarriga"
               event="contact_click"
-              properties={{ channel: "github" }}
+              properties={{ channel: "github", source_page: "/about" }}
             >
               github.com/AndresBarriga
             </TrackedLink>
@@ -80,7 +80,7 @@ export default function AboutPage() {
             <TrackedLink
               href="https://www.linkedin.com/in/andres-barriga/"
               event="contact_click"
-              properties={{ channel: "linkedin" }}
+              properties={{ channel: "linkedin", source_page: "/about" }}
             >
               linkedin.com/in/andres-barriga
             </TrackedLink>
