@@ -63,6 +63,13 @@ export default function PrivacyPage() {
               Visitors are never identified — no name, email, or account is
               ever attached to analytics events.
             </li>
+            <li>
+              A coarse country (e.g. &quot;DE&quot;) is attached to each
+              event, derived from your IP address at the hosting layer
+              (Vercel). The IP address itself is never stored, logged by
+              this site, or sent to the analytics provider — only the
+              resulting country code is, and only for the current visit.
+            </li>
           </ul>
           <p className="m-0 mt-3">
             Because no cookies or persistent identifiers are used, this site

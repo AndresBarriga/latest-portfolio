@@ -28,7 +28,12 @@ function initPostHogIfNeeded() {
   if (!key) return;
 
   posthog.init(key, {
-    api_host: "https://eu.i.posthog.com",
+    // Routed through our own domain via the rewrites in next.config.ts,
+    // instead of eu.i.posthog.com directly, so tracker blockers are less
+    // likely to catch it. ui_host keeps PostHog's own in-app links (e.g.
+    // the toolbar) pointing at the real app instead of the proxy path.
+    api_host: "/ledger",
+    ui_host: "https://eu.posthog.com",
     // No cookies, no localStorage device ID: PostHog derives an
     // anonymous, non-persistent identity server-side instead. This is
     // also why the site ships with no cookie consent banner.
@@ -52,6 +57,24 @@ function initPostHogIfNeeded() {
     request_batching: false,
   });
   markAnalyticsEnabled();
+  registerGeoCountry();
+}
+
+// Attaches a coarse country property to every subsequent event via
+// posthog.register(), which keeps it in memory for this page session only
+// (no cookie, no localStorage) — so it's naturally gone on the next visit
+// and never persisted client-side. Fetched once per page load, same as
+// init above. /api/geo reads the country server-side from Vercel's geo
+// header; no IP address ever reaches the client or PostHog.
+function registerGeoCountry() {
+  fetch("/api/geo")
+    .then((res) => (res.ok ? res.json() : null))
+    .then((data: { country: string | null } | null) => {
+      if (data) posthog.register({ country: data.country });
+    })
+    .catch(() => {
+      // Best-effort: events still capture fine without a country property.
+    });
 }
 
 function PageviewTracker() {
