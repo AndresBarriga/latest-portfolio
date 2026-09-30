@@ -70,6 +70,12 @@ export default function PrivacyPage() {
               this site, or sent to the analytics provider — only the
               resulting country code is, and only for the current visit.
             </li>
+            <li>
+              Mouse position and scroll position are recorded in aggregate
+              for heatmaps (which parts of a page get attention), separate
+              from and in addition to session recording, which stays
+              disabled — no individual session is ever played back.
+            </li>
           </ul>
           <p className="m-0 mt-3">
             Because no cookies or persistent identifiers are used, this site

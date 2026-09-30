@@ -42,7 +42,13 @@ function initPostHogIfNeeded() {
     // profile is ever created for a visitor.
     person_profiles: "identified_only",
     disable_session_recording: true,
+    // Deliberately off: the per-element clickmap needs autocapture, but we
+    // don't want every click captured — the position-based heatmap below
+    // and our own named events already cover the clicks that matter.
     autocapture: false,
+    // Aggregate mouse-position and scroll heatmap data (not session
+    // replay). Scrollmap needs capture_pageleave (already on below).
+    enable_heatmaps: true,
     // We capture pageviews ourselves in PageviewTracker (below), once per
     // App Router navigation, instead of relying on posthog-js's own
     // full-page-load detection.
