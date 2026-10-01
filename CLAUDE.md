@@ -48,7 +48,7 @@ them):
 takeaway?, role?, results?
 ```
 
-`takeaway` is one sentence (large text, max two lines on desktop).
+`takeaway` is one sentence (large text, max three lines on desktop).
 `role` is one sentence, metadata-style. `results` is at most 3
 `{value, label}` pairs rendered as a stat row (e.g. `{ value: '~50%',
 label: 'faster registration when guests scan' }`).

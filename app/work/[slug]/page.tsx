@@ -107,7 +107,7 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
           </h1>
 
           {frontmatter.takeaway ? (
-            <p className="mt-5 max-w-[48ch] font-display text-[19px] font-medium leading-[1.35] tracking-[-0.01em] text-ink sm:line-clamp-2 sm:text-[21px]">
+            <p className="mt-5 max-w-[48ch] font-display text-[19px] font-medium leading-[1.35] tracking-[-0.01em] text-ink sm:line-clamp-3 sm:text-[21px]">
               {frontmatter.takeaway}
             </p>
           ) : null}
