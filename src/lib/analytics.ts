@@ -56,6 +56,39 @@ export function disableAnalyticsNow() {
   enabled = false;
 }
 
+const ENTRY_UTM_KEYS = [
+  "utm_source",
+  "utm_medium",
+  "utm_campaign",
+  "utm_content",
+  "utm_term",
+] as const;
+
+// posthog-js already attaches utm_* to every event (not just $pageview) by
+// recomputing them from the current URL each time — but only while that URL
+// still carries the query string. Once an App Router client-side navigation
+// moves to a page without ?utm_..., later events (e.g. cv_download,
+// contact_click fired from /about or /cv) lose it. posthog.register() keeps
+// these as in-memory super properties for the rest of the tab's events,
+// same pattern as registerGeoCountry's `country` property below — under
+// cookieless_mode this is memory-only already (no cookie, no localStorage),
+// so it's naturally gone on the next visit and never persisted client-side.
+// Called once per full page load (from the same init gate as posthog.init),
+// so it captures first-touch UTMs for the whole visit, not just the
+// landing page.
+export function registerEntryUtmParams() {
+  if (!enabled) return;
+  if (typeof window === "undefined") return;
+
+  const params = new URLSearchParams(window.location.search);
+  const utm: Record<string, string> = {};
+  for (const key of ENTRY_UTM_KEYS) {
+    const value = params.get(key);
+    if (value) utm[key] = value;
+  }
+  if (Object.keys(utm).length > 0) posthog.register(utm);
+}
+
 export function track<E extends AnalyticsEventName>(
   event: E,
   properties: AnalyticsEventProperties<E>,

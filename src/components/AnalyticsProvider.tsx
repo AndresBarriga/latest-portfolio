@@ -8,6 +8,7 @@ import {
   capturePageview,
   isNoTrackFlagSet,
   markAnalyticsEnabled,
+  registerEntryUtmParams,
 } from "@/src/lib/analytics";
 
 // Guards posthog.init() to exactly one call per page load. Done at module
@@ -65,6 +66,7 @@ function initPostHogIfNeeded() {
   });
   markAnalyticsEnabled();
   registerGeoCountry();
+  registerEntryUtmParams();
 }
 
 // Attaches a coarse country property to every subsequent event via
