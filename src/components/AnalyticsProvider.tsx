@@ -24,6 +24,12 @@ function initPostHogIfNeeded() {
 
   if (typeof window === "undefined") return;
   if (process.env.NODE_ENV !== "production") return;
+  // Opting out after init doesn't actually stop posthog-js's own
+  // autocaptures here: with cookieless_mode "always", its internal
+  // is_capturing() check returns true unconditionally, ignoring
+  // opt_out_capturing() entirely. So /no-track must never call
+  // posthog.init() in the first place, rather than init-then-opt-out.
+  if (window.location.pathname === "/no-track") return;
   if (isNoTrackFlagSet()) return;
 
   const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
@@ -48,9 +54,16 @@ function initPostHogIfNeeded() {
     // don't want every click captured — the position-based heatmap below
     // and our own named events already cover the clicks that matter.
     autocapture: false,
-    // Aggregate mouse-position and scroll heatmap data (not session
-    // replay). Scrollmap needs capture_pageleave (already on below).
-    enable_heatmaps: true,
+    // Heatmaps, dead-click detection and web vitals/performance capture
+    // are all off: our own named events plus scroll_depth already cover
+    // the engagement signals that matter here, and each of these loads
+    // its own extra script and fires its own background event traffic for
+    // very little incremental insight on a low-traffic portfolio site.
+    // (`capture_heatmaps` is the current option name — `enable_heatmaps`
+    // still works but is deprecated.)
+    capture_heatmaps: false,
+    capture_dead_clicks: false,
+    capture_performance: false,
     // We capture pageviews ourselves in PageviewTracker (below), once per
     // App Router navigation, instead of relying on posthog-js's own
     // full-page-load detection.

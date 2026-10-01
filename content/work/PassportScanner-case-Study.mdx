@@ -3,48 +3,22 @@ title: 'Reversing a buy decision on unit economics'
 slug: 'document-scanning-decision'
 industry: 'Hospitality'
 focus: 'Unit economics'
+takeaway: 'Per-scan vendor pricing would have eaten most of a per-room licence, so I reversed an approved buy decision and shipped an in-house MRZ scanner instead.'
+role: 'I modelled the vendor pricing, ran the field discovery, argued to reverse the approved decision and set the phase-one scope.'
+results:
+  - value: '~50%'
+    label: 'faster registration when guests scan'
+  - value: '~1 in 2'
+    label: 'eligible guests choose to scan'
+  - value: '2 markets'
+    label: 'pulling phase two'
 problem: 'Guest registration required manual entry of passport and ID data at check-in. It was one of our most persistent customer requests, and competitors already offered it. A technical spike recommended buying a specialist scanning vendor, and that direction was approved before anyone had modelled what it would cost per room.'
-evidence: 'A discovery round with sales and service delivery teams established that demand was operational rather than regulatory, that image retention requirements varied by country, and that MRZ-only coverage (passports and European IDs only) would not be enough in markets with high domestic tourism. Vendor pricing modelled against our per-room licence then showed per-scan cost reaching roughly 70% of total licence revenue per room, more than the base product licence on its own.'
+evidence: 'Vendor pricing modelled against our per-room licence showed per-scan cost reaching roughly 70% of total licence revenue per room, more than the base product licence on its own. A discovery round with sales and service delivery teams established that demand was operational rather than regulatory, that image retention requirements varied by country, and that MRZ-only coverage (passports and European IDs only) would not be enough in markets with high domestic tourism.'
 alternatives: 'Vendor SDK: broadest coverage and maintained document formats, but per-scan pricing under a per-room licence. External AI extraction: faster, hallucination risk, identity documents leaving our environment. Self-hosted AI: data inside, heavy MLOps, still non-deterministic. Full in-house OCR across all document types: strategic control at a delivery cost we could not carry.'
 decision: 'Reverse the approved decision and build in-house, scoped to MRZ only rather than full document coverage, behind a provider abstraction so coverage could be extended per region later. Trade-off: markets with high domestic tourism and non-MRZ national IDs are not served in phase one.'
 outcome: 'In production across European properties. Registrations complete around 50% faster when scanned, with roughly half of eligible guests choosing to scan over manual entry. On-device extraction, manual fallback when a scan fails. Phase two is now underway against specific requests from two Asian markets.'
 lessons: 'The technical evaluation ran before the commercial one, and the approved direction did not survive contact with the pricing model. Unit economics should have gated the build-versus-buy question, not followed it.'
 ---
-
-GuestReg is a digital guest registration product. Instead of filling in a paper
-registration card at the desk, the guest completes it themselves on a tablet or
-their own phone, and the record syncs into the hotel's PMS as a guest profile.
-
-Scanning identity documents had been one of the most persistent customer
-requests across regions. The pull was operational: faster check-in, fewer manual
-profile errors, and one vendor covering registration and scanning instead of
-two. It had also stopped being a nice-to-have: it came up repeatedly and
-unprompted in customer conversations, and it was showing up in live deals as a
-reason to choose competitors who already offered it.
-
-A technical spike compared four approaches and recommended buying. I agreed with
-it at the time.
-
-## Why building was ruled out first
-
-The spike scored four options against speed to launch, cost, quality,
-determinism, privacy and operational burden. Building from scratch came out best
-on control, auditability and unit cost, and worst on everything to do with
-delivery.
-
-Identity documents are a moving target: countries reissue formats, add security
-features, change layouts. A vendor absorbs that continuously as part of the
-licence. Build it yourself and you own a maintenance obligation that never ends
-and grows with every market you sell into.
-
-The AI options were faster to prototype but introduced privacy and determinism
-concerns. Identity documents leaving our environment is a hard conversation with
-compliance, and a model that hallucinates a passport number is worse than one
-that fails visibly. Self-hosting solves the data question but introduces an
-MLOps burden we had no reason to take on.
-
-So buy was the right recommendation on its own terms. Then I went and got the
-pricing.
 
 <Diagram
   src="/images/document-scanning-decision/build-vs-buy-matrix.svg"
@@ -53,78 +27,77 @@ pricing.
   height={480}
 />
 
-## The number that killed it
+GuestReg is our digital guest registration product: the guest fills in the
+registration card on a tablet or their own phone, and the record syncs into the
+hotel's PMS. Scanning identity documents was one of the most persistent requests
+across regions, and it was showing up in live deals as a reason to choose
+competitors who already offered it.
 
-Our product is priced per room per month. Every vendor priced per scan.
+## Buying was the right answer, until the pricing
 
-I spoke to three vendors and modelled their plans against our licence. Using
-occupancy data across the properties we had, a conservative estimate put scans
-at eight per room per month. Even at that level, vendor rates consumed roughly
-70% of total licence revenue for the room, more than the base product licence
-on its own. Realistic volumes were considerably higher.
+A technical spike scored four options against speed to launch, cost, quality,
+determinism, privacy and operational burden, and recommended buying a specialist
+vendor. I agreed. Building in-house scored best on cost and control and worst on
+delivery: identity documents are a moving target, and a vendor absorbs new
+formats and security features as part of the licence. The AI options were faster
+to prototype, but identity documents leaving our environment is a hard
+conversation with compliance, and a model that hallucinates a passport number is
+worse than one that fails visibly.
 
-The ratio held across every property I modelled, because it depends on scans per
-room rather than on the customer. This was not a negotiation problem. A
-per-transaction cost sitting underneath a fixed recurring price is structurally
-wrong, and no discount changes the shape of it.
+**Then I went and got the pricing.**
 
-So I went back and argued to reverse a decision that had already been approved.
+## Per-scan pricing broke the per-room licence
 
-## Asking the field before locking scope
+Our product is priced per room per month. Every vendor priced per scan. I
+modelled three vendors' plans against our licence, using occupancy data across
+our properties. Even at a conservative eight scans per room per month, vendor
+rates consumed roughly 70% of the licence revenue for that room, more than the
+base product licence on its own. Realistic volumes were higher.
 
-I ran a discovery round with sales and service delivery teams across two
-regions, asking what their properties actually needed rather than what we
-assumed. Three things came back. Demand was operational, not regulatory. Image
-retention requirements varied by country, so storage had to be configurable
-rather than a fixed product decision. And in markets with heavy domestic
-tourism, MRZ-only coverage would not be enough.
+The ratio held across every property, because it depends on scans per room, not
+on the customer. **A per-transaction cost under a fixed recurring price is
+structurally wrong, and no discount changes the shape of it.** So I argued to
+reverse a decision that had already been approved.
 
-That last point became the trade-off I ended up accepting, knowing in advance
-who it would disappoint.
+## Discovery set the trade-off before I locked scope
 
-## One standard instead of every format
+I asked sales and service delivery teams in two regions what their properties
+actually needed. Three things came back: demand was operational, not
+regulatory; image retention rules varied by country, so storage had to be
+configurable; and in markets with heavy domestic tourism, MRZ-only coverage
+would not be enough. That last point became the trade-off I accepted, knowing in
+advance who it would disappoint.
 
-Building full document coverage in-house was never realistic. Covering every
-national ID format in the world is what the vendors exist for.
+## One standard covers Europe, and the rest waits
 
-MRZ is the machine-readable strip on passports and on most European national ID
-cards. It is a fixed international standard, it parses deterministically, and
-there are mature open source libraries for it. It also covers a whole market: in
-Europe, a European guest travels with an ID card carrying an MRZ or with a
-passport, and a non-European guest always travels with a passport. So European
-properties are covered, and so is any property with predominantly international
-guests.
+MRZ is the machine-readable strip on passports and most European ID cards: a
+fixed international standard that parses deterministically, with mature open
+source libraries. In Europe a guest carries either an MRZ ID card or a passport,
+so European properties are covered, and so is any property with mostly
+international guests. Domestic travel in markets with non-MRZ national IDs is
+not. The regional sales teams were right that this made the feature far less
+useful to them. I still think a narrow version that worked beat waiting for a
+broad one we could not afford.
 
-What it does not cover is domestic travel in markets using non-MRZ national IDs.
-The regional sales teams had flagged exactly this and were not happy with the
-scope. They were right that the feature is much less useful to them. I still
-think shipping a narrow version that worked was better than waiting for a broad
-version we could not afford.
+## A narrow phase one, with no dead end
 
-## Phasing coverage instead of promising it
+Extraction sits behind a provider abstraction from day one, so MRZ, OCR and any
+future document understanding are implementations behind one interface rather
+than competing rewrites. That was my condition for accepting narrow coverage.
 
-The scope was narrow, but extraction sits behind a provider abstraction from day
-one, so MRZ, OCR and any future document understanding are implementations
-behind a common interface rather than competing rewrites. That was the condition
-for accepting a limited phase one: narrow coverage, but no dead end.
+Phase one shipped as MRZ plus manual confirmation: the guest scans, reviews the
+fields and corrects them before saving, with manual entry as the fallback.
+Registrations complete around 50% faster when guests scan, and roughly half of
+eligible guests choose to scan. That adoption number is the one I watch:
+scanning is optional, so it measures whether guests prefer it, not whether we
+shipped it.
 
-Phase one shipped as MRZ plus manual confirmation. The guest opens GuestReg,
-scans, the fields populate, and they review and correct before saving. Manual
-entry remains available and is the fallback when a scan fails.
+Phase two adds OCR with per-country field rules, one country at a time. It was
+triggered by requests from Vietnam and Thailand after those teams saw phase one
+working. **The teams who objected loudest to the original scope are the ones now
+pulling the extension.**
 
-Registrations complete around 50% faster when the guest scans, and roughly half
-of eligible guests choose to scan rather than type. That adoption number is the
-one I watch: scanning is optional and manual entry is always available, so it
-measures whether guests actually prefer it rather than whether we shipped it.
+## What I got wrong: the order
 
-Phase two is underway. It adds OCR with per-country field rules for documents
-without an MRZ, taught one country at a time rather than attempted globally.
-What triggered it was not the roadmap: it was two specific customer requests
-from Vietnam and Thailand, markets with heavy domestic travel, that came in
-after those teams saw phase one working. The teams who had objected loudest to
-the original scope are the ones now pulling the extension, which is the outcome
-I wanted from shipping something narrow first.
-
-What I got wrong is the sequence. Build versus buy was answered on technical
-grounds and approved before anyone modelled what it would cost per room. The
-commercial model should have come first.
+Build versus buy was answered on technical grounds and approved before anyone
+modelled the cost per room. **The commercial model should have come first.**

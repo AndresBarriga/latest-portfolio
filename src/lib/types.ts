@@ -5,6 +5,15 @@ export interface CaseStudyFrontmatter {
   focus: string;
   /** Optional; the index row and header show only industry + focus when omitted. */
   tech?: string;
+  /** Optional one-sentence hook rendered large under the title/tags, before
+   * the body. Omitted entirely (no empty space) when not set. */
+  takeaway?: string;
+  /** Optional one-line statement of the author's specific contribution,
+   * rendered metadata-style in the trailer. */
+  role?: string;
+  /** Optional headline numbers (max 3) rendered as a stat row in the
+   * trailer, each a big value with a mono label underneath. */
+  results?: { value: string; label: string }[];
   problem: string;
   evidence: string;
   alternatives: string;

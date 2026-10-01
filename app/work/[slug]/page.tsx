@@ -1,8 +1,7 @@
-import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { MDXRemote } from "next-mdx-remote-client/rsc";
+import { evaluate } from "next-mdx-remote-client/rsc";
 import {
   getAllCaseStudies,
   getCaseStudyDescription,
@@ -60,13 +59,23 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
     notFound();
   }
 
-  const { frontmatter, content } = caseStudies[index];
+  const { frontmatter, content: rawContent } = caseStudies[index];
   const components = getMdxComponents({
     href: `/work/${frontmatter.slug}`,
     label: "the case",
   });
   const prev = index > 0 ? caseStudies[index - 1] : undefined;
   const next = index < caseStudies.length - 1 ? caseStudies[index + 1] : undefined;
+
+  // Awaited directly (no Suspense) so the whole body is guaranteed to be
+  // fully compiled before this page renders — these pages are statically
+  // generated once at build time, so a Suspense boundary that didn't
+  // settle in that single pass would leave its "Loading…" fallback frozen
+  // in the prerendered HTML forever (no live server render to resolve it
+  // afterward). A real MDX compile error fails the build loudly instead of
+  // silently shipping a stuck fallback.
+  const { content, error } = await evaluate({ source: rawContent, components });
+  if (error) throw error;
 
   return (
     <article>
@@ -96,20 +105,39 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
           <h1 className="m-0 max-w-[24ch] font-display text-[32px] font-medium leading-[1.1] tracking-[-0.02em] sm:text-[46px]">
             {frontmatter.title}
           </h1>
+
+          {frontmatter.takeaway ? (
+            <p className="mt-5 max-w-[48ch] font-display text-[19px] font-medium leading-[1.35] tracking-[-0.01em] text-ink sm:line-clamp-2 sm:text-[21px]">
+              {frontmatter.takeaway}
+            </p>
+          ) : null}
+
+          {frontmatter.results?.length ? (
+            <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-10">
+              {frontmatter.results.slice(0, 3).map((result, i) => (
+                <div key={i}>
+                  <p className="m-0 font-display text-[26px] font-medium leading-none tracking-[-0.01em] text-ink">
+                    {result.value}
+                  </p>
+                  <p className="m-0 mt-1 max-w-[22ch] font-mono text-[11px] leading-[1.4] text-meta">
+                    {result.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          ) : null}
+
+          {frontmatter.role ? (
+            <p className="m-0 mt-6 font-mono text-[12px] text-meta">
+              {frontmatter.role}
+            </p>
+          ) : null}
         </div>
       </div>
 
       <div className="px-6 py-10 sm:px-12 sm:py-14">
         <div className="mx-auto grid w-full max-w-[1080px] grid-cols-1 gap-10 lg:grid-cols-[1fr_372px] lg:items-start lg:gap-14">
-          <div>
-            <Suspense
-              fallback={
-                <p className="font-mono text-sm text-meta">Loading content…</p>
-              }
-            >
-              <MDXRemote source={content} components={components} />
-            </Suspense>
-          </div>
+          <div>{content}</div>
           <DecisionRecord data={frontmatter} fields={CASE_STUDY_FIELDS} />
         </div>
       </div>

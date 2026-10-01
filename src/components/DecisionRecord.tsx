@@ -44,6 +44,16 @@ const darkTheme: Theme = {
 const ROW_BASE_DELAY_MS = 150;
 const ROW_STAGGER_MS = 60;
 
+// Same first-sentence heuristic as getCaseStudyDescription/
+// getLabProjectDescription in src/lib/content.ts — split at the first
+// sentence-ending punctuation followed by whitespace or end of string.
+function splitFirstSentence(text: string): { first: string; rest: string } {
+  const match = text.match(/[.!?](?=\s|$)/);
+  if (!match || match.index === undefined) return { first: text, rest: "" };
+  const splitAt = match.index + 1;
+  return { first: text.slice(0, splitAt).trim(), rest: text.slice(splitAt).trim() };
+}
+
 export function DecisionRecord<T extends { slug: string }>({
   data,
   fields,
@@ -111,6 +121,10 @@ export function DecisionRecord<T extends { slug: string }>({
           const isOpen = openFields[String(key)] ?? false;
           const value = data[key];
           const isLast = index === fields.length - 1;
+          const { first, rest } = splitFirstSentence(
+            typeof value === "string" ? value : ""
+          );
+          const hasRest = rest.length > 0;
 
           return (
             <div
@@ -125,24 +139,33 @@ export function DecisionRecord<T extends { slug: string }>({
               }}
             >
               <dt className="m-0">
-                <button
-                  type="button"
-                  onClick={() => toggle(String(key))}
-                  aria-expanded={isOpen}
-                  className={`flex w-full cursor-pointer items-baseline justify-between gap-2 border-0 bg-transparent p-0 text-left font-mono text-[11px] ${t.meta}`}
-                >
-                  <span>{label}</span>
-                  <span aria-hidden="true">{isOpen ? "–" : "+"}</span>
-                </button>
+                {hasRest ? (
+                  <button
+                    type="button"
+                    onClick={() => toggle(String(key))}
+                    aria-expanded={isOpen}
+                    className={`flex w-full cursor-pointer items-baseline justify-between gap-2 border-0 bg-transparent p-0 text-left font-mono text-[11px] ${t.meta}`}
+                  >
+                    <span>{label}</span>
+                    <span aria-hidden="true">{isOpen ? "–" : "+"}</span>
+                  </button>
+                ) : (
+                  <span
+                    className={`flex w-full items-baseline justify-between gap-2 font-mono text-[11px] ${t.meta}`}
+                  >
+                    {label}
+                  </span>
+                )}
               </dt>
               <dd
                 className={
                   isOpen
                     ? `m-0 mt-[5px] whitespace-pre-line border-l-2 ${t.accent} pl-3 text-[14.5px] leading-[1.6] ${t.body}`
-                    : `m-0 mt-[5px] line-clamp-2 text-[14.5px] leading-[1.55] ${t.body}`
+                    : `m-0 mt-[5px] text-[14.5px] leading-[1.55] ${t.body}`
                 }
               >
-                {typeof value === "string" ? value : ""}
+                {first}
+                {isOpen && hasRest ? ` ${rest}` : ""}
               </dd>
             </div>
           );

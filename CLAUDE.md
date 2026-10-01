@@ -40,6 +40,19 @@ title, slug, problem, evidence, alternatives, decision, outcome, lessons
 Every field must be filled — an empty or vague field is a content gap,
 not something to paper over with generic language.
 
+Optional trailer fields (rendered under the title and tags, before the
+body — omitted entirely, no placeholder space, when a case doesn't set
+them):
+
+```
+takeaway?, role?, results?
+```
+
+`takeaway` is one sentence (large text, max two lines on desktop).
+`role` is one sentence, metadata-style. `results` is at most 3
+`{value, label}` pairs rendered as a stat row (e.g. `{ value: '~50%',
+label: 'faster registration when guests scan' }`).
+
 Lab projects (`content/lab/*.mdx` frontmatter):
 
 ```
