@@ -106,16 +106,24 @@ export function capturePageview(url: string) {
 // posthog-js's own automatic $pageleave only fires on a real document
 // unload (tab close, external link, hard reload) — it has no way to know
 // about a client-side route change, since we capture pageviews ourselves
-// (capture_pageview: false). Without this, time-on-page is only ever
+// (capture_pageview: false). Without this, scroll depth is only ever
 // measurable for whichever page happens to be open when the tab closes.
 // Called on every SPA navigation for the page being left; the very last
 // page of a visit still gets its $pageleave from posthog-js's native
 // unload handling, so this isn't called on unmount.
-export function capturePageleave(pathname: string, durationSeconds: number) {
+//
+// We don't pass $prev_pageview_duration (or $prev_pageview_pathname) here:
+// posthog-js's internal PageViewManager recomputes both on every event
+// literally named "$pageleave" and always overwrites whatever we send for
+// those two keys, using its own last-seen-$pageview timestamp rather than
+// ours. That internal timer can be read more than once before it resets
+// (e.g. a tab backgrounded then closed can fire posthog-js's native
+// pageleave twice off the same stale timestamp), so $prev_pageview_duration
+// is not reliable for either bot or human sessions — don't build anything
+// on it. $prev_pageview_max_scroll_percentage doesn't have this problem
+// (it's a running max, not a point-in-time clock read), which is why we
+// still rely on it elsewhere.
+export function capturePageleave(pathname: string) {
   if (!enabled) return;
-  posthog.capture("$pageleave", {
-    $pathname: pathname,
-    $prev_pageview_pathname: pathname,
-    $prev_pageview_duration: durationSeconds,
-  });
+  posthog.capture("$pageleave", { $pathname: pathname });
 }

@@ -1,51 +1,25 @@
 ---
-title: 'MCP applied to Traveltech'
+title: 'Letting an LLM act on hotel systems without writing to them'
 slug: 'mcp-orchestration'
 industry: 'Hospitality'
 focus: 'Architecture'
 tech: 'AI'
-problem: 'Guests and staff wanted to ask questions and make requests in plain language — book a treatment, order to the room, move a shift — across interconnected products from our Suite. Letting a LLM act on hotel systems means letting it write to a PMS and a POS that belong to the customer.'
+takeaway: 'Guests and staff wanted to book, order and change things in plain language. Each product exposes only operations it already ships and tests: the model chooses, the product executes.'
+role: 'I defined the requirements, including which operations each product exposes and the OTP rule for room charges.'
+results:
+  - value: '~20'
+    label: 'properties in production'
+  - value: '5'
+    label: 'products the assistant can act on'
+  - value: '0'
+    label: 'direct writes from the model to a customer system'
+problem: 'Guests and staff wanted to make requests in plain language — book a treatment, order to the room, move a shift — which means letting an LLM act on a PMS and a POS that belong to the customer. The requests span several interconnected products from our Suite.'
 evidence: 'The information a guest needs is spread across reservations, spa availability, F&B, and property documents the hotel uploads. Answering any real question means reaching into several products, and the useful requests are not questions at all — they are actions with consequences in a live operational system.'
 alternatives: 'One central orchestrator holding every integration: single place to reason, single place to get it wrong, and write logic duplicated away from the products that own it. Read-only assistant: safe, and stops short of what people actually asked for. Per-product MCP servers exposing tested operations: more surface to maintain, no central authority.'
 decision: 'One MCP server per product, each exposing a narrow set of write operations the product already implements and has been tested on. The model selects and invokes an operation; the product executes it. Trade-off: no single service understands the whole system, and each product team owns its own exposed surface.'
-outcome: "In production across roughly 20 properties, with guest access by QR and staff by login. Payment operations are exposed but always require an OTP to the guest's phone"
+outcome: "In production across roughly 20 properties, with guest access by QR and staff by login. Payment operations are exposed but always require an OTP to the guest's phone."
 lessons: "The safety property came from architecture, not from prompting. Because every write is an operation a product already ships and tests, there is no path where a model composes a novel action against a customer's system."
 ---
-
-We wanted guests to be able to say what they want. Book a spa treatment on the
-17th. Bring champagne to the room. And we wanted staff to be able to ask about
-their own operation accross mutiple products.
-
-The information needed to answer any of that is spread across. But the interesting requests are not questions. They are
-actions, and they land in a PMS and a POS the customer owns and runs their
-business on.
-
-## Where the boundary went
-
-The obvious design is one orchestrator that holds every integration and does the
-writing. We did not build that.
-
-Instead each product exposes its own MCP server, offering a narrow set of
-operations it already implements: create a booking, place an order, move a shift,
-reschedule a reservation. They are the operations the product already ships and has been tested
-on heavily, exposed through a different door.
-
-So a guest asking for champagne does not result in a write to the POS. It results
-in an order in the ordering product, which then does what it already does — the
-same path a tap in the interface would take. The product owns the logic for
-getting that right, including everything it has learned about the customer's
-configuration.
-
-This is the part I would defend hardest. The model chooses among operations; it
-never composes one. We have not seen hallucinated actions in production, and
-the reason is structural rather than a matter of how well the prompt is written.
-The other half is not operational at all
-
-Not every question has an operation behind it. A guest asks what time the pool closes, whether there is parking, how to get to the station. None of that lives in a PMS.
-
-So property documents are a source alongside the operational products. Hotel admins upload their own PDFs and website content, and it becomes answerable in the same conversation as a booking. Events turned out to be the case that showed why this matters: an organiser uploads a schedule, and attendees can ask about their own sessions without anyone building an event product.
-
-This is the half that costs almost nothing and covers most of the questions. The operational half is harder and matters more, but a system that can only act and cannot answer is not something a guest would open twice.
 
 <Diagram
   src="/images/mcp-orchestration/ai-guide-architecture.svg"
@@ -54,7 +28,53 @@ This is the half that costs almost nothing and covers most of the questions. The
   height={402}
 />
 
-## Identity, and the one case that needed more
+We wanted guests to be able to say what they want. Book a spa treatment on the
+17th. Bring champagne to the room. And we wanted staff to be able to ask about
+their own operation across multiple products.
+
+The information needed to answer any of that is spread across reservations, spa
+availability, F&B and the documents each hotel uploads. But the interesting
+requests are not questions. They are actions, and they land in a PMS and a POS
+the customer owns and runs their business on.
+
+## No central orchestrator: each product exposes what it already ships
+
+The obvious design is one orchestrator that holds every integration and does the
+writing. We did not build that.
+
+Instead each product exposes its own MCP server, offering a narrow set of
+operations it already implements: create a booking, place an order, move a
+shift, reschedule a reservation. They are the operations the product already
+ships and has tested heavily, exposed through a different door.
+
+So a guest asking for champagne does not result in a write to the POS. It
+results in an order in the ordering product, which then does what it already
+does: the same path a tap in the interface would take. The product owns the
+logic for getting that right, including everything it has learned about the
+customer's configuration.
+
+This is the part I would defend hardest. **The model chooses among operations;
+it never composes one.** We have not seen hallucinated actions in production,
+and the reason is structural rather than a matter of how well the prompt is
+written.
+
+## Most questions need documents, not operations
+
+Not every question has an operation behind it. A guest asks what time the pool
+closes, whether there is parking, how to get to the station. None of that lives
+in a PMS.
+
+So property documents are a source alongside the operational products. Hotel
+admins upload their own PDFs and website content, and it becomes answerable in
+the same conversation as a booking. Events showed why this matters: an
+organiser uploads a schedule, and attendees can ask about their own sessions
+without anyone building an event product.
+
+This half costs almost nothing and covers most of the questions. The
+operational half is harder and matters more, but **a system that can only act
+and cannot answer is not something a guest would open twice.**
+
+## A conversation is not consent: room charges need an OTP
 
 Guests authenticate by QR from their reservation; staff log in. The two do not
 see the same tools, because they are not talking to the same set of servers.
@@ -64,19 +84,18 @@ through Stripe or post a charge to the room, and posting to the room moves money
 without a card present. That operation is exposed, but it always requires an OTP
 to the guest's phone before it executes.
 
-The reasoning is that a conversation is not consent. Everything else the
-assistant does is either reversible or low-consequence, and the request itself is
-sufficient authorisation. A charge is neither, and I did not want the transcript
-to be the only evidence that a guest agreed to it.
+Everything else the assistant does is either reversible or low-consequence, and
+the request itself is sufficient authorisation. A charge is neither, and **I did
+not want the transcript to be the only evidence that a guest agreed to it.**
 
-## What it costs
+## No single service understands the whole system
 
-The honest trade-off is that no single service understands the whole system. Each
-product team owns its own exposed surface, which means adding a product means
-building its server rather than getting orchestration for free. That is a real
-maintenance cost and I do not want to claim otherwise.
+That is the honest trade-off. Each product team owns its own exposed surface, so
+adding a product means building its server rather than getting orchestration
+for free. **That is a real maintenance cost and I do not want to claim
+otherwise.**
 
 What we get for it is that capability grows with the portfolio. Each product
 added extends what can be asked and done, and the write path for every new
-capability is one a product team already owns and tests, rather than one that has
-to be re-earned in a central place.
+capability is one a product team already owns and tests, rather than one that
+has to be re-earned in a central place.

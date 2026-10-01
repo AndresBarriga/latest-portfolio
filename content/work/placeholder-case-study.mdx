@@ -4,48 +4,60 @@ slug: 'shared-integration-service'
 industry: 'Hospitality'
 focus: 'Platform strategy'
 tech: 'Integrations'
-problem: "Five products needed the same reservation and profile data from a customer's PMS. Each integrating separately meant a new connector per product per property, each with its own cache and its own idea of how fresh the data was."
+takeaway: 'Five products needed the same guest data from each hotel''s PMS. Instead of one integration per product per property, we replicate it once and every product reads from there.'
+role: 'I owned the product boundary: what the service replicates, what stays configurable per customer, and where the abstraction stops. Engineering owned the replication and running it.'
+results:
+  - value: '5'
+    label: 'products in production on one layer'
+  - value: '1'
+    label: 'integration per property, not one per product'
+problem: 'Five products needed the same reservation and profile data from a customer''s PMS. Each integrating separately meant a new connector per product per property, each with its own cache and its own idea of how fresh the data was.'
 evidence: 'Every new product repeated the same onboarding work against the same system. Reference data such as payment methods, packages and rates differs per property and changes without notice, so each product was independently exposed to the same class of failure.'
 alternatives: 'Direct integration per product: no shared infrastructure, but N connectors and N divergent caches per property. A shared client library: removes duplicated code, leaves every product owning its own state. A shared service: one integration per property, consumed by all products.'
-decision: "A dedicated service replicating reservations and profiles per PMS instance via Business Events, consumed by every product. Trade-off: we took on eventual consistency and the operational cost of running a replica of someone else's data."
+decision: 'A dedicated service replicating reservations and profiles per PMS instance via Business Events, consumed by every product. Trade-off: we took on eventual consistency and the operational cost of running a replica of someone else''s data.'
 outcome: 'Five products in production on the same layer, including digital guest registration, restaurant access control, spa booking, and staff ordering synced with the POS. Also used for a multi-property deployment for a hotel group.'
-lessons: The dictionary fallback treated unmapped values as an edge case to patch after the fact. What should have been there from day one is schema validation at the point of ingestion — reject and alert on an unrecognized value immediately, rather than let it pass through silently until a downstream product broke. The dictionary was the visible fix; the actual gap was that nothing was watching the boundary.
+lessons: 'The dictionary fallback treated unmapped values as an edge case to patch after the fact. What should have been there from day one is schema validation at the point of ingestion — reject and alert on an unrecognized value immediately, rather than let it pass through silently until a downstream product broke. The dictionary was the visible fix; the actual gap was that nothing was watching the boundary.'
 ---
+
+<Diagram
+  src="/images/shared-integration-service/before-after.svg"
+  alt="Before and after. Before: five products each connect separately to the hotel's PMS, each with its own cache and refresh policy, repeated for every property. After: one replication service per PMS instance subscribes to the PMS's Business Events and replicates reservations and profiles; all five products read from it, so each property is integrated once."
+  width={680}
+  height={420}
+/>
 
 We had five products that all needed the same thing: who is staying, what they
 booked, what packages they are entitled to. That data lives in the customer's
 PMS, and every product was going to reach for it separately.
 
-That framing matters, because the obvious reading is wrong. This was not a
-performance problem (API was fast enough), it was a duplication problem. One integration per product per property
-means the same onboarding work repeated five times, five caches with five
-different refresh policies, and five separate places where the same failure can
-appear.
+**This was not a performance problem (the API was fast enough); it was a
+duplication problem.** One integration per product per property means the same
+onboarding work repeated five times, five caches with five different refresh
+policies, and five separate places where the same failure can appear.
 
 So we built one service per PMS instance. It subscribes to Business Events from
 the PMS and replicates reservations and profiles into our own infrastructure.
 Any product that needs guest data reads from there. A customer running three of
 our products integrates once.
 
-## What we deliberately did not standardise
+## Customers choose how fresh their data is
 
-Worth being precise about who decided what. I owned the product boundary: which data the service replicates, what stays configurable per customer, and where the abstraction stops.
-Engineering owned how — the replication itself, the queue, the reconciliation, and everything about running it. The decisions that took the longest were the ones on the line between those, and they were made together.
-
-Reference data is cached, and the refresh frequency is configurable by the
+Reference data is cached, and I made the refresh frequency configurable by the
 customer rather than fixed by us. Different properties tolerate stale data
 differently, and it also depends on which product is consuming it. We set
 sensible defaults for customers who do not want to think about it, but the
-decision belongs to them. Choosing freshness on a customer's behalf is the kind
-of default that looks tidy in design and generates support tickets for years.
+decision belongs to them. **Choosing freshness on a customer's behalf is the
+kind of default that looks tidy in design and generates support tickets for
+years.**
 
-The second thing that shaped the design is that a third-party system changes
-underneath you without telling you. A property adds a payment method, renames a
-package, reconfigures a rate. A product then sends a value the PMS rejects. The
-naive behaviour is to return the error. Instead the service refreshes the
-relevant dictionary, checks what the valid values actually are now, and either
-retries with the correct value or falls back. Most of the time the failure
-resolves itself rather than surfacing to a receptionist.
+## The PMS changes underneath you without telling you
+
+A property adds a payment method, renames a package, reconfigures a rate. A
+product then sends a value the PMS rejects. The naive behaviour is to return the
+error. Instead the service refreshes the relevant dictionary, checks what the
+valid values actually are now, and either retries with the correct value or
+falls back. Most of the time the failure resolves itself rather than surfacing
+to a receptionist.
 
 ## Operating a replica, not just building one
 
@@ -55,13 +67,15 @@ you can see what was processed, skipped or purged, scheduled reconciliation
 against the source system, and a manual resync for reservations, profiles and
 packages when someone needs to force the issue.
 
-The observability mattered more than I expected. The difference between
+The observability mattered more than I expected. **The difference between
 replicating data and operating a replica is being able to answer why a booking
-looks wrong without guessing.
+looks wrong without guessing.**
+
+## The integration became something products could assume
 
 What convinced me the abstraction was right is not the architecture. It is that
 products got built on top of it that would have been hard to justify
 individually: restaurant access control checking entitlements in real time,
-pre-arrival communications driven by who is actually arriving tomorrow. The
-integration stopped being a cost per product and became something products could
-assume.
+pre-arrival communications driven by who is actually arriving tomorrow. **The
+integration stopped being a cost per product and became something products
+could assume.**

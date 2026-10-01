@@ -80,6 +80,25 @@ function initPostHogIfNeeded() {
   markAnalyticsEnabled();
   registerGeoCountry();
   registerEntryUtmParams();
+  registerAutomationSignals();
+}
+
+// Flags likely-automated sessions as super properties instead of a
+// project-wide bot rule, so automated traffic stays queryable as its own
+// segment rather than silently dropped. navigator.webdriver is set by
+// Selenium/Playwright/Puppeteer-driven browsers; a viewport that exactly
+// matches the screen (no browser chrome taken into account) is the
+// signature of a headless browser with no real window, which is what we
+// saw on the undetected crawl traffic — PostHog's own $virt_is_bot missed
+// it because the UA string itself looked like genuine Chrome.
+function registerAutomationSignals() {
+  if (typeof window === "undefined") return;
+  posthog.register({
+    is_webdriver: navigator.webdriver === true,
+    viewport_equals_screen:
+      window.innerWidth === window.screen.width &&
+      window.innerHeight === window.screen.height,
+  });
 }
 
 // Attaches a coarse country property to every subsequent event via
@@ -102,21 +121,18 @@ function registerGeoCountry() {
 function PageviewTracker() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const prevPageRef = useRef<{ pathname: string; enteredAt: number } | null>(
-    null
-  );
+  const prevPathnameRef = useRef<string | null>(null);
 
   useEffect(() => {
     let url = `${window.location.origin}${pathname}`;
     const search = searchParams.toString();
     if (search) url += `?${search}`;
 
-    const now = Date.now();
-    const prev = prevPageRef.current;
-    if (prev && prev.pathname !== pathname) {
-      capturePageleave(prev.pathname, (now - prev.enteredAt) / 1000);
+    const prevPathname = prevPathnameRef.current;
+    if (prevPathname && prevPathname !== pathname) {
+      capturePageleave(prevPathname);
     }
-    prevPageRef.current = { pathname, enteredAt: now };
+    prevPathnameRef.current = pathname;
 
     capturePageview(url);
   }, [pathname, searchParams]);

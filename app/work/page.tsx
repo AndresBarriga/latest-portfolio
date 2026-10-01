@@ -15,12 +15,9 @@ export default function WorkIndexPage() {
         <h1 className="m-0 font-display text-[28px] font-medium tracking-[-0.025em] sm:text-[32px]">
           Work
         </h1>
-        <span className="font-mono text-xs text-meta">
-          [PLACEHOLDER: date range]
-        </span>
       </div>
       <p className="mb-8 max-w-[62ch] text-[15.5px] leading-[1.6] text-body-muted">
-        [PLACEHOLDER: one-line framing for the case study index.]
+        Some highlights on problems, decisions and solutions that I encountered
       </p>
       <div className="border-t-2 border-ink">
         {caseStudies.map((entry, index) => (
