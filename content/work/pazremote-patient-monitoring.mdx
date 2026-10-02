@@ -3,12 +3,21 @@ title: 'Working backwards from clinician time in remote patient monitoring'
 slug: 'remote-patient-monitoring'
 industry: 'Healthtech'
 focus: 'Discovery'
+takeaway: 'In a regulated product, I measured clinician time and patient onboarding before changing anything, then redesigned both without dropping a single regulatory step.'
+role: 'Only PM on the platform: the physician web app with an internal team, and the patient app with an external one.'
+results:
+  - value: '−40%'
+    label: 'average alert-handling time'
+  - value: '+18%'
+    label: 'onboarding completion'
+  - value: '5'
+    label: 'paying hospitals, 500+ patients'
 problem: >
-  Remote patient monitoring has to satisfy two things at once. Regulation
-  defines what must happen. The service only works commercially if
-  clinicians can handle each patient's alerts quickly and patients
-  actually complete onboarding. We had to improve both without dropping
-  a single regulatory step.
+  For the service to work commercially, clinicians had to handle each
+  patient's alerts quickly and patients had to complete onboarding,
+  without dropping a single regulatory step. Regulation defined what must
+  happen; the economics defined how much clinician time each patient
+  could cost.
 evidence: >
   We measured the baseline before changing anything: average
   alert-handling time with doctors, and completion time and completion
@@ -47,72 +56,67 @@ lessons: >
   the user.
 ---
 
-I was the only product manager on this platform, owning the physician web
-app with an internal team and the patient app with an external one. Two
-numbers decided whether the service worked: how long clinicians spent on
-each alert, and how many patients finished setting up. We measured both
-before changing anything, and treated each step of the workflow as a
-question: does this have to happen, and does a person have to do it?
+Two numbers decided whether this service worked: how long clinicians spent on
+each alert, and how many patients finished setting up. We measured both before
+changing anything, and treated each step of the workflow as a question: does
+this have to happen, and does a person have to do it?
 
-## Clinician time
+## The clinician-time target came from the economics
 
 The service was only commercially viable if doctors could process alerts
-quickly, so we measured average alert-handling time and agreed with
-doctors what target would make it viable. That gave us a concrete number
-to work backwards from, rather than a vague goal of "making the workflow
-more efficient."
+quickly, so we measured average alert-handling time and agreed with doctors
+what target would make it viable. That gave us a number to work backwards
+from, rather than a vague goal of "making the workflow more efficient."
 
-We then went through the workflow step by step to identify what actually
-required clinical attention, what could be simplified and what could be
-automated. We also ran workshops with nurses where we deliberately let
-them use the product rather than explaining how we expected them to use
-it. We observed where they hesitated and what they did differently from
-our assumptions, used those observations to change the product, and
+We went through the workflow step by step to find what actually required
+clinical attention, what could be simplified and what could be automated.
+**In workshops with nurses, we deliberately let them use the product instead of
+explaining how we expected them to use it.** We watched where they hesitated
+and what they did differently from our assumptions, changed the product, and
 repeated the process.
 
 The result: average alert-handling time down 40%.
 
 ## Alert triage: rules for what is dangerous, a model for what to read first
 
-A separate design question was how much of alert triage should be decided
-by rules and how much could be assisted by a model.
-
 Letting a model decide what counts as dangerous was not defensible in a
 regulated context: a missed threshold or a hallucinated reading is not an
-acceptable failure mode. But rules alone left doctors reading raw data
-with no prioritization, which was a large part of the alert-handling time.
+acceptable failure mode. But rules alone left doctors reading raw data with no
+prioritization, which was a large part of the alert-handling time.
 
-We split it in two. A deterministic layer flagged dangerous readings with
-fixed rules (a value rising by a set amount, or crossing a set
-threshold): auditable and non-negotiable. We defined those rules together
-with doctors, so the clinical judgment of what counts as dangerous stayed
-with clinicians, not with product or engineering. On top of that, an LLM
-layer ordered alerts by priority, highlighted which transmitted values
-were potentially concerning, and produced a short summary of exactly what
-to look at.
+<Diagram
+  src="/images/remote-patient-monitoring/alert-triage.svg"
+  alt="Alert triage flow. Daily readings from patients' medical devices pass through a deterministic layer of fixed rules defined with doctors, which decides what counts as dangerous and flags alerts. An LLM layer then orders the flagged alerts by priority, highlights the concerning values and writes a short summary. The doctor reads the summary and decides. The model never decides what is dangerous."
+  width={680}
+  height={300}
+/>
 
-The model never decided what was dangerous. Its job was to reduce what a
-doctor had to read before acting. Together with fewer screens and clicks
-and all the necessary information in one place, that is where the
-reduction came from.
+So we split it in two. A deterministic layer flagged dangerous readings with
+fixed rules (a value rising by a set amount, or crossing a set threshold):
+auditable and non-negotiable. We defined those rules together with doctors, so
+the clinical judgment of what counts as dangerous stayed with clinicians, not
+with product or engineering. On top of that, an LLM layer ordered alerts by
+priority, highlighted which transmitted values were potentially concerning,
+and produced a short summary of exactly what to look at.
 
-## Patient onboarding
+**The model never decided what was dangerous.** Its job was to reduce what a
+doctor had to read before acting. Together with fewer screens and clicks and
+all the necessary information in one place, that is where the reduction came
+from.
 
-Onboarding had its own drop-off. Product analytics showed where patients
-left, and we simplified the flow to fix those points.
+## Regulation kept the steps; the product took over the work
 
-We could not simply remove steps because they were inconvenient: some
-existed because regulatory requirements demanded them. Instead, we looked
-at where the burden could move from the patient to the product. If
-something had to happen, the question became: does the patient actually
-need to do it manually?
+Onboarding had its own drop-off. Product analytics showed where patients left,
+and we simplified the flow at those points. We could not simply remove steps
+because they were inconvenient: some existed because regulation demanded them.
+So for each one, the question became: **does the patient actually need to do
+it manually?**
 
 The result: onboarding completion time down 25% and completion rate up 18%.
 
-## What it added up to
+## Measure the baseline before you change anything
 
-The product went from pre-launch to reimbursement-approved and live with
-5 paying hospital customers, monitoring 500+ patients.
-Regulation defined what had to happen; measuring a baseline told us where
-the effort was being wasted. The habit that carried over: define the
-constraint, measure the baseline, change the product, measure again.
+The product went from pre-launch to reimbursement-approved and live with 5
+paying hospital customers, monitoring 500+ patients. **Regulation defined what
+had to happen; measuring a baseline told us where the effort was being
+wasted.**

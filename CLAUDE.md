@@ -62,6 +62,20 @@ title, slug, problem, decision, rigor, traction, nextVersion, repoUrl?
 `rigor` = eval notes, failure modes, what breaks — this is the whole point
 of the Lab section, don't let it become a features list.
 
+Optional fields:
+
+```
+summary?, tag?, takeaway?, role?, results?
+```
+
+`summary` is a one-line teaser used on the `/lab` list row and the home
+page instead of `problem` when set. `tag` is a short mono label for the
+`/lab` list row (e.g. `rag · evals`), shown instead of `traction` when set.
+`takeaway`, `role` and `results` are the same trailer fields as case
+studies (see above) — same shape, same shared `CaseTrailer` component,
+rendered under the title before the decision record when a lab entry sets
+`takeaway`. Omitted entirely, no placeholder space, when not set.
+
 TypeScript types for both live in `src/lib/types.ts`.
 
 ## Section purpose (don't blur these)

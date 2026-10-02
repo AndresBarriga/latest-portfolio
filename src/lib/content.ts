@@ -12,6 +12,18 @@ const WORK_DIR = path.join(process.cwd(), "content/work");
 const LAB_DIR = path.join(process.cwd(), "content/lab");
 const HOW_WE_BUILD_DIR = path.join(process.cwd(), "content/how-we-build");
 
+// Single source of truth for case study display order — home, /work, and
+// the prev/next nav on /work/[slug] all read getAllCaseStudies(), so
+// reordering here reorders everywhere at once. Slugs not listed here sort
+// after the ones that are, in their filesystem order.
+const CASE_STUDY_ORDER = [
+  "shared-integration-service",
+  "document-scanning-decision",
+  "remote-patient-monitoring",
+  "mcp-orchestration",
+  "translation-cache",
+];
+
 function readEntries<TFrontmatter>(dir: string): ContentEntry<TFrontmatter>[] {
   if (!fs.existsSync(dir)) return [];
 
@@ -26,7 +38,15 @@ function readEntries<TFrontmatter>(dir: string): ContentEntry<TFrontmatter>[] {
 }
 
 export function getAllCaseStudies(): ContentEntry<CaseStudyFrontmatter>[] {
-  return readEntries<CaseStudyFrontmatter>(WORK_DIR);
+  const entries = readEntries<CaseStudyFrontmatter>(WORK_DIR);
+  return entries.sort((a, b) => {
+    const aIndex = CASE_STUDY_ORDER.indexOf(a.frontmatter.slug);
+    const bIndex = CASE_STUDY_ORDER.indexOf(b.frontmatter.slug);
+    return (
+      (aIndex === -1 ? CASE_STUDY_ORDER.length : aIndex) -
+      (bIndex === -1 ? CASE_STUDY_ORDER.length : bIndex)
+    );
+  });
 }
 
 export function getCaseStudyBySlug(
@@ -35,12 +55,14 @@ export function getCaseStudyBySlug(
   return getAllCaseStudies().find((entry) => entry.frontmatter.slug === slug);
 }
 
-/** Meta description for a case study: explicit frontmatter value if set,
- * otherwise the first sentence of `problem`. */
+/** Summary for a case study, used as both the list-row teaser and the meta
+ * description: explicit frontmatter `description` if set, otherwise
+ * `takeaway`, otherwise the first sentence of `problem`. */
 export function getCaseStudyDescription(
   frontmatter: CaseStudyFrontmatter
 ): string {
   if (frontmatter.description) return frontmatter.description;
+  if (frontmatter.takeaway) return frontmatter.takeaway;
   const match = frontmatter.problem.match(/^.*?[.!?](?=\s|$)/);
   return match ? match[0] : frontmatter.problem;
 }
@@ -68,14 +90,21 @@ export function getLabProjectBySlug(
   return getAllLabProjects().find((entry) => entry.frontmatter.slug === slug);
 }
 
-/** Meta description for a lab project: explicit frontmatter value if set,
- * otherwise the first sentence of `problem`. */
+/** Meta description for a lab project: explicit frontmatter `description` if
+ * set, otherwise `takeaway`, otherwise the first sentence of `problem`. */
 export function getLabProjectDescription(
   frontmatter: LabProjectFrontmatter
 ): string {
   if (frontmatter.description) return frontmatter.description;
+  if (frontmatter.takeaway) return frontmatter.takeaway;
   const match = frontmatter.problem.match(/^.*?[.!?](?=\s|$)/);
   return match ? match[0] : frontmatter.problem;
+}
+
+/** One-line teaser for a lab project's list row (/lab and home): explicit
+ * `summary` if set, otherwise the full `problem` text. */
+export function getLabProjectSummary(frontmatter: LabProjectFrontmatter): string {
+  return frontmatter.summary ?? frontmatter.problem;
 }
 
 export function getHowWeBuildEntry(): ContentEntry<EssayFrontmatter> | undefined {

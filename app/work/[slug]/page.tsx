@@ -8,6 +8,7 @@ import {
   getCaseStudyMetaLine,
 } from "@/src/lib/content";
 import { DecisionRecord, type DecisionRecordField } from "@/src/components/DecisionRecord";
+import { CaseTrailer } from "@/src/components/CaseTrailer";
 import { getMdxComponents } from "@/src/components/mdx-components";
 import { ScrollDepthTracker } from "@/src/components/ScrollDepthTracker";
 import type { CaseStudyFrontmatter } from "@/src/lib/types";
@@ -106,32 +107,11 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
             {frontmatter.title}
           </h1>
 
-          {frontmatter.takeaway ? (
-            <p className="mt-5 max-w-[48ch] font-display text-[19px] font-medium leading-[1.35] tracking-[-0.01em] text-ink sm:line-clamp-3 sm:text-[21px]">
-              {frontmatter.takeaway}
-            </p>
-          ) : null}
-
-          {frontmatter.results?.length ? (
-            <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-10">
-              {frontmatter.results.slice(0, 3).map((result, i) => (
-                <div key={i}>
-                  <p className="m-0 font-display text-[26px] font-medium leading-none tracking-[-0.01em] text-ink">
-                    {result.value}
-                  </p>
-                  <p className="m-0 mt-1 max-w-[22ch] font-mono text-[11px] leading-[1.4] text-meta">
-                    {result.label}
-                  </p>
-                </div>
-              ))}
-            </div>
-          ) : null}
-
-          {frontmatter.role ? (
-            <p className="m-0 mt-6 font-mono text-[12px] text-meta">
-              {frontmatter.role}
-            </p>
-          ) : null}
+          <CaseTrailer
+            takeaway={frontmatter.takeaway}
+            results={frontmatter.results}
+            role={frontmatter.role}
+          />
         </div>
       </div>
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getLabProjectSummary } from "@/src/lib/content";
 import type { LabProjectFrontmatter, ContentEntry } from "@/src/lib/types";
 
 export function LabListItem({
@@ -18,11 +19,11 @@ export function LabListItem({
           {frontmatter.title}
         </div>
         <p className="mt-1.5 max-w-[58ch] text-[14.5px] leading-[1.6] text-body-dark">
-          {frontmatter.problem}
+          {getLabProjectSummary(frontmatter)}
         </p>
       </div>
       <div className="font-mono text-[11.5px] leading-[1.7] text-accent-dark sm:text-right">
-        {frontmatter.traction}
+        {frontmatter.tag ?? frontmatter.traction}
       </div>
     </Link>
   );

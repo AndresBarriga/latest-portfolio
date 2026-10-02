@@ -11,20 +11,44 @@ export function CaseStudyListItem({
 }) {
   const { frontmatter } = entry;
   const tags = getCaseStudyTags(frontmatter);
+  const description = getCaseStudyDescription(frontmatter);
+  const firstResult = frontmatter.results?.[0];
 
   return (
     <TrackedLink
       href={`/work/${frontmatter.slug}`}
       event="work_row_click"
       properties={{ case: frontmatter.slug, position }}
-      className="group grid grid-cols-1 items-start gap-2 border-b border-hairline py-6 text-ink no-underline transition-colors hover:bg-paper-hover sm:grid-cols-[1fr_180px] sm:gap-8"
+      aria-label={`Read: ${frontmatter.title}`}
+      className="group block border-b border-hairline py-5 text-ink no-underline transition-colors hover:bg-paper-hover md:grid md:grid-cols-[130px_1fr_24px] md:items-baseline md:gap-6 md:py-6"
     >
+      {/* Mobile-only stat line; the desktop left column below is hidden on mobile. */}
+      {firstResult ? (
+        <div className="mb-2 font-mono text-[12.5px] text-meta md:hidden">
+          <span className="font-medium text-ink">{firstResult.value}</span>{" "}
+          {firstResult.label}
+        </div>
+      ) : null}
+
+      <div className="hidden md:block">
+        {firstResult ? (
+          <>
+            <div className="font-mono text-[24px] font-medium leading-none text-ink">
+              {firstResult.value}
+            </div>
+            <div className="mt-1.5 line-clamp-2 font-mono text-[11px] leading-[1.4] text-meta">
+              {firstResult.label}
+            </div>
+          </>
+        ) : null}
+      </div>
+
       <div>
-        <div className="font-display text-[25px] leading-tight tracking-[-0.02em]">
+        <div className="font-display text-[22px] leading-tight tracking-[-0.02em] transition-colors group-hover:text-accent group-focus-visible:text-accent">
           {frontmatter.title}
         </div>
-        <p className="mt-1.5 max-w-[62ch] text-[14.5px] leading-[1.55] text-body-muted">
-          {getCaseStudyDescription(frontmatter)}
+        <p className="mt-1.5 line-clamp-2 text-[14.5px] leading-[1.55] text-body-muted">
+          {description}
         </p>
         <div className="mt-3 flex flex-wrap gap-1.5">
           {tags.map((tag) => (
@@ -37,11 +61,9 @@ export function CaseStudyListItem({
           ))}
         </div>
       </div>
-      <div className="flex w-fit items-baseline gap-1 font-mono text-[11.5px] text-meta sm:ml-auto">
-        <span>read</span>
-        <span className="row-arrow" aria-hidden="true">
-          →
-        </span>
+
+      <div className="hidden md:block" aria-hidden="true">
+        <span className="row-arrow font-mono text-ink">→</span>
       </div>
     </TrackedLink>
   );

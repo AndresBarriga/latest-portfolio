@@ -1,10 +1,21 @@
 ---
-title: 'Internal Product Documentation Chatbot'
+title: 'Measuring a documentation assistant before trusting it'
 slug: 'ask-ai-productinfo'
+summary: 'RAG assistant over product documentation for support and CS, evaluated with a 21-case harness.'
+tag: 'rag · evals'
+takeaway: 'I built an internal documentation assistant and an evaluation harness to test every change. The biggest fixes came from places I did not expect: a missing heading path, and one retrieval parameter.'
+role: 'Built end to end on my own initiative: the problem, the architecture, the evaluation harness and the prototype.'
+results:
+  - value: '1/10 → 9/10'
+    label: 'installation-guide chunks retrieved after one fix'
+  - value: '85.7% → 100%'
+    label: 'correct answers on a 21-case harness'
+  - value: '3×'
+    label: 'cheaper per answer with a smaller model'
 problem: >
   Product knowledge (installation, configuration, troubleshooting,
   roadmap) lives scattered across Confluence, exported PDFs, and the
-  heads of a few people. Support , Sales and CS, the people who need it
+  heads of a few people. Support, Sales and CS, the people who need it
   most, don't have access to those tools or a fast way to find
   answers. The same questions get answered by hand, repeatedly, over
   Slack and email.
@@ -13,51 +24,65 @@ decision: >
   interface: users select a product, and the chatbot searches only
   that product's documentation and conversation history.
 
-  I kept the prototype lightweight — Python, FastAPI and SQLite —
+  I kept the prototype lightweight (Python, FastAPI and SQLite)
   because the real corpus was only 857 chunks. I also measured model
   cost and latency rather than assuming the largest model was necessary:
   switching to a smaller model cut cost by 3x and median latency from
   5.60s to 3.24s, with groundedness intact and a one-point completeness
   trade-off.
 rigor: >
-  Four findings changed the implementation:
-
-  (1) Missing context, not missing content. "Install" appeared in 4/42
-  chunks using text alone, versus 28/42 when the heading path was
-  included. Adding the heading path improved installation retrieval
-  from 1/10 to 9/10 and an early evaluation from 19/23 to 23/23.
-
-  (2) Retrieval depth was the bottleneck. Two mechanisms built around
-  a presumed missing-information problem fixed only 1 of 3 missed facts.
-  Increasing K from 10 to 50 showed the missing facts at ranks 11–13.
-  The problem was retrieval depth, not missing knowledge.
-
-  (3) The UI hid a data-loss bug. Syncing one documentation branch
-  silently removed previous branches for the same product. Changing
-  replacement scope from product-level to branch-level fixed it.
-
-  (4) The evaluation had to measure regressions as well as improvements.
-  A separate 21-case harness moved from 85.7% to 100% after increasing K,
-  dropped to 95.2% with a cheaper generation model, then recovered to
-  100% after tightening completeness rules.
+  Four findings changed the implementation, and the evaluation history
+  is not monotonic: the harness caught a regression from a cheaper
+  model, and the change that recovered it. The sections below walk
+  through each finding.
 traction: >
-  Shown to several people in Support, Product and CS internally; positive
-  reaction feedback. Now deployed to stage environment and people actively using it.
+  Deployed to a staging environment and used by people in Support,
+  Product and CS, with positive feedback. Not yet in production.
 nextVersion: >
-  Expand the evaluation set beyond the initial document and establish
-  a repeatable evaluation suite before making further retrieval or
-  generation changes. The next iteration will focus on broader content
-  coverage, retrieval edge cases and repeatability rather than adding
-  more mechanisms, including image handling.
+  Diagnose before building: when a retrieval case fails, ask where the
+  missing information ranks before building a mechanism. Then expand
+  the evaluation set beyond the initial document, make the suite
+  repeatable, and cover more content, retrieval edge cases and image
+  handling, rather than adding more mechanisms.
 ---
 
-This started inside a hospitality SaaS platform, where product
-knowledge, installation, configuration, troubleshooting, the
-roadmap, was scattered across Confluence, exported PDFs, and the
-heads of a handful of people. Support and CS, who needed it most,
-didn't have access to fast way to search them. The
-same questions kept getting answered by hand, over Slack and email.
+Built inside a hospitality SaaS platform. Company and product names are omitted throughout.
 
-Company and product names are omitted throughout — the underlying
-documentation spans several internal products, and nothing below
-depends on which ones.
+<Diagram
+  src="/images/ask-ai-productinfo/eval-history.svg"
+  alt="Line chart of the share of correct answers on a 21-case evaluation across six configurations: baseline 85.7 percent; tables kept with their introduction 85.7; retrieval depth raised from 6 to 10, 100; same configuration re-measured, 100; cheaper generation model, 95.2; completeness rules added to the prompt, 100. The history is not monotonic: the cheaper model caused a regression that the prompt change recovered."
+  width={680}
+  height={300}
+/>
+
+## A missing heading path was the biggest bug, and no test saw it
+
+Embedding only each chunk's text silently dropped the page title. The word
+"install" appeared in 4 of 42 chunks by text alone, and in 28 of 42 once the
+heading path was included. Adding the path took retrieval of the installation
+guide from 1/10 to 9/10, and an early evaluation set from 19/23 to 23/23.
+**The fix was not a better model; it was context the embeddings never saw.**
+
+## Two mechanisms for a one-parameter problem
+
+Three facts kept getting missed. I built two mechanisms for what looked like a
+missing-information problem, and together they fixed only one of the three.
+Widening the retrieval window from 10 to 50, as a diagnosis, showed the missing
+facts sitting just past the old cut-off. **The bottleneck was retrieval depth,
+a single parameter nobody had questioned before I built more machinery on top
+of it.** The check that exposed it costs cents, and it should have come first.
+
+## The PDF was not unparseable, it was corrupted
+
+An exported PDF arrived with zero extractable characters. My first diagnosis,
+a parsing-library failure, was wrong: 62% of the file was Unicode replacement
+characters, the result of a lossy conversion in transport. **The bytes were
+destroyed, not misread.** That moved ingestion directly from the source API
+from a "maybe later" idea to the primary path.
+
+## A harness that goes down as well as up
+
+Gut feel would have called every change an improvement. A 21-case harness,
+graded by a separate judge model, did not: a cheaper generation model dropped it
+to 95.2%, and a change to the prompt brought it back. **A history that is not
+monotonic is the sign the harness measures something real.**
